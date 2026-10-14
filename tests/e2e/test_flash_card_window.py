@@ -4,16 +4,19 @@
 @brief Builds the real window with Tk and checks it against the wireframe.
 """
 
+import time
 import tkinter as tk
-from collections.abc import Iterator, Sequence
+from collections.abc import Callable, Iterator, Sequence
 
 import pytest
 
 from flash_card.application.use_cases.study_session import StudySession
 from flash_card.constants import (
+    BACK_TEXT_COLOR,
     BACKGROUND_COLOR,
     CARD_HEIGHT,
     CARD_WIDTH,
+    FLIP_DELAY_MS,
     FRONT_TEXT_COLOR,
     LANGUAGE_FONT,
     WINDOW_PADDING,
@@ -23,6 +26,7 @@ from flash_card.constants import (
 from flash_card.domain.entities.card import Card
 from flash_card.domain.entities.deck import Deck
 from flash_card.domain.value_objects.language_pair import LanguagePair
+from flash_card.presentation.features.flash_card import flash_card_view
 from flash_card.presentation.features.flash_card.flash_card_view import FlashCardView
 from flash_card.presentation.features.flash_card.flash_card_view_model import (
     FlashCardViewModel,
@@ -134,3 +138,110 @@ def test_each_button_press_shows_next_card(
     assert _shown(view) == ("Malay", "kau")
     view.right_button.invoke()
     assert _shown(view) == ("Malay", "aku")
+
+
+def _word(view: FlashCardView) -> str:
+    return _shown(view)[1]
+
+
+def _image(view: FlashCardView) -> str:
+    return str(view.canvas.itemcget(view.image_id, "image"))
+
+
+def _fill(view: FlashCardView) -> tuple[str, str]:
+    return (
+        str(view.canvas.itemcget(view.language_text_id, "fill")),
+        str(view.canvas.itemcget(view.word_text_id, "fill")),
+    )
+
+
+def _reset(root: tk.Tk, view: FlashCardView) -> None:
+    """Show a fresh front with no pending timer."""
+    view.next_card()
+    if view.flip_timer is not None:
+        root.after_cancel(view.flip_timer)
+        view.flip_timer = None
+
+
+def test_front_state_uses_front_image_black_text_and_front_language(
+    window: tuple[tk.Tk, FlashCardView],
+) -> None:
+    root, view = window
+    _reset(root, view)
+    assert _image(view) == str(view.card_front_image)
+    assert _fill(view) == (FRONT_TEXT_COLOR, FRONT_TEXT_COLOR)
+    assert _shown(view)[0] == "Malay"
+    assert _word(view) in {card.front for card in CARDS}
+
+
+def test_flip_card_shows_back_image_white_text_and_translation(
+    window: tuple[tk.Tk, FlashCardView],
+) -> None:
+    root, view = window
+    _reset(root, view)
+    front = _word(view)
+    view.flip_card()
+    translations = {card.front: card.back for card in CARDS}
+    assert _image(view) == str(view.card_back_image)
+    assert _image(view) != str(view.card_front_image)
+    assert _fill(view) == (BACK_TEXT_COLOR, BACK_TEXT_COLOR)
+    assert _shown(view) == ("Danish", translations[front])
+    assert view.flip_timer is None
+
+
+def test_next_card_after_flip_shows_front_again(
+    window: tuple[tk.Tk, FlashCardView],
+) -> None:
+    root, view = window
+    _reset(root, view)
+    view.flip_card()
+    view.right_button.invoke()
+    assert _image(view) == str(view.card_front_image)
+    assert _fill(view) == (FRONT_TEXT_COLOR, FRONT_TEXT_COLOR)
+    assert _shown(view)[0] == "Malay"
+    _reset(root, view)
+
+
+def test_next_card_cancels_pending_timer_and_schedules_flip(
+    window: tuple[tk.Tk, FlashCardView],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root, view = window
+    _reset(root, view)
+    calls: list[tuple[str, object]] = []
+
+    def fake_after(delay: int, callback: Callable[[], None]) -> str:
+        calls.append(("after", (delay, callback)))
+        return "timer-id"
+
+    def fake_cancel(timer_id: str) -> None:
+        calls.append(("cancel", timer_id))
+
+    monkeypatch.setattr(root, "after", fake_after, raising=False)
+    monkeypatch.setattr(root, "after_cancel", fake_cancel, raising=False)
+    view.flip_timer = "old-id"
+    view.next_card()
+    assert calls == [
+        ("cancel", "old-id"),
+        ("after", (FLIP_DELAY_MS, view.flip_card)),
+    ]
+    assert view.flip_timer == "timer-id"
+    view.flip_timer = None
+
+
+def test_real_timer_flips_card_after_delay(
+    window: tuple[tk.Tk, FlashCardView],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root, view = window
+    monkeypatch.setattr(flash_card_view, "FLIP_DELAY_MS", 50)
+    view.next_card()
+    assert _image(view) == str(view.card_front_image)
+    deadline = time.monotonic() + 2
+    while view.flip_timer is not None and time.monotonic() < deadline:
+        root.update()
+        time.sleep(0.005)
+    assert view.flip_timer is None
+    assert _image(view) == str(view.card_back_image)
+    assert _shown(view)[0] == "Danish"
+    _reset(root, view)
