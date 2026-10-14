@@ -1,0 +1,36 @@
+# Doxygen configuration for the flash card program.
+# Build:  doxygen Doxyfile      (output: docs/doxygen/html/index.html)
+# Only the settings that differ from the Doxygen defaults are listed.
+
+PROJECT_NAME           = "Flash Card"
+PROJECT_BRIEF          = "Malay to Danish flash cards (Udemy 100 Days of Code, day 31)"
+PROJECT_NUMBER         = 0.1.0
+OUTPUT_DIRECTORY       = docs/doxygen
+CREATE_SUBDIRS         = NO
+
+INPUT                  = src
+FILE_PATTERNS          = *.py
+RECURSIVE              = YES
+EXCLUDE_PATTERNS       = */__pycache__/* */.venv/*
+
+# Python
+OPTIMIZE_OUTPUT_JAVA   = YES
+PYTHON_DOCSTRING       = NO
+EXTRACT_ALL            = NO
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+JAVADOC_AUTOBRIEF      = YES
+AUTOLINK_SUPPORT       = YES
+MARKDOWN_SUPPORT       = YES
+
+# Diagrams need Graphviz; leave them off so the build works everywhere.
+HAVE_DOT               = NO
+
+# Output
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+SOURCE_BROWSER         = YES
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = YES

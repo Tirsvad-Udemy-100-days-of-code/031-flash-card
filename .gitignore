@@ -1,0 +1,77 @@
+# Local secrets: tokens are for personal use and are never part of the project
+.env
+.env.*
+
+# Learner's own progress (created by the program on the first "known" answer)
+data/words_to_learn.csv
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Generated documentation (doxygen Doxyfile)
+docs/doxygen/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[codz]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py.cover
+.hypothesis/
+.pytest_cache/
+
+# Type checkers and linters
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+.import_linter_cache/
+
+# Jupyter, IDEs and operating systems
+.ipynb_checkpoints
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
