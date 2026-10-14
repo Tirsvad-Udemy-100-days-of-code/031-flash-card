@@ -11,7 +11,8 @@
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-008 and the review records of the level choice (no checklist exists for this type) | [0b983b7] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [768ca34] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [768ca34] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [061b4f4] |
 
 ---
 
@@ -48,7 +49,7 @@ updated whenever an artifact instance is created or reviewed.
 | MIL-006 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-006 | [RC-021] |
 | MIL-007 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-007 | [RC-022] |
 | MIL-008 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-008 | [RC-040] |
-| MIL-009 | Milestone / Gateway | en | it | BC-001 | - | [RC-047] |
+| MIL-009 | Milestone / Gateway | en | it | BC-001 | - | [RC-050] |
 | ADR-0004 | Architecture Decision Record | - | - | BC-001 | - | [RC-046] |
 | PY-MIL-001 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-023] |
 | PY-MIL-002 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-024] |
@@ -59,6 +60,7 @@ updated whenever an artifact instance is created or reviewed.
 | PY-MIL-007 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-029] |
 | PY-MIL-008 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-041] |
 | PY-MIL-009 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-048] |
+| PY-FIX-001 | Python Source Code | - | - | PY-MIL-008 | - | [RC-049] |
 
 ## Coverage Notes
 
@@ -153,3 +155,7 @@ updated whenever an artifact instance is created or reviewed.
 [768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
 [RC-048]: ./reviews/rc-048-py-mil-009.md
 [PY-MIL-009]: ../../src/flash_card
+[RC-049]: ./reviews/rc-049-py-fix-001.md
+[PY-FIX-001]: ../../tests/unit/test_app.py
+[RC-050]: ./reviews/rc-050-mil-009-task9.md
+[061b4f4]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/061b4f48b5d49e6800656c95d79df707e07ec0f3

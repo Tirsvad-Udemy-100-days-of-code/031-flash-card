@@ -92,6 +92,12 @@ def _first(cards: Sequence[Card]) -> Card:
     return cards[0]
 
 
+@pytest.fixture(autouse=True)
+def fake_tk_root(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Keep every test in this module away from a real Tk root."""
+    monkeypatch.setattr(app.tk, "Tk", _FakeRoot)
+
+
 @pytest.fixture
 def fake_views(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(app, "LevelView", _FakeLevelView)
@@ -280,7 +286,6 @@ def test_create_application_draws_first_card_from_bundled_list(
     bundled.parent.mkdir()
     bundled.write_text("ms;da\nsaya;jeg\n", encoding="utf-8")
     data = tmp_path / "data"
-    monkeypatch.setattr(app.tk, "Tk", _FakeRoot)
     monkeypatch.setattr(app, "DEFAULT_DATA_DIR", data)
     monkeypatch.setattr(app, "BUNDLED_VOCABULARY_PATH", bundled)
     application = app.create_application(None, False, Level(None))

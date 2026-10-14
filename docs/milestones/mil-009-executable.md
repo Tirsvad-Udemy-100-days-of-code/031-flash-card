@@ -11,7 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [768ca34] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [768ca34] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added task 9 (fix a flaky unit test found after the merge) | [061b4f4] |
 
 ---
 
@@ -73,6 +74,7 @@ Decide whether the Learner can start the program from one executable file withou
 | 6 | Build and smoke-test the executable | Build it, start it with the virtual environment not active, check the window, the images, the level choice, the progress file next to it, the word list override and the speech import; record the result in the review record. | Yes | US-001.07 |
 | 7 | Test the path rules and the build arguments | Unit tests for the frozen and source path rules and for the argument list the build script gives PyInstaller (without running PyInstaller). | No | |
 | 8 | Update README and wiki | README and the Install page of the wiki in English, Danish and Bahasa Malaysia: how to build, where the executable and the data folder are, that Python is not needed to run it. The wiki is republished after the merge. | No | |
+| 9 | Fix a flaky unit test | After the merge a unit test of `app.main` failed in about 1 of 6 full runs because it created a real Tk root; it uses the module's fake root instead, so the unit tests never need a display. Found by running the suite repeatedly. | No | RC-049 |
 
 ---
 
@@ -81,3 +83,4 @@ Decide whether the Learner can start the program from one executable file withou
 [UC-001]: ../uc-001/uc.md
 [DCD-001]: ../dcd.md
 [768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
+[061b4f4]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/061b4f48b5d49e6800656c95d79df707e07ec0f3
