@@ -1,8 +1,8 @@
 """Capture screenshots of the running flash card window.
 
 @file capture_screenshots.py
-@brief Starts the program, grabs the front of a card and, three seconds later,
-the back, and saves both as PNG files.
+@brief Starts the program, grabs the level screen, the front of a card and,
+three seconds later, the back, and saves them as PNG files.
 
 The tool needs Pillow (`python -m pip install -e ".[tools]"`), which is a tool
 dependency only and not a dependency of the program. It grabs the screen area
@@ -31,7 +31,11 @@ from flash_card.constants import (  # noqa: E402
     PROJECT_ROOT,
     VOCABULARY_FILE_NAME,
 )
+from flash_card.domain.value_objects.level import Level  # noqa: E402
 from flash_card.presentation.app import create_application  # noqa: E402
+from flash_card.presentation.features.flash_card.flash_card_view import (  # noqa: E402
+    FlashCardView,
+)
 
 ## @brief Default folder of the screenshots.
 DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "docs" / "images"
@@ -60,20 +64,36 @@ def _pump(root: object, seconds: float) -> None:
 
 
 def capture(output_dir: Path) -> list[Path]:
-    """Capture the front and the back of one card.
+    """Capture the level screen, then the front and the back of one card.
 
-    @param output_dir Folder to write `screenshot-front.png` and
-        `screenshot-back.png` into.
-    @return The two files written, front first.
+    @param output_dir Folder to write `screenshot-level.png`,
+        `screenshot-front.png` and `screenshot-back.png` into.
+    @return The three files written: level, front, back.
     """
     _make_dpi_aware()
     output_dir.mkdir(parents=True, exist_ok=True)
     random.seed(SCREENSHOT_SEED)
+    level = output_dir / "screenshot-level.png"
+    front = output_dir / "screenshot-front.png"
+    back = output_dir / "screenshot-back.png"
     with tempfile.TemporaryDirectory() as data_dir:
         shutil.copy(DEFAULT_DATA_DIR / VOCABULARY_FILE_NAME, data_dir)
-        root, view = create_application(Path(data_dir), speech_enabled=False)
+        application = create_application(Path(data_dir), speech_enabled=False)
+        root = application.root
         root.lift()
         root.attributes("-topmost", True)
+        _pump(root, SETTLE_SECONDS)
+        window_box = (
+            root.winfo_rootx(),
+            root.winfo_rooty(),
+            root.winfo_rootx() + root.winfo_width(),
+            root.winfo_rooty() + root.winfo_height(),
+        )
+        ImageGrab.grab(bbox=window_box).save(level)
+        application.start(Level(None))
+        view = application.view
+        if not isinstance(view, FlashCardView):
+            raise RuntimeError("the card window did not open")
         _pump(root, SETTLE_SECONDS)
         box = (
             view.canvas.winfo_rootx() - 20,
@@ -84,13 +104,11 @@ def capture(output_dir: Path) -> list[Path]:
             + view.right_button.winfo_height()
             + 20,
         )
-        front = output_dir / "screenshot-front.png"
-        back = output_dir / "screenshot-back.png"
         ImageGrab.grab(bbox=box).save(front)
         _pump(root, FLIP_DELAY_MS / 1000 + SETTLE_SECONDS)
         ImageGrab.grab(bbox=box).save(back)
         root.destroy()
-    return [front, back]
+    return [level, front, back]
 
 
 def main(argv: Sequence[str] | None = None) -> int:

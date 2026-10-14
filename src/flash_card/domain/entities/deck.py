@@ -4,6 +4,7 @@
 @brief The Deck entity: holds cards, draws one and removes one.
 """
 
+from collections import Counter
 from collections.abc import Callable, Iterable, Sequence
 
 from flash_card.domain.entities.card import Card
@@ -66,24 +67,43 @@ class Deck:
         """
         return len(self._cards)
 
+    def within(self, cards: Sequence[Card]) -> tuple[Card, ...]:
+        """Select the cards of the deck that also appear in the given cards.
+
+        A card counts as often as it appears in both.
+
+        @param cards The cards to match against, for example a level.
+        @return The matching cards in deck order.
+        """
+        allowed = Counter(cards)
+        selected: list[Card] = []
+        for card in self._cards:
+            if allowed[card] > 0:
+                allowed[card] -= 1
+                selected.append(card)
+        return tuple(selected)
+
     def draw(
         self,
         choose: Callable[[Sequence[Card]], Card],
         exclude: Card | None = None,
+        among: Sequence[Card] | None = None,
     ) -> Card:
         """Pick a card without removing it.
 
-        The pick avoids the excluded card when another card exists.
+        The pick avoids the excluded card when another candidate exists.
 
         @param choose Picks one card from a non-empty sequence.
         @param exclude A card to avoid, usually the one shown now.
+        @param among The candidates, or None for every card of the deck.
         @return The picked card.
-        @throws EmptyDeckError When the deck has no card.
+        @throws EmptyDeckError When there is no candidate.
         """
-        if not self._cards:
+        candidates = self._cards if among is None else list(among)
+        if not candidates:
             raise EmptyDeckError("cannot draw from an empty deck")
-        others = [card for card in self._cards if card != exclude]
-        return choose(others or self._cards)
+        others = [card for card in candidates if card != exclude]
+        return choose(others or candidates)
 
     def remove(self, card: Card) -> None:
         """Remove the first card equal to the given one.

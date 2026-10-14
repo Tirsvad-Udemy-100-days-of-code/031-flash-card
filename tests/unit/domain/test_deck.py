@@ -71,3 +71,47 @@ def test_remove_raises_when_card_is_absent() -> None:
 def test_is_empty_reflects_cards() -> None:
     assert Deck(PAIR, []).is_empty
     assert not Deck(PAIR, [A]).is_empty
+
+
+def test_within_returns_deck_cards_found_in_given_cards_in_deck_order() -> None:
+    c = Card("ini", "denne")
+    deck = Deck(PAIR, [A, B, c])
+    assert deck.within([c, A]) == (A, c)
+
+
+def test_within_respects_multiplicity() -> None:
+    deck = Deck(PAIR, [A, A, B])
+    assert deck.within([A, B]) == (A, B)
+    assert deck.within([A, A, A]) == (A, A)
+
+
+def test_within_returns_empty_when_no_card_matches() -> None:
+    assert Deck(PAIR, [A]).within([B]) == ()
+
+
+def test_within_does_not_change_the_deck() -> None:
+    deck = Deck(PAIR, [A, B])
+    deck.within([A])
+    assert deck.cards == (A, B)
+
+
+def test_draw_chooses_among_given_candidates_only() -> None:
+    deck = Deck(PAIR, [A, B])
+    assert deck.draw(_first, among=[B]) == B
+
+
+def test_draw_among_avoids_excluded_when_another_candidate_exists() -> None:
+    c = Card("ini", "denne")
+    deck = Deck(PAIR, [A, B, c])
+    assert deck.draw(_first, exclude=B, among=[B, c]) == c
+
+
+def test_draw_among_returns_excluded_when_it_is_the_only_candidate() -> None:
+    deck = Deck(PAIR, [A, B])
+    assert deck.draw(_first, exclude=B, among=[B]) == B
+
+
+def test_draw_among_empty_raises_empty_deck_error() -> None:
+    deck = Deck(PAIR, [A, B])
+    with pytest.raises(EmptyDeckError):
+        deck.draw(_first, among=[])

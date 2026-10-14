@@ -20,8 +20,6 @@ from flash_card.constants import (
     LANGUAGE_FONT,
     LANGUAGE_TEXT_Y,
     RIGHT_IMAGE_NAME,
-    WINDOW_PADDING,
-    WINDOW_TITLE,
     WORD_FONT,
     WORD_TEXT_Y,
     WRONG_IMAGE_NAME,
@@ -30,6 +28,7 @@ from flash_card.presentation.features.flash_card.flash_card_view_model import (
     FlashCardViewModel,
     Side,
 )
+from flash_card.presentation.shared.window import configure_window
 
 
 def _load_image(root: tk.Tk, name: str) -> tk.PhotoImage:
@@ -60,8 +59,7 @@ class FlashCardView:
         self._root = root
         ## @brief The data source of the texts.
         self._view_model = view_model
-        root.title(WINDOW_TITLE)
-        root.config(padx=WINDOW_PADDING, pady=WINDOW_PADDING, bg=BACKGROUND_COLOR)
+        configure_window(root)
 
         # Kept as attributes: Tkinter drops an image nothing refers to.
         ## @brief Card front image, kept so Tk does not drop it.

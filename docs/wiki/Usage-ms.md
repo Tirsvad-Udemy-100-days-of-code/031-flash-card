@@ -5,12 +5,13 @@
 ## Berlatih dengan kad
 
 1. Mulakan program dengan `python -m flash_card`.
-2. Kad menunjukkan satu perkataan Melayu. Cuba ingat terjemahan Denmarknya.
-3. Selepas tiga saat kad terbalik dan menunjukkan terjemahan.
-4. Tekan tanda semak hijau jika anda tahu perkataan itu, atau pangkah merah jika tidak.
-5. Satu perkataan rawak baharu muncul. Ulang.
+2. Pilih tahap: **100 words**, **1000 words** atau **All words**. Senarai perkataan disusun daripada perkataan paling kerap kepada paling jarang, jadi tahap 100 ialah 100 perkataan paling kerap.
+3. Kad menunjukkan satu perkataan Melayu. Cuba ingat terjemahan Denmarknya.
+4. Selepas tiga saat kad terbalik dan menunjukkan terjemahan.
+5. Tekan tanda semak hijau jika anda tahu perkataan itu, atau pangkah merah jika tidak.
+6. Satu perkataan rawak baharu daripada tahap itu muncul. Ulang.
 
-Perkataan yang anda tandakan sebagai diketahui dibuang dan tidak muncul lagi. Apabila tiada perkataan lagi, kad menunjukkan "Nothing left to learn".
+Perkataan yang anda tandakan sebagai diketahui dibuang dan tidak muncul lagi. Apabila tiada perkataan lagi pada tahap itu, kad menunjukkan "Nothing left to learn"; mulakan program semula dan pilih tahap yang lebih tinggi.
 
 ## Kemajuan anda
 
@@ -18,6 +19,8 @@ Perkataan yang anda tandakan sebagai diketahui dibuang dan tidak muncul lagi. Ap
 - Permulaan seterusnya menggunakan fail itu. Jika ia tiada, program menggunakan senarai penuh `data/ms-da.csv`.
 - Untuk bermula semula, padam `data/words_to_learn.csv`.
 - Pangkah merah tidak pernah mengubah fail.
+- Perkataan yang diketahui kekal diketahui pada semua tahap. Tahap hanya mengehadkan perkataan yang belum anda ketahui yang muncul, dan fail sentiasa menyimpan semua perkataan yang anda belum tahu, termasuk yang di luar tahap.
+- Senarai ini mempunyai 1000 perkataan, jadi "1000 words" dan "All words" memberikan kad yang sama.
 
 ## Format fail
 
@@ -34,6 +37,7 @@ yang;hvilke
 | Pilihan | Maksud |
 | --- | --- |
 | `--data-dir <folder>` | Folder yang mengandungi `ms-da.csv` dan `words_to_learn.csv` (lalai: `data/` dalam repositori) |
+| `--level {100,1000,all}` | Mulakan pada tahap itu dan langkau skrin tahap |
 | `--no-speech` | Jangan sebut perkataan Melayu, walaupun tambahan suara dipasang |
 
 ## Gunakan pasangan bahasa lain

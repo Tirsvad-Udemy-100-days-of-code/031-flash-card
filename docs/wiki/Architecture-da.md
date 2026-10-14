@@ -6,7 +6,7 @@ Programmet er bygget i fire lag under `src/flash_card/`. Importer peger indad; `
 
 | Lag | Indeholder | Må importere |
 | --- | --- | --- |
-| `domain` | `Card`, `LanguagePair`, `Vocabulary`, `Deck`, fejlene og repository-grænsefladerne | ingenting |
+| `domain` | `Card`, `LanguagePair`, `Level`, `Vocabulary`, `Deck`, fejlene og repository-grænsefladerne | ingenting |
 | `application` | `StudySession`, `open_study_session`, `CardDto` og `SpeechPort` | `domain` |
 | `infrastructure` | CSV-repositories og tale-adaptere | `application`, `domain` |
 | `presentation` | `FlashCardView`, `FlashCardViewModel` (MVVM) og kompositionsroden `app.py` | alle lag |
@@ -21,6 +21,7 @@ Alle konstanter står i `src/flash_card/constants.py`.
 | Trin 2: læs CSV, tilfældigt ord ved hvert tryk | `CsvVocabularyRepository` og `read_word_list` (erstatter `pandas`), `Deck.draw`, `StudySession.next_card`, `FlashCardView.next_card` |
 | Trin 3: vend efter 3 sekunder | `FlashCardView.flip_card`, `FlashCardView.flip_timer` (`after`, `after_cancel`), `FlashCardViewModel.flip_card` |
 | Trin 4: kendte ord, `words_to_learn.csv` | `FlashCardView.is_known`, `StudySession.mark_known`, `CsvProgressRepository`, `open_study_session` |
+| Ekstra: niveauvalg | `Level`, `Deck.within`, `StudySession.next_card`, `open_study_session`, `LevelView`, `LevelViewModel`, `Application.start` i `presentation/app.py` |
 | Ekstra: tale | `SpeechPort`, `GttsSpeech`, `NullSpeech`, `build_speech` i `presentation/app.py` |
 
 ## Hvorfor en lagdelt løsning til en lille opgave?
