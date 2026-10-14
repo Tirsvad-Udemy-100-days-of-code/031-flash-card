@@ -1,10 +1,12 @@
-"""Reading of the word list CSV file.
+"""Reading and writing of the word list CSV file.
 
 @file csv_word_list.py
-@brief Reads a semicolon separated word list with a language code header.
+@brief Reads and writes a semicolon separated word list with a language code
+header; the format is defined once here.
 """
 
 import csv
+from collections.abc import Iterable
 from pathlib import Path
 
 from flash_card.constants import CSV_DELIMITER, CSV_ENCODING
@@ -84,3 +86,31 @@ def read_word_list(path: Path) -> tuple[LanguagePair, tuple[Card, ...]]:
     if pair is None:
         raise _format_error(path, 1, "file is empty")
     return pair, tuple(cards)
+
+
+def write_word_list(
+    path: Path, language_pair: LanguagePair, cards: Iterable[Card]
+) -> None:
+    """Write a word list file atomically.
+
+    The rows go to a temporary file in the same folder, which then replaces the
+    target, so a crash never leaves a half written file.
+
+    @param path The CSV file to create or replace.
+    @param language_pair The languages, written as the header row.
+    @param cards The cards, written one row each in the given order.
+    @return Nothing.
+    @throws OSError When the file cannot be written.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".tmp")
+    rows = [(language_pair.front_code, language_pair.back_code)]
+    rows.extend((card.front, card.back) for card in cards)
+    try:
+        with temporary.open("w", encoding=CSV_ENCODING, newline="") as file:
+            writer = csv.writer(file, delimiter=CSV_DELIMITER, lineterminator="\n")
+            writer.writerows(rows)
+        temporary.replace(path)
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise

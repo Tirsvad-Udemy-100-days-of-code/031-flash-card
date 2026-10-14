@@ -88,10 +88,25 @@ class FlashCardViewModel:
         return self._card.front_text
 
     def next_card(self) -> None:
-        """Draw the next card and show its front.
+        """Draw the next card and show its front; does nothing when finished.
 
         @return Nothing.
         """
+        if self._card is None:
+            return
+        self._card = self._session.next_card()
+        self._side = Side.FRONT
+
+    def is_known(self) -> None:
+        """Mark the card as known, save the progress and show the next card.
+
+        Does nothing when finished.
+
+        @return Nothing.
+        """
+        if self._card is None:
+            return
+        self._session.mark_known()
         self._card = self._session.next_card()
         self._side = Side.FRONT
 

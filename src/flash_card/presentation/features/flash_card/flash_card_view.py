@@ -32,6 +32,21 @@ from flash_card.presentation.features.flash_card.flash_card_view_model import (
 )
 
 
+def _load_image(root: tk.Tk, name: str) -> tk.PhotoImage:
+    """Load an asset image.
+
+    The bytes are read here and handed to Tk as data, so the image does not
+    depend on Tcl opening the file: Tcl keeps the standard handles it saw at
+    start, and a process that swaps them (pytest fd capture) makes the first
+    Tcl file open fail with an empty error.
+
+    @param root The Tk root window that owns the image.
+    @param name The file name in the assets folder.
+    @return The image; the caller must keep a reference.
+    """
+    return tk.PhotoImage(master=root, data=(ASSETS_DIR / name).read_bytes())
+
+
 class FlashCardView:
     """The flash card window: a card and the wrong and right buttons."""
 
@@ -50,13 +65,13 @@ class FlashCardView:
 
         # Kept as attributes: Tkinter drops an image nothing refers to.
         ## @brief Card front image, kept so Tk does not drop it.
-        self._card_front_image = tk.PhotoImage(file=ASSETS_DIR / CARD_FRONT_IMAGE_NAME)
+        self._card_front_image = _load_image(root, CARD_FRONT_IMAGE_NAME)
         ## @brief Card back image, kept so Tk does not drop it.
-        self._card_back_image = tk.PhotoImage(file=ASSETS_DIR / CARD_BACK_IMAGE_NAME)
+        self._card_back_image = _load_image(root, CARD_BACK_IMAGE_NAME)
         ## @brief Wrong button image, kept so Tk does not drop it.
-        self._wrong_image = tk.PhotoImage(file=ASSETS_DIR / WRONG_IMAGE_NAME)
+        self._wrong_image = _load_image(root, WRONG_IMAGE_NAME)
         ## @brief Right button image, kept so Tk does not drop it.
-        self._right_image = tk.PhotoImage(file=ASSETS_DIR / RIGHT_IMAGE_NAME)
+        self._right_image = _load_image(root, RIGHT_IMAGE_NAME)
 
         ## @brief Canvas that draws the card.
         self.canvas = tk.Canvas(
@@ -103,7 +118,7 @@ class FlashCardView:
             image=self._right_image,
             highlightthickness=0,
             bd=0,
-            command=self.next_card,
+            command=self.is_known,
         )
         self.right_button.grid(row=1, column=1)
 
@@ -134,6 +149,16 @@ class FlashCardView:
         """
         self._cancel_flip_timer()
         self._view_model.next_card()
+        self._show_card()
+        self._start_flip_timer()
+
+    def is_known(self) -> None:
+        """Mark the card as known, show the next card front, restart the timer.
+
+        @return Nothing.
+        """
+        self._cancel_flip_timer()
+        self._view_model.is_known()
         self._show_card()
         self._start_flip_timer()
 
