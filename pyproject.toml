@@ -24,6 +24,8 @@ dependencies = []
 [project.optional-dependencies]
 # Spoken Malay word (text to speech). Optional; the program works without it.
 speech = ["gTTS>=2.5", "playsound==1.2.2"]
+# Only for tools/capture_screenshots.py; not needed to run the program.
+tools = ["pillow>=10"]
 dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11", "import-linter>=2.0"]
 
 [project.scripts]

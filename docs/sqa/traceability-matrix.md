@@ -51,6 +51,7 @@ updated whenever an artifact instance is created or reviewed.
 | PY-MIL-004 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-026] |
 | PY-MIL-005 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-027] |
 | PY-MIL-006 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-028] |
+| PY-MIL-007 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-029] |
 
 ## Coverage Notes
 
@@ -117,3 +118,5 @@ updated whenever an artifact instance is created or reviewed.
 [PY-MIL-005]: ../../src/flash_card
 [RC-028]: ./reviews/rc-028-py-mil-006.md
 [PY-MIL-006]: ../../src/flash_card
+[RC-029]: ./reviews/rc-029-py-mil-007.md
+[PY-MIL-007]: ../../src/flash_card

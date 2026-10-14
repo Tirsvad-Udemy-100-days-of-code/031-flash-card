@@ -107,6 +107,9 @@ class FlashCardView:
         self.wrong_button = tk.Button(
             root,
             image=self._wrong_image,
+            bg=BACKGROUND_COLOR,
+            activebackground=BACKGROUND_COLOR,
+            relief="flat",
             highlightthickness=0,
             bd=0,
             command=self.next_card,
@@ -116,6 +119,9 @@ class FlashCardView:
         self.right_button = tk.Button(
             root,
             image=self._right_image,
+            bg=BACKGROUND_COLOR,
+            activebackground=BACKGROUND_COLOR,
+            relief="flat",
             highlightthickness=0,
             bd=0,
             command=self.is_known,
