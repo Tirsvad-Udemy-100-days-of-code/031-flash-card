@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
 
 ---
 
@@ -98,3 +98,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-020]: ./reviews/rc-020-mil-005.md
 [RC-021]: ./reviews/rc-021-mil-006.md
 [RC-022]: ./reviews/rc-022-mil-007.md
+[c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3

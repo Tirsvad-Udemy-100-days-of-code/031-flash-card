@@ -11,7 +11,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
 
 ---
 
@@ -102,3 +102,4 @@ All five stories are Independent in delivery order (each builds on the one befor
 [MIL-004]: ./milestones/mil-004-step3-flip-cards.md
 [MIL-005]: ./milestones/mil-005-step4-save-progress.md
 [MIL-006]: ./milestones/mil-006-malay-speech.md
+[c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
