@@ -42,15 +42,11 @@ BACK_TEXT_COLOR: Final[str] = "white"
 LANGUAGE_NAMES: Final[Mapping[str, str]] = {"ms": "Malay", "da": "Danish"}
 ## @brief Message shown when no word is left to learn.
 FINISHED_MESSAGE: Final[str] = "Nothing left to learn"
-## @brief Language name shown before the first card.
-PLACEHOLDER_LANGUAGE_NAME: Final[str] = "Malay"
-## @brief Word shown before the first card.
-PLACEHOLDER_WORD: Final[str] = "kata"
 
 ## @brief Delimiter of the CSV files.
 CSV_DELIMITER: Final[str] = ";"
-## @brief Encoding of the CSV files.
-CSV_ENCODING: Final[str] = "utf-8"
+## @brief Encoding of the CSV files; drops a leading byte order mark.
+CSV_ENCODING: Final[str] = "utf-8-sig"
 ## @brief File name of the vocabulary.
 VOCABULARY_FILE_NAME: Final[str] = "ms-da.csv"
 ## @brief File name of the words still to learn.

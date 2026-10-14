@@ -31,3 +31,7 @@ def test_language_names_cover_ms_and_da() -> None:
 
 def test_project_root_contains_pyproject() -> None:
     assert (constants.PROJECT_ROOT / "pyproject.toml").is_file()
+
+
+def test_csv_encoding_drops_byte_order_mark() -> None:
+    assert constants.CSV_ENCODING == "utf-8-sig"

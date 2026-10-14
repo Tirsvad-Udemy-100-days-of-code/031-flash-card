@@ -84,11 +84,30 @@ class FlashCardView:
 
         ## @brief Button for a word the user does not know.
         self.wrong_button = tk.Button(
-            root, image=self._wrong_image, highlightthickness=0, bd=0
+            root,
+            image=self._wrong_image,
+            highlightthickness=0,
+            bd=0,
+            command=self.next_card,
         )
         self.wrong_button.grid(row=1, column=0)
         ## @brief Button for a word the user knows.
         self.right_button = tk.Button(
-            root, image=self._right_image, highlightthickness=0, bd=0
+            root,
+            image=self._right_image,
+            highlightthickness=0,
+            bd=0,
+            command=self.next_card,
         )
         self.right_button.grid(row=1, column=1)
+
+    def next_card(self) -> None:
+        """Show the next card.
+
+        @return Nothing.
+        """
+        self._view_model.next_card()
+        self.canvas.itemconfig(
+            self.language_text_id, text=self._view_model.language_name
+        )
+        self.canvas.itemconfig(self.word_text_id, text=self._view_model.text)
