@@ -5,26 +5,46 @@
 """
 
 import tkinter as tk
-from collections.abc import Iterator
+from collections.abc import Iterator, Sequence
 
 import pytest
 
+from flash_card.application.use_cases.study_session import StudySession
 from flash_card.constants import (
     BACKGROUND_COLOR,
     CARD_HEIGHT,
     CARD_WIDTH,
     FRONT_TEXT_COLOR,
     LANGUAGE_FONT,
-    PLACEHOLDER_LANGUAGE_NAME,
-    PLACEHOLDER_WORD,
     WINDOW_PADDING,
     WINDOW_TITLE,
     WORD_FONT,
 )
+from flash_card.domain.entities.card import Card
+from flash_card.domain.entities.deck import Deck
+from flash_card.domain.value_objects.language_pair import LanguagePair
 from flash_card.presentation.features.flash_card.flash_card_view import FlashCardView
 from flash_card.presentation.features.flash_card.flash_card_view_model import (
     FlashCardViewModel,
 )
+
+CARDS = (Card("aku", "mig"), Card("kau", "du"), Card("ini", "denne"))
+
+
+def _first(cards: Sequence[Card]) -> Card:
+    return cards[0]
+
+
+def _build_view(root: tk.Tk) -> FlashCardView:
+    deck = Deck(LanguagePair("ms", "da"), CARDS)
+    return FlashCardView(root, FlashCardViewModel(StudySession(deck, _first)))
+
+
+def _shown(view: FlashCardView) -> tuple[str, str]:
+    return (
+        str(view.canvas.itemcget(view.language_text_id, "text")),
+        str(view.canvas.itemcget(view.word_text_id, "text")),
+    )
 
 
 @pytest.fixture(scope="module")
@@ -35,7 +55,7 @@ def window() -> Iterator[tuple[tk.Tk, FlashCardView]]:
         root = tk.Tk()
     except tk.TclError:
         pytest.skip("no display available for Tk")
-    view = FlashCardView(root, FlashCardViewModel())
+    view = _build_view(root)
     root.update_idletasks()
     yield root, view
     root.destroy()
@@ -72,14 +92,14 @@ def test_canvas_holds_one_image_and_two_texts(
     assert len(types) == 3
 
 
-def test_texts_show_placeholders_with_font_and_colour(
+def test_texts_show_first_card_with_font_and_colour(
     window: tuple[tk.Tk, FlashCardView],
 ) -> None:
     _root, view = window
     canvas = view.canvas
     expected = [
-        (view.language_text_id, PLACEHOLDER_LANGUAGE_NAME, LANGUAGE_FONT),
-        (view.word_text_id, PLACEHOLDER_WORD, WORD_FONT),
+        (view.language_text_id, "Malay", LANGUAGE_FONT),
+        (view.word_text_id, "aku", WORD_FONT),
     ]
     for item, text, font in expected:
         assert canvas.itemcget(item, "text") == text
@@ -101,5 +121,16 @@ def test_buttons_sit_in_row_one_with_their_images(
     assert wrong_image
     assert right_image
     assert wrong_image != right_image
-    assert not str(view.wrong_button.cget("command"))
-    assert not str(view.right_button.cget("command"))
+    assert str(view.wrong_button.cget("command"))
+    assert str(view.right_button.cget("command"))
+
+
+def test_each_button_press_shows_next_card(
+    window: tuple[tk.Tk, FlashCardView],
+) -> None:
+    _root, view = window
+    assert _shown(view) == ("Malay", "aku")
+    view.wrong_button.invoke()
+    assert _shown(view) == ("Malay", "kau")
+    view.right_button.invoke()
+    assert _shown(view) == ("Malay", "aku")
