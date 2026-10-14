@@ -17,8 +17,20 @@ def _first(cards: Sequence[Card]) -> Card:
     return cards[0]
 
 
-def _session(*cards: Card) -> StudySession:
-    return StudySession(Deck(PAIR, cards), _first)
+class _RecordingProgress:
+    def __init__(self) -> None:
+        self.saved: list[tuple[Card, ...]] = []
+
+    def load(self) -> Deck | None:
+        return None
+
+    def save(self, deck: Deck) -> None:
+        self.saved.append(deck.cards)
+
+
+def _session(*cards: Card, progress: _RecordingProgress | None = None) -> StudySession:
+    store = _RecordingProgress() if progress is None else progress
+    return StudySession(Deck(PAIR, cards), _first, store)
 
 
 def test_current_card_is_none_before_first_draw() -> None:
@@ -58,3 +70,38 @@ def test_remaining_counts_cards_in_deck() -> None:
     session = _session(A, B)
     session.next_card()
     assert session.remaining == 2
+
+
+def test_mark_known_removes_current_card_and_saves_remaining_once() -> None:
+    progress = _RecordingProgress()
+    session = _session(A, B, progress=progress)
+    session.next_card()
+    session.mark_known()
+    assert session.remaining == 1
+    assert session.current_card is None
+    assert progress.saved == [(B,)]
+
+
+def test_mark_known_saves_nothing_when_no_current_card() -> None:
+    progress = _RecordingProgress()
+    session = _session(A, progress=progress)
+    session.mark_known()
+    assert session.remaining == 1
+    assert progress.saved == []
+
+
+def test_mark_known_on_last_card_leaves_session_finished() -> None:
+    progress = _RecordingProgress()
+    session = _session(A, progress=progress)
+    session.next_card()
+    session.mark_known()
+    assert progress.saved == [()]
+    assert session.next_card() is None
+
+
+def test_next_card_never_saves() -> None:
+    progress = _RecordingProgress()
+    session = _session(A, B, progress=progress)
+    session.next_card()
+    session.next_card()
+    assert progress.saved == []

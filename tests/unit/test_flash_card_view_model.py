@@ -20,8 +20,22 @@ def _first(cards: Sequence[Card]) -> Card:
     return cards[0]
 
 
-def _session(code: str, *cards: Card) -> StudySession:
-    return StudySession(Deck(LanguagePair(code, "da"), cards), _first)
+class _RecordingProgress:
+    def __init__(self) -> None:
+        self.saved: list[tuple[Card, ...]] = []
+
+    def load(self) -> Deck | None:
+        return None
+
+    def save(self, deck: Deck) -> None:
+        self.saved.append(deck.cards)
+
+
+def _session(
+    code: str, *cards: Card, progress: _RecordingProgress | None = None
+) -> StudySession:
+    store = _RecordingProgress() if progress is None else progress
+    return StudySession(Deck(LanguagePair(code, "da"), cards), _first, store)
 
 
 def test_view_model_draws_first_card_on_construction() -> None:
@@ -90,3 +104,45 @@ def test_next_card_resets_side_to_front() -> None:
     assert view_model.side is Side.FRONT
     assert view_model.language_name == "Malay"
     assert view_model.text == "kau"
+
+
+def test_is_known_saves_remaining_and_shows_next_front() -> None:
+    progress = _RecordingProgress()
+    view_model = FlashCardViewModel(_session("ms", A, B, progress=progress))
+    view_model.flip_card()
+    view_model.is_known()
+    assert progress.saved == [(B,)]
+    assert view_model.side is Side.FRONT
+    assert view_model.text == "kau"
+    assert not view_model.is_finished
+
+
+def test_is_known_on_last_card_finishes() -> None:
+    progress = _RecordingProgress()
+    view_model = FlashCardViewModel(_session("ms", A, progress=progress))
+    view_model.is_known()
+    assert view_model.is_finished
+    assert view_model.text == FINISHED_MESSAGE
+    assert progress.saved == [()]
+
+
+def test_is_known_does_nothing_when_finished() -> None:
+    progress = _RecordingProgress()
+    view_model = FlashCardViewModel(_session("ms", progress=progress))
+    view_model.is_known()
+    assert view_model.is_finished
+    assert progress.saved == []
+
+
+def test_next_card_does_nothing_when_finished() -> None:
+    view_model = FlashCardViewModel(_session("ms"))
+    view_model.next_card()
+    assert view_model.is_finished
+    assert view_model.text == FINISHED_MESSAGE
+
+
+def test_next_card_never_saves() -> None:
+    progress = _RecordingProgress()
+    view_model = FlashCardViewModel(_session("ms", A, B, progress=progress))
+    view_model.next_card()
+    assert progress.saved == []

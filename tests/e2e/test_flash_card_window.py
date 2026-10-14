@@ -7,15 +7,18 @@
 import time
 import tkinter as tk
 from collections.abc import Callable, Iterator, Sequence
+from pathlib import Path
 
 import pytest
 
+from flash_card.application.use_cases.open_study_session import open_study_session
 from flash_card.application.use_cases.study_session import StudySession
 from flash_card.constants import (
     BACK_TEXT_COLOR,
     BACKGROUND_COLOR,
     CARD_HEIGHT,
     CARD_WIDTH,
+    FINISHED_MESSAGE,
     FLIP_DELAY_MS,
     FRONT_TEXT_COLOR,
     LANGUAGE_FONT,
@@ -26,6 +29,12 @@ from flash_card.constants import (
 from flash_card.domain.entities.card import Card
 from flash_card.domain.entities.deck import Deck
 from flash_card.domain.value_objects.language_pair import LanguagePair
+from flash_card.infrastructure.persistence.csv_progress_repository import (
+    CsvProgressRepository,
+)
+from flash_card.infrastructure.persistence.csv_vocabulary_repository import (
+    CsvVocabularyRepository,
+)
 from flash_card.presentation.features.flash_card import flash_card_view
 from flash_card.presentation.features.flash_card.flash_card_view import FlashCardView
 from flash_card.presentation.features.flash_card.flash_card_view_model import (
@@ -39,9 +48,20 @@ def _first(cards: Sequence[Card]) -> Card:
     return cards[0]
 
 
+class _MemoryProgress:
+    """Progress store that keeps nothing: the shared window never deletes cards."""
+
+    def load(self) -> Deck | None:
+        return None
+
+    def save(self, deck: Deck) -> None:
+        return None
+
+
 def _build_view(root: tk.Tk) -> FlashCardView:
     deck = Deck(LanguagePair("ms", "da"), CARDS)
-    return FlashCardView(root, FlashCardViewModel(StudySession(deck, _first)))
+    session = StudySession(deck, _first, _MemoryProgress())
+    return FlashCardView(root, FlashCardViewModel(session))
 
 
 def _shown(view: FlashCardView) -> tuple[str, str]:
@@ -129,14 +149,14 @@ def test_buttons_sit_in_row_one_with_their_images(
     assert str(view.right_button.cget("command"))
 
 
-def test_each_button_press_shows_next_card(
+def test_wrong_button_press_shows_next_card(
     window: tuple[tk.Tk, FlashCardView],
 ) -> None:
     _root, view = window
     assert _shown(view) == ("Malay", "aku")
     view.wrong_button.invoke()
     assert _shown(view) == ("Malay", "kau")
-    view.right_button.invoke()
+    view.wrong_button.invoke()
     assert _shown(view) == ("Malay", "aku")
 
 
@@ -195,7 +215,7 @@ def test_next_card_after_flip_shows_front_again(
     root, view = window
     _reset(root, view)
     view.flip_card()
-    view.right_button.invoke()
+    view.wrong_button.invoke()
     assert _image(view) == str(view.card_front_image)
     assert _fill(view) == (FRONT_TEXT_COLOR, FRONT_TEXT_COLOR)
     assert _shown(view)[0] == "Malay"
@@ -245,3 +265,65 @@ def test_real_timer_flips_card_after_delay(
     assert _image(view) == str(view.card_back_image)
     assert _shown(view)[0] == "Danish"
     _reset(root, view)
+
+
+HEADER_ONLY = "ms;da\n"
+
+
+@pytest.fixture
+def files_view(
+    window: tuple[tk.Tk, FlashCardView], tmp_path: Path
+) -> Iterator[tuple[FlashCardView, Path]]:
+    """A second view on the shared root, over real repositories in tmp_path."""
+    root, _shared = window
+    words = tmp_path / "words.csv"
+    words.write_text("ms;da\naku;mig\nkau;du\nini;denne\n", encoding="utf-8")
+    progress = tmp_path / "words_to_learn.csv"
+    session = open_study_session(
+        CsvVocabularyRepository(words), CsvProgressRepository(progress), _first
+    )
+    view = FlashCardView(root, FlashCardViewModel(session))
+    yield view, progress
+    if view.flip_timer is not None:
+        root.after_cancel(view.flip_timer)
+    for widget in (view.canvas, view.wrong_button, view.right_button):
+        widget.destroy()
+
+
+def _saved(progress: Path) -> str:
+    return progress.read_bytes().decode("utf-8-sig")
+
+
+def test_right_button_removes_card_and_writes_progress_file(
+    files_view: tuple[FlashCardView, Path],
+) -> None:
+    view, progress = files_view
+    assert _shown(view) == ("Malay", "aku")
+    view.right_button.invoke()
+    assert _shown(view) == ("Malay", "kau")
+    assert _saved(progress) == "ms;da\nkau;du\nini;denne\n"
+
+
+def test_wrong_button_shows_next_card_and_leaves_progress_file_absent(
+    files_view: tuple[FlashCardView, Path],
+) -> None:
+    view, progress = files_view
+    view.wrong_button.invoke()
+    assert _shown(view) == ("Malay", "kau")
+    assert not progress.exists()
+
+
+def test_buttons_do_nothing_visible_when_finished(
+    files_view: tuple[FlashCardView, Path],
+) -> None:
+    view, progress = files_view
+    for _ in range(3):
+        view.right_button.invoke()
+    assert _shown(view) == ("", FINISHED_MESSAGE)
+    assert view.flip_timer is None
+    assert _saved(progress) == HEADER_ONLY
+    view.right_button.invoke()
+    view.wrong_button.invoke()
+    assert _shown(view) == ("", FINISHED_MESSAGE)
+    assert view.flip_timer is None
+    assert _saved(progress) == HEADER_ONLY

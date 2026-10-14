@@ -13,8 +13,15 @@ from pathlib import Path
 from typing import NoReturn
 
 from flash_card.application.use_cases.open_study_session import open_study_session
-from flash_card.constants import DEFAULT_DATA_DIR, VOCABULARY_FILE_NAME
+from flash_card.constants import (
+    DEFAULT_DATA_DIR,
+    PROGRESS_FILE_NAME,
+    VOCABULARY_FILE_NAME,
+)
 from flash_card.domain.errors.vocabulary_errors import VocabularyError
+from flash_card.infrastructure.persistence.csv_progress_repository import (
+    CsvProgressRepository,
+)
 from flash_card.infrastructure.persistence.csv_vocabulary_repository import (
     CsvVocabularyRepository,
 )
@@ -34,11 +41,12 @@ def create_application(
 
     @param data_dir Folder of the data files, or None for the default folder.
     @return The root window and the view built on it.
-    @throws VocabularyError When the word list cannot be loaded.
+    @throws VocabularyError When the word list or saved progress is unusable.
     """
     folder = DEFAULT_DATA_DIR if data_dir is None else data_dir
     repository = CsvVocabularyRepository(folder / VOCABULARY_FILE_NAME)
-    session = open_study_session(repository, random.choice)
+    progress = CsvProgressRepository(folder / PROGRESS_FILE_NAME)
+    session = open_study_session(repository, progress, random.choice)
     view_model = FlashCardViewModel(session)
     root = tk.Tk()
     view = FlashCardView(root, view_model)

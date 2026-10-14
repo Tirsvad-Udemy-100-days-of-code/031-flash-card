@@ -9,17 +9,26 @@ from collections.abc import Callable, Sequence
 from flash_card.application.dto.card_dto import CardDto
 from flash_card.domain.entities.card import Card
 from flash_card.domain.entities.deck import Deck
+from flash_card.domain.repositories.progress_repository import ProgressRepository
 
 
 class StudySession:
     """Draws cards from a deck, one after another."""
 
-    def __init__(self, deck: Deck, choose: Callable[[Sequence[Card]], Card]) -> None:
+    def __init__(
+        self,
+        deck: Deck,
+        choose: Callable[[Sequence[Card]], Card],
+        progress: ProgressRepository,
+    ) -> None:
         """Create a session.
 
         @param deck The cards still to learn.
         @param choose Picks one card from a non-empty sequence.
+        @param progress Store of the words still to learn.
         """
+        ## @brief Store of the words still to learn.
+        self._progress = progress
         ## @brief The cards still to learn.
         self._deck = deck
         ## @brief Picks one card from a non-empty sequence.
@@ -53,6 +62,19 @@ class StudySession:
             return None
         self._current = self._deck.draw(self._choose, exclude=self._current)
         return self._to_dto(self._current)
+
+    def mark_known(self) -> None:
+        """Remove the current card from the deck and save the remaining cards.
+
+        Does nothing and saves nothing when no card is shown.
+
+        @return Nothing.
+        """
+        if self._current is None:
+            return
+        self._deck.remove(self._current)
+        self._progress.save(self._deck)
+        self._current = None
 
     def _to_dto(self, card: Card | None) -> CardDto | None:
         """Map a card to its DTO.
