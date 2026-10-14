@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [768ca34] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added task 9 (fix a flaky unit test found after the merge) | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added task 9 (fix a flaky unit test found after the merge) | [061b4f4] |
 
 ---
 
@@ -83,3 +83,4 @@ Decide whether the Learner can start the program from one executable file withou
 [UC-001]: ../uc-001/uc.md
 [DCD-001]: ../dcd.md
 [768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
+[061b4f4]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/061b4f48b5d49e6800656c95d79df707e07ec0f3

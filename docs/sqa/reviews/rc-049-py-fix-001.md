@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [061b4f4] |
 
 ---
 
@@ -61,3 +61,4 @@ Defect fixed: an unpatched `app.main` call created a real `tk.Tk()` inside a uni
 
 [PY-FIX-001]: ../../../tests/unit/test_app.py
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[061b4f4]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/061b4f48b5d49e6800656c95d79df707e07ec0f3
