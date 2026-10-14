@@ -46,6 +46,7 @@ updated whenever an artifact instance is created or reviewed.
 | MIL-006 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-006 | [RC-021] |
 | MIL-007 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-007 | [RC-022] |
 | PY-MIL-001 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-023] |
+| PY-MIL-002 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-024] |
 
 ## Coverage Notes
 
@@ -102,3 +103,5 @@ updated whenever an artifact instance is created or reviewed.
 [RC-022]: ./reviews/rc-022-mil-007.md
 [RC-023]: ./reviews/rc-023-py-mil-001.md
 [c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
+[RC-024]: ./reviews/rc-024-py-mil-002.md
+[PY-MIL-002]: ../../src/flash_card
