@@ -163,6 +163,14 @@ def test_buttons_sit_in_row_one_with_their_images(
     assert str(view.right_button.cget("command"))
 
 
+def test_buttons_sit_on_the_window_background(
+    window: tuple[tk.Tk, FlashCardView],
+) -> None:
+    _root, view = window
+    assert view.wrong_button.cget("bg") == BACKGROUND_COLOR
+    assert view.right_button.cget("bg") == BACKGROUND_COLOR
+
+
 def test_wrong_button_press_shows_next_card(
     window: tuple[tk.Tk, FlashCardView],
 ) -> None:

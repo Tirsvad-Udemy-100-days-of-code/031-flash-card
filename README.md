@@ -22,10 +22,33 @@ The program shows a Malay word on a card. After three seconds the card turns ove
 | `src/flash_card/` | The program, in four layers: `domain`, `application`, `infrastructure`, `presentation` |
 | `tests/` | `pytest` tests: `unit`, `integration`, `e2e` |
 | `data/` | The word list `ms-da.csv` and, after the first known word, your own `words_to_learn.csv` |
-| `docs/` | Project documents (business case, plan, design, review records) |
+| `docs/` | Project documents (business case, plan, design, review records), `docs/wiki/` and `docs/images/` |
+| `tools/` | Helper scripts: `generate_images.py` and `capture_screenshots.py` |
 | `Doxyfile` | Doxygen configuration for the source code documentation |
 
 The core program uses only the Python standard library. Spoken Malay words are an optional extra.
+
+### Screenshots
+
+| Front: the Malay word | Back: the Danish translation after 3 seconds |
+| --- | --- |
+| ![The front of a card][screenshot-front] | ![The back of a card][screenshot-back] |
+
+### Where is each assignment step?
+
+| Assignment step | Code |
+| --- | --- |
+| 1. User interface | `FlashCardView.__init__` in `src/flash_card/presentation/features/flash_card/flash_card_view.py`; images made by `tools/generate_images.py` |
+| 2. New flash cards | `CsvVocabularyRepository` (the standard library `csv` instead of `pandas`), `Deck.draw`, `StudySession.next_card`, `FlashCardView.next_card` |
+| 3. Flip the cards | `FlashCardView.flip_card` and `FlashCardView.flip_timer` (`after`, `after_cancel`), `FlashCardViewModel.flip_card` |
+| 4. Save your progress | `FlashCardView.is_known`, `StudySession.mark_known`, `CsvProgressRepository` |
+| Extra: spoken word | `GttsSpeech`, `NullSpeech`, `build_speech` in `presentation/app.py` |
+
+The wiki ([English][wiki-en], [Dansk][wiki-da], [Bahasa Malaysia][wiki-ms]) explains the same in three languages.
+
+### Data
+
+`data/ms-da.csv` holds 1000 frequent Malay words with a Danish machine translation; see [data/README.md][data-readme] for the format and origin.
 
 ## 📋 Requirements
 
@@ -69,7 +92,14 @@ python -m pip install -e ".[dev]"
 python -m flash_card
 ```
 
-The program is run from the activated `.venv`. The window opens with the first card; the program is built step by step and the pull requests and milestones show each step.
+The program is run from the activated `.venv`. The window opens with a card. Press the green tick for a word you know and the red cross for a word you do not. Options:
+
+| Option | Meaning |
+| --- | --- |
+| `--data-dir <folder>` | Folder with `ms-da.csv` and `words_to_learn.csv` |
+| `--no-speech` | Do not speak the Malay word |
+
+To start again, delete `data/words_to_learn.csv`.
 
 ## 🧪 Tests
 
@@ -86,6 +116,8 @@ lint-imports
 ```
 
 The window test in `tests/e2e/` is skipped when no display is available.
+
+Build the source code documentation (Doxygen comments) with `doxygen Doxyfile`; the HTML is written to `docs/doxygen/html/`. The screenshots are made with `python tools/capture_screenshots.py` after `python -m pip install -e ".[tools]"` (Pillow, tool only).
 
 ## 📄 License
 
@@ -117,6 +149,12 @@ The documents a newcomer needs, in reading order.
 ---
 
 [license]: ./LICENSE
+[screenshot-front]: ./docs/images/screenshot-front.png
+[screenshot-back]: ./docs/images/screenshot-back.png
+[wiki-en]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/wiki/Home
+[wiki-da]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/wiki/Home-da
+[wiki-ms]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/wiki/Home-ms
+[data-readme]: ./data/README.md
 [repository]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card
 [documentation]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/wiki
 [issues]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/issues
