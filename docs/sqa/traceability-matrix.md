@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-008 and the review records of the level choice (no checklist exists for this type) | pending |
 
 ---
 
@@ -23,18 +24,18 @@ updated whenever an artifact instance is created or reviewed.
 
 | Artifact Instance | Type | Language | Domain | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- | --- | --- |
-| BC-001 | Business Case | en | it | - | SA-001, PP-001 | [RC-001] |
+| BC-001 | Business Case | en | it | - | SA-001, PP-001 | [RC-030] |
 | SA-001 | Stakeholder Analysis | en | it | BC-001 | PP-001, DICT-001 | [RC-002] |
-| PP-001 | Project Plan | en | it | BC-001, SA-001 | MIL-001 to MIL-007 | [RC-003] |
+| PP-001 | Project Plan | en | it | BC-001, SA-001 | MIL-001 to MIL-008 | [RC-032] |
 | UCD-001 | Use Case Diagram | en | it | SA-001, BC-001 | US-001, UC-001 | [RC-004] |
-| US-001 | User Story | en | it | UCD-001, BC-001 | MIL-002 to MIL-006 | [RC-005] |
-| UC-001 | Use Case | en | it | UCD-001, US-001 | DM-001, SSD-001 | [RC-006] |
-| DM-001 | Domain Model | en | it | UC-001 | SSD-001, DICT-001, DCD-001 | [RC-007] |
-| SSD-001 | System Sequence Diagram | en | it | UC-001, DM-001 | DCD-001 | [RC-008] |
-| OC-001 | Operation Contract | - | - | SSD-001, DM-001 | SD-001 | [RC-009] |
-| SD-001 | Sequence Diagram | - | - | OC-001 | DCD-001 | [RC-010] |
-| DCD-001 | Design Class Diagram | - | - | DM-001, SD-001, DICT-001 | src/flash_card | [RC-011] |
-| DICT-001 | Domain Dictionary | en | it | BC-001, SA-001, DM-001 | DCD-001 | [RC-012] |
+| US-001 | User Story | en | it | UCD-001, BC-001 | MIL-002 to MIL-006, MIL-008 | [RC-031] |
+| UC-001 | Use Case | en | it | UCD-001, US-001 | DM-001, SSD-001 | [RC-033] |
+| DM-001 | Domain Model | en | it | UC-001 | SSD-001, DICT-001, DCD-001 | [RC-034] |
+| SSD-001 | System Sequence Diagram | en | it | UC-001, DM-001 | DCD-001 | [RC-036] |
+| OC-001 | Operation Contract | - | - | SSD-001, DM-001 | SD-001 | [RC-037] |
+| SD-001 | Sequence Diagram | - | - | OC-001 | DCD-001 | [RC-038] |
+| DCD-001 | Design Class Diagram | - | - | DM-001, SD-001, DICT-001 | src/flash_card | [RC-039] |
+| DICT-001 | Domain Dictionary | en | it | BC-001, SA-001, DM-001 | DCD-001 | [RC-035] |
 | ADR-0001 | Architecture Decision Record | - | - | BC-001 | MIL-001, MIL-003, MIL-006 | [RC-013] |
 | ADR-0002 | Architecture Decision Record | - | - | BC-001 | DCD-001 | [RC-014] |
 | ADR-0003 | Architecture Decision Record | - | - | BC-001 | - | [RC-015] |
@@ -45,6 +46,7 @@ updated whenever an artifact instance is created or reviewed.
 | MIL-005 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-005 | [RC-020] |
 | MIL-006 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-006 | [RC-021] |
 | MIL-007 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-007 | [RC-022] |
+| MIL-008 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-008 | [RC-040] |
 | PY-MIL-001 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-023] |
 | PY-MIL-002 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-024] |
 | PY-MIL-003 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-025] |
@@ -120,3 +122,15 @@ updated whenever an artifact instance is created or reviewed.
 [PY-MIL-006]: ../../src/flash_card
 [RC-029]: ./reviews/rc-029-py-mil-007.md
 [PY-MIL-007]: ../../src/flash_card
+[RC-030]: ./reviews/rc-030-business-case-level.md
+[RC-031]: ./reviews/rc-031-user-stories-level.md
+[RC-032]: ./reviews/rc-032-project-plan-level.md
+[RC-033]: ./reviews/rc-033-use-case-level.md
+[RC-034]: ./reviews/rc-034-domain-model-level.md
+[RC-035]: ./reviews/rc-035-domain-dictionary-level.md
+[RC-036]: ./reviews/rc-036-system-sequence-diagram-level.md
+[RC-037]: ./reviews/rc-037-operation-contracts-level.md
+[RC-038]: ./reviews/rc-038-sequence-diagrams-level.md
+[RC-039]: ./reviews/rc-039-design-class-diagram-level.md
+[RC-040]: ./reviews/rc-040-mil-008.md
+[MIL-008]: ../milestones/mil-008-choose-level.md

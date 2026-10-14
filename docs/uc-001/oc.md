@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added chooseLevel; startStudySession returns the levels | pending |
 
 ---
 
@@ -19,20 +20,46 @@ The turn-over of the card after 3000 ms is started by the system's own timer, no
 
 | Item | Value |
 | --- | --- |
-| Operation | `startStudySession(): CardDto \| None` |
+| Operation | `startStudySession(): tuple[Level, ...]` |
 | Traces to | `startStudySession` in [SSD-001] |
-| Domain Model concepts | Study Session, Words To Learn, Word List, Flash Card ([DM-001]); IT terms `StudySession`, `Deck`, `Vocabulary`, `Card` ([DICT-001]) |
+| Domain Model concepts | Level ([DM-001]); IT term `Level` ([DICT-001]) |
+
+**Preconditions**
+
+- The program was started without a level.
+
+**Postconditions**
+
+- The levels 100 words, 1000 words and all words are returned, in that order.
+- No `StudySession` or `Deck` was created and no file was read.
+
+**Exceptions**
+
+| Condition (failing precondition) | Outcome |
+| --- | --- |
+| The program was started with a level | The operation is not sent; `chooseLevel` is the first operation |
+
+## Contract: chooseLevel
+
+| Item | Value |
+| --- | --- |
+| Operation | `chooseLevel(level: Level): CardDto \| None` |
+| Traces to | `chooseLevel` in [SSD-001] |
+| Domain Model concepts | Study Session, Words To Learn, Word List, Level, Flash Card ([DM-001]); IT terms `StudySession`, `Deck`, `Vocabulary`, `Level`, `Card` ([DICT-001]) |
 
 **Preconditions**
 
 - A `Vocabulary` exists in the word list file.
+- `level` is one of the levels returned by `startStudySession`, or was given at start.
 
 **Postconditions**
 
-- A `StudySession` instance was created.
+- A `StudySession` instance was created and associated with `level`.
 - A `Deck` instance was created and associated with the `StudySession`.
-- The `Deck` holds the cards of the progress file when it exists, otherwise a copy of the cards of the `Vocabulary`.
-- When the `Deck` is not empty, `StudySession.current_card` was set to a card of the `Deck` and a `CardDto` of it is returned; otherwise `current_card` is `None` and `None` is returned.
+- The `Deck` holds the cards of the progress file when it exists, otherwise a copy of the cards of the `Vocabulary`; cards outside the level are kept in it.
+- The level's cards are the first `level.limit` cards of the `Vocabulary` (all of them when the limit is none or larger than the list).
+- When the `Deck` holds a card of the level, `StudySession.current_card` was set to such a card and a `CardDto` of it is returned; otherwise `current_card` is `None` and `None` is returned.
+- The Malay word of the card was passed to the `SpeechPort`.
 
 **Exceptions**
 
@@ -40,6 +67,7 @@ The turn-over of the card after 3000 ms is started by the system's own timer, no
 | --- | --- |
 | The word list file does not exist | `VocabularyNotFoundError` is raised; no session is created |
 | The word list or progress file has no header of two cells, or a row with other than two cells | `VocabularyFormatError` is raised; no session is created and no file is changed |
+| No card of the level is left in the `Deck` | `None` is returned; nothing is spoken |
 
 ## Contract: markKnown
 
@@ -55,8 +83,8 @@ The turn-over of the card after 3000 ms is started by the system's own timer, no
 
 **Postconditions**
 
-- The `Card` of `current_card` was removed from the `Deck` (the association was destroyed).
-- The `Deck` was stored in the progress file.
+- The `Card` of `current_card` was removed from the `Deck` (the association was destroyed); cards outside the level are not touched.
+- The whole `Deck` was stored in the progress file.
 - `StudySession.current_card` was set to `None`.
 
 **Exceptions**
@@ -79,8 +107,8 @@ The turn-over of the card after 3000 ms is started by the system's own timer, no
 
 **Postconditions**
 
-- `StudySession.current_card` was set to a card of the `Deck` that differs from the previous `current_card` when the `Deck` holds two or more cards, and a `CardDto` of it is returned.
-- When the `Deck` is empty, `current_card` is `None` and `None` is returned.
+- `StudySession.current_card` was set to a card of the level that differs from the previous `current_card` when the level holds two or more cards still to learn, and a `CardDto` of it is returned.
+- When no card of the level is left, `current_card` is `None` and `None` is returned.
 - The `Deck` and the progress file are unchanged.
 - The Malay word of the new `current_card` was passed to the `SpeechPort`.
 
@@ -88,7 +116,7 @@ The turn-over of the card after 3000 ms is started by the system's own timer, no
 
 | Condition (failing precondition) | Outcome |
 | --- | --- |
-| The `Deck` is empty | `None` is returned; nothing is spoken |
+| No card of the level is left | `None` is returned; nothing is spoken |
 
 ---
 
