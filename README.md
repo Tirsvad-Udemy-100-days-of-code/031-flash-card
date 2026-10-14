@@ -23,7 +23,7 @@ The program first asks for a level: the first 100 words, the first 1000 words or
 | `tests/` | `pytest` tests: `unit`, `integration`, `e2e` |
 | `data/` | The word list `ms-da.csv` and, after the first known word, your own `words_to_learn.csv` |
 | `docs/` | Project documents (business case, plan, design, review records), `docs/wiki/` and `docs/images/` |
-| `tools/` | Helper scripts: `generate_images.py` and `capture_screenshots.py` |
+| `tools/` | Helper scripts: `generate_images.py`, `capture_screenshots.py` and `build_executable.py` |
 | `Doxyfile` | Doxygen configuration for the source code documentation |
 
 The core program uses only the Python standard library. Spoken Malay words are an optional extra.
@@ -58,6 +58,7 @@ The wiki ([English][wiki-en], [Dansk][wiki-da], [Bahasa Malaysia][wiki-ms]) expl
 | Python 3.13 or later, with Tkinter | The program and its window (Tkinter is part of the standard Python installers for Windows and macOS; on Debian or Ubuntu install `python3-tk`) |
 | `git` | To clone the repository |
 | Doxygen (optional) | To build the source code documentation |
+| `pyinstaller` (optional, extra `build`) | To build a single executable file (see Run) |
 | `gTTS` and `playsound==1.2.2` (optional, extra `speech`) | To hear the Malay word; needs a network connection |
 
 ## 🛠️ Setup
@@ -102,6 +103,15 @@ The program is run from the activated `.venv`. The window opens with the level s
 | `--no-speech` | Do not speak the Malay word |
 
 Known words stay known at every level: the level only limits which of the words you do not know yet come up. To start again, delete `data/words_to_learn.csv`.
+
+### Executable (Windows, no Python needed to run it)
+
+```powershell
+python -m pip install -e ".[build,speech]"
+python tools/build_executable.py
+```
+
+The script builds `dist/flash-card.exe`: one file, no console window, with the images, the word list and the spoken word inside. Open it by double-clicking. It keeps your progress in a `data/` folder next to the executable (`data/words_to_learn.csv`); a `data/ms-da.csv` next to it replaces the word list inside. Add `--no-speech` to the build script to leave the speech packages out. The executable is a build output and is not committed; build it on the system you want to run it on (Windows, Linux or macOS).
 
 ## 🧪 Tests
 

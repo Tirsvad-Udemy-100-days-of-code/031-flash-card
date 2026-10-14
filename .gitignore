@@ -75,3 +75,6 @@ dmypy.json
 *.swp
 .DS_Store
 Thumbs.db
+
+# PyInstaller spec files
+*.spec

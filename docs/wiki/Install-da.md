@@ -56,6 +56,20 @@ python -m pytest
 
 Vinduestesten i `tests/e2e/` springes over, når der ikke er en skærm.
 
+## Byg en programfil (Windows)
+
+```powershell
+python -m pip install -e ".[build,speech]"
+python tools/build_executable.py
+```
+
+Scriptet bruger PyInstaller og skriver `dist/flash-card.exe`: én fil uden konsolvindue, med billeder, ordliste og udtalen indeni. Dobbeltklik for at starte; Python er ikke nødvendigt for at køre den.
+
+- Din fremgang gemmes i en `data/`-mappe ved siden af programfilen (`data/words_to_learn.csv`).
+- En `data/ms-da.csv` ved siden af programfilen erstatter ordlisten indeni.
+- `python tools/build_executable.py --no-speech` udelader talepakkerne; `--clean` bygger forfra.
+- Programfilen er ikke i repositoryet. Byg den på det system, hvor den skal køre; Windows kan vise en SmartScreen-advarsel, fordi filen ikke er signeret.
+
 ## Dokumentation af kildekoden
 
 ```bash

@@ -56,6 +56,20 @@ python -m pytest
 
 The window test in `tests/e2e/` is skipped when no display is available.
 
+## Build an executable (Windows)
+
+```powershell
+python -m pip install -e ".[build,speech]"
+python tools/build_executable.py
+```
+
+The script uses PyInstaller and writes `dist/flash-card.exe`: one file, no console window, with the images, the word list and the spoken word inside. Double-click it to start; Python is not needed to run it.
+
+- Your progress is kept in a `data/` folder next to the executable (`data/words_to_learn.csv`).
+- A `data/ms-da.csv` next to the executable replaces the word list inside it.
+- `python tools/build_executable.py --no-speech` leaves the speech packages out; `--clean` rebuilds from scratch.
+- The executable is not committed to the repository. Build it on the system you want to run it on; Windows may show a SmartScreen warning because the file is not signed.
+
 ## Documentation of the source code
 
 ```bash

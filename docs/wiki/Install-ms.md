@@ -56,6 +56,20 @@ python -m pytest
 
 Ujian tetingkap dalam `tests/e2e/` dilangkau apabila tiada paparan.
 
+## Bina fail boleh laku (Windows)
+
+```powershell
+python -m pip install -e ".[build,speech]"
+python tools/build_executable.py
+```
+
+Skrip menggunakan PyInstaller dan menulis `dist/flash-card.exe`: satu fail tanpa tetingkap konsol, dengan imej, senarai perkataan dan suara di dalamnya. Klik dua kali untuk memulakan; Python tidak diperlukan untuk menjalankannya.
+
+- Kemajuan anda disimpan dalam folder `data/` di sebelah fail boleh laku (`data/words_to_learn.csv`).
+- `data/ms-da.csv` di sebelah fail boleh laku menggantikan senarai perkataan di dalamnya.
+- `python tools/build_executable.py --no-speech` meninggalkan pakej suara; `--clean` membina semula dari awal.
+- Fail boleh laku tidak disimpan dalam repositori. Bina di sistem tempat ia akan dijalankan; Windows mungkin menunjukkan amaran SmartScreen kerana fail tidak ditandatangani.
+
 ## Dokumentasi kod sumber
 
 ```bash

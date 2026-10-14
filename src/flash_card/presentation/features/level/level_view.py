@@ -21,6 +21,7 @@ from flash_card.presentation.features.level.level_view_model import (
     LevelChoice,
     LevelViewModel,
 )
+from flash_card.presentation.shared.window import configure_window
 
 
 class LevelView:
@@ -40,6 +41,7 @@ class LevelView:
         """
         ## @brief Called with the level the user picked.
         self._on_choose = on_choose
+        configure_window(root)
         ## @brief Frame that holds the whole screen.
         self.frame = tk.Frame(
             root, bg=BACKGROUND_COLOR, width=CARD_WIDTH, height=LEVEL_SCREEN_HEIGHT
