@@ -12,7 +12,8 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | In Scope: choice of level (new request of S01) | [0b983b7] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | In Scope: choice of level (new request of S01) | [0b983b7] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: executable built with PyInstaller (new request of S01) | pending |
 
 ---
 
@@ -54,6 +55,7 @@ A small, well-structured reference solution gives the Product Owner a language l
 - Saving the words still to learn to `data/words_to_learn.csv` and using that file on the next start.
 - Optional spoken Malay word (text to speech) as an extra that can be installed.
 - A choice of level (the first 100 words, the first 1000 words or all words of the frequency ordered word list) before learning starts.
+- A single Windows executable file, built with PyInstaller by a script of this repository, that runs without an installed Python.
 - `pyproject.toml`, `.gitignore`, `Doxyfile`, virtual environment instructions, `pytest` tests and `constants.py`.
 - README from the framework template, screenshots, and a wiki in English, Danish and Bahasa Malaysia.
 - Repository description and topics on the git host.
@@ -63,7 +65,7 @@ A small, well-structured reference solution gives the Product Owner a language l
 
 - Other languages: the user interface labels are Malay and Danish only; another word list works by changing the data file but is not delivered.
 - Spaced repetition scheduling, statistics, accounts, cloud synchronisation and mobile apps.
-- Packaging for distribution on PyPI or as an installer.
+- Packaging for distribution on PyPI, an installer, a signed executable and an upload of the executable to a release (the executable built with PyInstaller is in scope; the file itself is not committed).
 - Redistribution of the course's own image files; the card and button images are generated for this project.
 - A translation quality review of the word list.
 

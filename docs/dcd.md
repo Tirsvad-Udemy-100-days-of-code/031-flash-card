@@ -4,19 +4,20 @@
 | Key | Value |
 | --- | --- |
 | ID | DCD-001 |
-| CrossReference | [DM-001], [SD-001], [DICT-001], [ADR-0002] |
+| CrossReference | [DM-001], [SD-001], [DICT-001], [ADR-0002], [ADR-0004] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added Level, Deck.within, the level argument and the level screen | [0b983b7] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added Level, Deck.within, the level argument and the level screen | [0b983b7] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope note: runtime path rules and the executable build are packaging support, not design classes | pending |
 
 ---
 
 ## Purpose and Scope
 
-The design classes of the program in `src/flash_card/`, in four layers (domain, application, infrastructure, presentation) with the presentation pattern MVVM ([ADR-0002]). The classes refine the concepts of [DM-001]; names are the IT terms of [DICT-001]. Methods trace to the operation contracts of [OC-001] and the sequence diagrams of [SD-001] (the SSD messages are in [SSD-001]).
+The design classes of the program in `src/flash_card/`, in four layers (domain, application, infrastructure, presentation) with the presentation pattern MVVM ([ADR-0002]). The classes refine the concepts of [DM-001]; names are the IT terms of [DICT-001]. Methods trace to the operation contracts of [OC-001] and the sequence diagrams of [SD-001] (the SSD messages are in [SSD-001]). The module `flash_card/runtime.py` (where the resources and the data folder are when the program is frozen by PyInstaller) and the scripts in `tools/` are packaging support ([ADR-0004]): they have no system operation and are not design classes; `app.main` is still the only place that names the adapters, and it chooses the word list file.
 
 ## Diagram
 
@@ -208,7 +209,7 @@ Main ..> FlashCardView : composes
 | Ports and adapters | `SpeechPort`, `GttsSpeech`, `NullSpeech` | Speech is an optional extra; the core runs without it |
 | Null Object | `NullSpeech` | No `if speech:` checks in the use case |
 | MVVM | `FlashCardView`, `FlashCardViewModel`, `LevelView`, `LevelViewModel` | Behaviour is tested without Tkinter ([ADR-0002]) |
-| Composition root | `app.main` | The one place that names the adapters and shows the level screen |
+| Composition root | `app.main` | The one place that names the adapters, shows the level screen and chooses the word list file (beside the executable, else inside it) |
 | Value object | `Level`, `Card`, `LanguagePair` | Immutable data with its own rule (`Level.first`) |
 
 ## Dependency Check
@@ -223,5 +224,6 @@ Imports point inward: `domain` imports nothing from the other packages; `applica
 [OC-001]: ./uc-001/oc.md
 [SD-001]: ./uc-001/sd.md
 [ADR-0002]: ./adr/adr-0002-clean-architecture-and-mvvm.md
+[ADR-0004]: ./adr/adr-0004-pyinstaller-executable.md
 [c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
 [0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1
