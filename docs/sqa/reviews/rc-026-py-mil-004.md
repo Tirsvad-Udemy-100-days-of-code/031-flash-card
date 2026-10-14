@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [02e0c2c] |
 
 ---
 
@@ -61,3 +61,4 @@ Milestone MIL-004 Go criteria: 1 `flip_card` changes side, language name and tex
 
 [PY-MIL-004]: ../../../src/flash_card/presentation
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[02e0c2c]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/02e0c2c55e2a62ca13e2dec9dbf3aa823cf16242
