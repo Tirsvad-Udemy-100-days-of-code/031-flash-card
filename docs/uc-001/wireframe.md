@@ -1,8 +1,32 @@
 # Wireframe: Study Flash Cards
 
+_Revision 2026-10-14: the level screen (screen 1) was added for US-001.06. It was drawn by the AI from the use case because the Product Owner gave no wireframe for it; S01 may change it._
+
 The Product Owner gave this screen in the first prompt (the course's target screenshot). The presentation layer implements it and does not redesign it. Source use case: [UC-001](./uc.md).
 
-## Screen
+## Screen 1: Choose your level
+
+```text
++----------------------------------------------------------+   background  #B1DDC6
+|   padding 50 px                                          |
+|                                                          |
+|              Choose your level   (Arial 40 italic)       |
+|                                                          |
+|                  [   100 words   ]                       |
+|                  [  1000 words   ]                       |
+|                  [   All words   ]                       |
+|                                                          |
++----------------------------------------------------------+
+```
+
+| Element | Position | Details |
+| --- | --- | --- |
+| Window | whole | Same title, padding and background as the card screen |
+| Title | row 0 | "Choose your level", Arial 40 italic |
+| Level buttons | rows 1 to 3, one column | Labels "100 words", "1000 words", "All words"; Arial 24 bold; white background, equal width |
+| After a choice | whole | The screen is replaced by screen 2 on the same window |
+
+## Screen 2: The card
 
 ```text
 +----------------------------------------------------------+   background  #B1DDC6

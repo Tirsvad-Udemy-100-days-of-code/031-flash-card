@@ -9,7 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the sequences startStudySession (levels) and chooseLevel (level filter) | [0b983b7] |
 
 ---
 
@@ -21,27 +22,64 @@
 
 ```plantuml
 @startuml
+participant ":LevelView" as V
+participant ":LevelViewModel" as VM
+V -> VM : choices
+VM --> V : tuple[Level, ...]
+@enduml
+```
+
+### Pattern Annotations
+
+| Pattern (GRASP / GoF) | Applied to | Rationale |
+| --- | --- | --- |
+| MVVM | `LevelView`, `LevelViewModel` | The view shows the choices; the labels and the order are in the view model |
+
+### Postcondition Coverage
+
+| Postcondition (from contract) | Satisfied by message |
+| --- | --- |
+| The three levels are returned in order | `choices` |
+| No session or deck is created and no file is read | no other message is sent |
+
+### Responsibility Check
+
+The view model owns the choices; the view only draws buttons and forwards the click.
+
+## Sequence: chooseLevel
+
+**Realizes:** `chooseLevel` in [OC-001]
+
+### Diagram
+
+```plantuml
+@startuml
 participant "main : app" as M
 participant ":CsvVocabularyRepository" as VR
 participant ":CsvProgressRepository" as PR
+participant "level : Level" as L
 participant ":StudySession" as S
 participant ":Deck" as D
 participant ":SpeechPort" as SP
+M -> VR : load()
+VR --> M : vocabulary
 M -> PR : load()
 PR --> M : deck | None
 alt deck is None
-  M -> VR : load()
-  VR --> M : vocabulary
   create D
   M -> D : from_vocabulary(vocabulary)
   D --> M : deck
 end
+M -> L : first(vocabulary.cards)
+L --> M : level_cards
 create S
-M -> S : create(deck, progress, speech, choose)
+M -> S : create(deck, progress, speech, choose, level_cards)
 M -> S : next_card()
 activate S
-opt deck is not empty
-  S -> D : draw(choose, exclude)
+S -> D : within(level_cards)
+D --> S : candidates
+opt candidates is not empty
+  S -> D : draw(choose, exclude, among=candidates)
   D --> S : card
   S -> SP : speak(card.front, front_code)
 end
@@ -55,20 +93,21 @@ deactivate S
 | Pattern (GRASP / GoF) | Applied to | Rationale |
 | --- | --- | --- |
 | Creator | `app.main` creates `StudySession` | It holds the adapters the session needs |
-| Information Expert | `Deck` draws and removes its own cards | It owns the list of cards |
+| Information Expert | `Level.first`, `Deck.within`, `Deck.draw` | The level knows its limit, the deck knows its cards |
 | Null Object | `NullSpeech` as `SpeechPort` | The session never tests for speech |
 
 ### Postcondition Coverage
 
 | Postcondition (from contract) | Satisfied by message |
 | --- | --- |
-| A `StudySession` instance was created | `create(deck, progress, speech, choose)` |
-| A `Deck` was created from the progress file or a copy of the `Vocabulary` | `PR.load()`, `alt` fragment, `from_vocabulary` |
-| `current_card` set and a `CardDto` returned, or `None` | `next_card()` with the `opt` fragment |
+| A `StudySession` was created and associated with the level | `create(deck, progress, speech, choose, level_cards)` |
+| A `Deck` was created from the progress file or a copy of the `Vocabulary`, cards outside the level kept | `PR.load()`, `alt` fragment, `from_vocabulary` |
+| The level's cards are the first N cards of the `Vocabulary` | `first(vocabulary.cards)` |
+| `current_card` set and a `CardDto` returned, or `None`; the word was passed to the `SpeechPort` | `next_card()` with `within`, the `opt` fragment and `speak` |
 
 ### Responsibility Check
 
-The session coordinates, the deck holds the cards, the repositories hold the file format; no object receives all messages.
+The composition root only wires; the level selects, the deck holds, the session coordinates; no object receives all messages.
 
 ## Sequence: markKnown
 
@@ -134,8 +173,10 @@ participant ":SpeechPort" as SP
 V -> VM : next_card()
 VM -> S : next_card()
 activate S
-opt deck is not empty
-  S -> D : draw(choose, exclude=current)
+S -> D : within(level_cards)
+D --> S : candidates
+opt candidates is not empty
+  S -> D : draw(choose, exclude=current, among=candidates)
   D --> S : card
   S -> SP : speak(card.front, front_code)
 end
@@ -155,7 +196,7 @@ VM --> V : side, language name, text
 
 | Postcondition (from contract) | Satisfied by message |
 | --- | --- |
-| A different card was chosen when two or more exist | `draw(choose, exclude=current)` |
+| A different card of the level was chosen when two or more exist | `within(level_cards)`, `draw(choose, exclude=current, among=candidates)` |
 | Deck and file unchanged | no `remove` or `save` message |
 | The Malay word was passed to the `SpeechPort` | `speak(card.front, front_code)` |
 
@@ -169,3 +210,4 @@ Same as `markKnown`; the session is the only object that speaks and draws.
 [DCD-001]: ../dcd.md
 [DICT-001]: ../dictionary.md
 [c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
+[0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1

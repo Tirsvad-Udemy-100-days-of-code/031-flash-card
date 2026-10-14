@@ -11,7 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | In Scope: choice of level (new request of S01) | [0b983b7] |
 
 ---
 
@@ -52,6 +53,7 @@ A small, well-structured reference solution gives the Product Owner a language l
 - Reading the Malay to Danish list from `data/ms-da.csv` (semicolon separated, header `ms;da`).
 - Saving the words still to learn to `data/words_to_learn.csv` and using that file on the next start.
 - Optional spoken Malay word (text to speech) as an extra that can be installed.
+- A choice of level (the first 100 words, the first 1000 words or all words of the frequency ordered word list) before learning starts.
 - `pyproject.toml`, `.gitignore`, `Doxyfile`, virtual environment instructions, `pytest` tests and `constants.py`.
 - README from the framework template, screenshots, and a wiki in English, Danish and Bahasa Malaysia.
 - Repository description and topics on the git host.
@@ -147,3 +149,4 @@ Proceed — the scope is small, the risks are mitigated, and the result serves t
 
 [SA-001]: ./stakeholder-analysis.md
 [c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
+[0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1
