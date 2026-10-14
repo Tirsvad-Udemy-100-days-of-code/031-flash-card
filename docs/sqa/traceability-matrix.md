@@ -10,7 +10,8 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-008 and the review records of the level choice (no checklist exists for this type) | [0b983b7] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-008 and the review records of the level choice (no checklist exists for this type) | [0b983b7] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [768ca34] |
 
 ---
 
@@ -24,17 +25,17 @@ updated whenever an artifact instance is created or reviewed.
 
 | Artifact Instance | Type | Language | Domain | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- | --- | --- |
-| BC-001 | Business Case | en | it | - | SA-001, PP-001 | [RC-030] |
+| BC-001 | Business Case | en | it | - | SA-001, PP-001 | [RC-042] |
 | SA-001 | Stakeholder Analysis | en | it | BC-001 | PP-001, DICT-001 | [RC-002] |
-| PP-001 | Project Plan | en | it | BC-001, SA-001 | MIL-001 to MIL-008 | [RC-032] |
+| PP-001 | Project Plan | en | it | BC-001, SA-001 | MIL-001 to MIL-008 | [RC-044] |
 | UCD-001 | Use Case Diagram | en | it | SA-001, BC-001 | US-001, UC-001 | [RC-004] |
-| US-001 | User Story | en | it | UCD-001, BC-001 | MIL-002 to MIL-006, MIL-008 | [RC-031] |
+| US-001 | User Story | en | it | UCD-001, BC-001 | MIL-002 to MIL-006, MIL-008 | [RC-043] |
 | UC-001 | Use Case | en | it | UCD-001, US-001 | DM-001, SSD-001 | [RC-033] |
 | DM-001 | Domain Model | en | it | UC-001 | SSD-001, DICT-001, DCD-001 | [RC-034] |
 | SSD-001 | System Sequence Diagram | en | it | UC-001, DM-001 | DCD-001 | [RC-036] |
 | OC-001 | Operation Contract | - | - | SSD-001, DM-001 | SD-001 | [RC-037] |
 | SD-001 | Sequence Diagram | - | - | OC-001 | DCD-001 | [RC-038] |
-| DCD-001 | Design Class Diagram | - | - | DM-001, SD-001, DICT-001 | src/flash_card | [RC-039] |
+| DCD-001 | Design Class Diagram | - | - | DM-001, SD-001, DICT-001 | src/flash_card | [RC-045] |
 | DICT-001 | Domain Dictionary | en | it | BC-001, SA-001, DM-001 | DCD-001 | [RC-035] |
 | ADR-0001 | Architecture Decision Record | - | - | BC-001 | MIL-001, MIL-003, MIL-006 | [RC-013] |
 | ADR-0002 | Architecture Decision Record | - | - | BC-001 | DCD-001 | [RC-014] |
@@ -47,6 +48,8 @@ updated whenever an artifact instance is created or reviewed.
 | MIL-006 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-006 | [RC-021] |
 | MIL-007 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-007 | [RC-022] |
 | MIL-008 | Milestone / Gateway | en | it | BC-001, PP-001 | tasks of MIL-008 | [RC-040] |
+| MIL-009 | Milestone / Gateway | en | it | BC-001 | - | [RC-047] |
+| ADR-0004 | Architecture Decision Record | - | - | BC-001 | - | [RC-046] |
 | PY-MIL-001 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-023] |
 | PY-MIL-002 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-024] |
 | PY-MIL-003 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-025] |
@@ -138,3 +141,12 @@ updated whenever an artifact instance is created or reviewed.
 [0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1
 [RC-041]: ./reviews/rc-041-py-mil-008.md
 [PY-MIL-008]: ../../src/flash_card
+[RC-042]: ./reviews/rc-042-business-case-exe.md
+[RC-043]: ./reviews/rc-043-user-stories-exe.md
+[RC-044]: ./reviews/rc-044-project-plan-exe.md
+[RC-045]: ./reviews/rc-045-design-class-diagram-exe.md
+[RC-046]: ./reviews/rc-046-adr-0004.md
+[RC-047]: ./reviews/rc-047-mil-009.md
+[MIL-009]: ../milestones/mil-009-executable.md
+[ADR-0004]: ../adr/adr-0004-pyinstaller-executable.md
+[768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54

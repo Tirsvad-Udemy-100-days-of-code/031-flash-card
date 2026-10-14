@@ -4,7 +4,7 @@
 | Key | Value |
 | --- | --- |
 | ID | US-001 |
-| CrossReference | [UCD-001], [BC-001], [UC-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-008] |
+| CrossReference | [UCD-001], [BC-001], [UC-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-008], [MIL-009] |
 | Language | en |
 | Domain | it |
 
@@ -12,13 +12,14 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.06 Choose my level | [0b983b7] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.06 Choose my level | [0b983b7] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.07 Start without Python | [768ca34] |
 
 ---
 
 ## Purpose and Scope
 
-These stories cover the epic "Study Flash Cards": the four steps of the course assignment (the window, new cards, flipping the cards, saving progress), the spoken Malay word and the choice of level. Each story is delivered by one milestone. The wireframe the stories follow is in `docs/uc-001/wireframe.md`.
+These stories cover the epic "Study Flash Cards": the four steps of the course assignment (the window, new cards, flipping the cards, saving progress), the spoken Malay word the choice of level and the start without an installed Python. Each story is delivered by one milestone. The wireframe the stories follow is in `docs/uc-001/wireframe.md`.
 
 ## Story List
 
@@ -105,9 +106,24 @@ These stories cover the epic "Study Flash Cards": the four steps of the course a
 | --- | --- | --- |
 | [MIL-008], [UC-001] | fits one iteration | none |
 
+### US-001.07 — Start without Python
+
+**As a** Learner, **I want** to start the program by opening one executable file, **so that** I can learn without installing Python or a virtual environment.
+
+**Acceptance Criteria**
+
+- Given the executable was built, when I open it on a Windows computer without Python, then the level screen appears and no console window opens.
+- Given I mark a word as known in the executable, when I open it again, then the known word does not come up (my progress is kept in `data/words_to_learn.csv` next to the executable).
+- Given a `data/ms-da.csv` exists next to the executable, when the program starts, then that word list is used; otherwise the word list inside the executable is used.
+- Given the speech extra was included in the build and a network is available, when a card is shown, then the Malay word is spoken; without a network the program works silently.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [MIL-009], [UC-001] | fits one iteration | none |
+
 ## INVEST Check
 
-All six stories are Independent in delivery order (each builds on the one before but can be accepted alone), Negotiable in wording, Valuable to the Learner, Estimable, Small (one milestone each) and Testable (every criterion is Given/When/Then). Exception: US-001.02 to US-001.06 depend on the window of US-001.01, which is stated in their milestones' Dependencies.
+All seven stories are Independent in delivery order (each builds on the one before but can be accepted alone), Negotiable in wording, Valuable to the Learner, Estimable, Small (one milestone each) and Testable (every criterion is Given/When/Then). Exception: US-001.02 to US-001.07 depend on the window of US-001.01, which is stated in their milestones' Dependencies.
 
 ---
 
@@ -120,5 +136,7 @@ All six stories are Independent in delivery order (each builds on the one before
 [MIL-005]: ./milestones/mil-005-step4-save-progress.md
 [MIL-006]: ./milestones/mil-006-malay-speech.md
 [MIL-008]: ./milestones/mil-008-choose-level.md
+[MIL-009]: ./milestones/mil-009-executable.md
 [c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
 [0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1
+[768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
