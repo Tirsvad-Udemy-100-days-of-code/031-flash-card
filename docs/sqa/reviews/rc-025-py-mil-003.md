@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [8d66c43] |
 
 ---
 
@@ -61,3 +61,4 @@ Milestone MIL-003 Go criteria: 1 integration test reads 1000 cards, pair ms/da; 
 
 [PY-MIL-003]: ../../../src/flash_card
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[8d66c43]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/8d66c43eea9673728e4f7497d7673498306e8b13
