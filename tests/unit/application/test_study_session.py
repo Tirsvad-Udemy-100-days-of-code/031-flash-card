@@ -28,9 +28,22 @@ class _RecordingProgress:
         self.saved.append(deck.cards)
 
 
-def _session(*cards: Card, progress: _RecordingProgress | None = None) -> StudySession:
+class _RecordingSpeech:
+    def __init__(self) -> None:
+        self.spoken: list[tuple[str, str]] = []
+
+    def speak(self, text: str, language_code: str) -> None:
+        self.spoken.append((text, language_code))
+
+
+def _session(
+    *cards: Card,
+    progress: _RecordingProgress | None = None,
+    speech: _RecordingSpeech | None = None,
+) -> StudySession:
     store = _RecordingProgress() if progress is None else progress
-    return StudySession(Deck(PAIR, cards), _first, store)
+    voice = _RecordingSpeech() if speech is None else speech
+    return StudySession(Deck(PAIR, cards), _first, store, voice)
 
 
 def test_current_card_is_none_before_first_draw() -> None:
@@ -105,3 +118,35 @@ def test_next_card_never_saves() -> None:
     session.next_card()
     session.next_card()
     assert progress.saved == []
+
+
+def test_next_card_speaks_front_text_once_in_front_language() -> None:
+    speech = _RecordingSpeech()
+    session = _session(A, B, speech=speech)
+    session.next_card()
+    assert speech.spoken == [("aku", "ms")]
+
+
+def test_next_card_does_not_speak_when_deck_is_empty() -> None:
+    speech = _RecordingSpeech()
+    session = _session(speech=speech)
+    session.next_card()
+    assert speech.spoken == []
+
+
+def test_next_card_speaks_again_on_every_draw() -> None:
+    speech = _RecordingSpeech()
+    session = _session(A, B, speech=speech)
+    session.next_card()
+    session.next_card()
+    assert speech.spoken == [("aku", "ms"), ("kau", "ms")]
+
+
+def test_mark_known_does_not_speak_but_following_draw_does() -> None:
+    speech = _RecordingSpeech()
+    session = _session(A, B, speech=speech)
+    session.next_card()
+    session.mark_known()
+    assert speech.spoken == [("aku", "ms")]
+    session.next_card()
+    assert speech.spoken == [("aku", "ms"), ("kau", "ms")]

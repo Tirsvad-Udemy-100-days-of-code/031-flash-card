@@ -17,6 +17,7 @@ from flash_card.infrastructure.persistence.csv_vocabulary_repository import (
     CsvVocabularyRepository,
 )
 from flash_card.infrastructure.persistence.csv_word_list import read_word_list
+from flash_card.infrastructure.speech.null_speech import NullSpeech
 
 PATH = DEFAULT_DATA_DIR / VOCABULARY_FILE_NAME
 
@@ -32,7 +33,9 @@ def test_open_study_session_yields_card_from_real_file(tmp_path: Path) -> None:
     repository = CsvVocabularyRepository(PATH)
     cards = repository.load().cards
     progress = CsvProgressRepository(tmp_path / PROGRESS_FILE_NAME)
-    session = open_study_session(repository, progress, lambda candidates: candidates[0])
+    session = open_study_session(
+        repository, progress, NullSpeech(), lambda candidates: candidates[0]
+    )
 
     card = session.next_card()
 

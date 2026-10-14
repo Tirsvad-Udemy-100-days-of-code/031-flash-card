@@ -7,6 +7,7 @@
 from collections.abc import Callable, Sequence
 
 from flash_card.application.dto.card_dto import CardDto
+from flash_card.application.ports.speech_port import SpeechPort
 from flash_card.domain.entities.card import Card
 from flash_card.domain.entities.deck import Deck
 from flash_card.domain.repositories.progress_repository import ProgressRepository
@@ -20,13 +21,17 @@ class StudySession:
         deck: Deck,
         choose: Callable[[Sequence[Card]], Card],
         progress: ProgressRepository,
+        speech: SpeechPort,
     ) -> None:
         """Create a session.
 
         @param deck The cards still to learn.
         @param choose Picks one card from a non-empty sequence.
         @param progress Store of the words still to learn.
+        @param speech Speaks the front text of each drawn card.
         """
+        ## @brief Speaks the front text of each drawn card.
+        self._speech = speech
         ## @brief Store of the words still to learn.
         self._progress = progress
         ## @brief The cards still to learn.
@@ -60,8 +65,10 @@ class StudySession:
         if self._deck.is_empty:
             self._current = None
             return None
-        self._current = self._deck.draw(self._choose, exclude=self._current)
-        return self._to_dto(self._current)
+        card = self._deck.draw(self._choose, exclude=self._current)
+        self._current = card
+        self._speech.speak(card.front, self._deck.language_pair.front_code)
+        return self._to_dto(card)
 
     def mark_known(self) -> None:
         """Remove the current card from the deck and save the remaining cards.

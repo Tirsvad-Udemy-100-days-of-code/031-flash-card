@@ -5,6 +5,7 @@
 """
 
 import argparse
+import importlib.util
 import logging
 import random
 import tkinter as tk
@@ -12,6 +13,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import NoReturn
 
+from flash_card.application.ports.speech_port import SpeechPort
 from flash_card.application.use_cases.open_study_session import open_study_session
 from flash_card.constants import (
     DEFAULT_DATA_DIR,
@@ -25,6 +27,8 @@ from flash_card.infrastructure.persistence.csv_progress_repository import (
 from flash_card.infrastructure.persistence.csv_vocabulary_repository import (
     CsvVocabularyRepository,
 )
+from flash_card.infrastructure.speech.gtts_speech import GttsSpeech
+from flash_card.infrastructure.speech.null_speech import NullSpeech
 from flash_card.presentation.features.flash_card.flash_card_view import FlashCardView
 from flash_card.presentation.features.flash_card.flash_card_view_model import (
     FlashCardViewModel,
@@ -33,20 +37,40 @@ from flash_card.presentation.features.flash_card.flash_card_view_model import (
 ## @brief Logger of the entry point.
 _logger = logging.getLogger(__name__)
 
+## @brief Optional packages the spoken words need.
+_SPEECH_PACKAGES = ("gtts", "playsound")
+
+
+def build_speech(enabled: bool) -> SpeechPort:
+    """Choose the speech adapter.
+
+    @param enabled False when the user switched speech off.
+    @return GttsSpeech when enabled and gtts and playsound are installed,
+        else NullSpeech.
+    """
+    if enabled and all(
+        importlib.util.find_spec(name) is not None for name in _SPEECH_PACKAGES
+    ):
+        return GttsSpeech()
+    return NullSpeech()
+
 
 def create_application(
     data_dir: Path | None = None,
+    speech_enabled: bool = True,
 ) -> tuple[tk.Tk, FlashCardView]:
     """Create the root window and the flash card view.
 
     @param data_dir Folder of the data files, or None for the default folder.
+    @param speech_enabled False to run without spoken words.
     @return The root window and the view built on it.
     @throws VocabularyError When the word list or saved progress is unusable.
     """
     folder = DEFAULT_DATA_DIR if data_dir is None else data_dir
     repository = CsvVocabularyRepository(folder / VOCABULARY_FILE_NAME)
     progress = CsvProgressRepository(folder / PROGRESS_FILE_NAME)
-    session = open_study_session(repository, progress, random.choice)
+    speech = build_speech(speech_enabled)
+    session = open_study_session(repository, progress, speech, random.choice)
     view_model = FlashCardViewModel(session)
     root = tk.Tk()
     view = FlashCardView(root, view_model)
@@ -66,9 +90,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         default=DEFAULT_DATA_DIR,
         help="folder of the data files",
     )
+    parser.add_argument(
+        "--no-speech",
+        action="store_true",
+        help="do not speak the words",
+    )
     args = parser.parse_args(argv)
     try:
-        root, _view = create_application(args.data_dir)
+        root, _view = create_application(args.data_dir, not args.no_speech)
     except VocabularyError as error:
         _logger.error("%s", error)
         return 1

@@ -25,7 +25,9 @@ def test_main_runs_main_loop_and_returns_zero(
     root = _FakeRoot()
     seen: list[Path | None] = []
 
-    def fake_create(data_dir: Path | None = None) -> tuple[_FakeRoot, object]:
+    def fake_create(
+        data_dir: Path | None = None, speech_enabled: bool = True
+    ) -> tuple[_FakeRoot, object]:
         seen.append(data_dir)
         return root, object()
 

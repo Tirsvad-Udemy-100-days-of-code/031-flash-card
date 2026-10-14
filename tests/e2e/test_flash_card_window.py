@@ -35,6 +35,7 @@ from flash_card.infrastructure.persistence.csv_progress_repository import (
 from flash_card.infrastructure.persistence.csv_vocabulary_repository import (
     CsvVocabularyRepository,
 )
+from flash_card.infrastructure.speech.null_speech import NullSpeech
 from flash_card.presentation.features.flash_card import flash_card_view
 from flash_card.presentation.features.flash_card.flash_card_view import FlashCardView
 from flash_card.presentation.features.flash_card.flash_card_view_model import (
@@ -58,9 +59,22 @@ class _MemoryProgress:
         return None
 
 
+class _RecordingSpeech:
+    """Speech port that records what would have been spoken."""
+
+    def __init__(self) -> None:
+        self.spoken: list[tuple[str, str]] = []
+
+    def speak(self, text: str, language_code: str) -> None:
+        self.spoken.append((text, language_code))
+
+
+SPEECH = _RecordingSpeech()
+
+
 def _build_view(root: tk.Tk) -> FlashCardView:
     deck = Deck(LanguagePair("ms", "da"), CARDS)
-    session = StudySession(deck, _first, _MemoryProgress())
+    session = StudySession(deck, _first, _MemoryProgress(), SPEECH)
     return FlashCardView(root, FlashCardViewModel(session))
 
 
@@ -280,7 +294,10 @@ def files_view(
     words.write_text("ms;da\naku;mig\nkau;du\nini;denne\n", encoding="utf-8")
     progress = tmp_path / "words_to_learn.csv"
     session = open_study_session(
-        CsvVocabularyRepository(words), CsvProgressRepository(progress), _first
+        CsvVocabularyRepository(words),
+        CsvProgressRepository(progress),
+        NullSpeech(),
+        _first,
     )
     view = FlashCardView(root, FlashCardViewModel(session))
     yield view, progress
@@ -327,3 +344,13 @@ def test_buttons_do_nothing_visible_when_finished(
     assert _shown(view) == ("", FINISHED_MESSAGE)
     assert view.flip_timer is None
     assert _saved(progress) == HEADER_ONLY
+
+
+def test_button_press_speaks_the_malay_word_of_the_shown_card(
+    window: tuple[tk.Tk, FlashCardView],
+) -> None:
+    root, view = window
+    SPEECH.spoken.clear()
+    view.wrong_button.invoke()
+    assert SPEECH.spoken == [(_word(view), "ms")]
+    _reset(root, view)

@@ -51,8 +51,6 @@ CSV_ENCODING: Final[str] = "utf-8-sig"
 VOCABULARY_FILE_NAME: Final[str] = "ms-da.csv"
 ## @brief File name of the words still to learn.
 PROGRESS_FILE_NAME: Final[str] = "words_to_learn.csv"
-## @brief Language code used for speech.
-SPEECH_LANGUAGE_CODE: Final[str] = "ms"
 
 ## @brief Root folder of the project.
 PROJECT_ROOT: Final[Path] = Path(__file__).resolve().parents[2]
