@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [b3c5116] |
 
 ---
 
@@ -61,3 +61,4 @@ Milestone MIL-006 Go criteria: 1 `speak(text, front_code)` once per drawn card a
 
 [PY-MIL-006]: ../../../src/flash_card
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[b3c5116]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/b3c51161107b4cdcbc4c5334e28608423a299638
