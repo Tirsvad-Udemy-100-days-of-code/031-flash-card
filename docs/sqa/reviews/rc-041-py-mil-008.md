@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [f45d603] |
 
 ---
 
@@ -61,3 +61,4 @@ Milestone MIL-008 Go criteria: 1 level 100 draws exactly the first 100 rows over
 
 [PY-MIL-008]: ../../../src/flash_card
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[f45d603]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/f45d6036e4210e1fbe52f6a582c540a6e1877056
