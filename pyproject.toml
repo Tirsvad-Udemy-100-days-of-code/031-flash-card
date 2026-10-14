@@ -26,6 +26,8 @@ dependencies = []
 speech = ["gTTS>=2.5", "playsound==1.2.2"]
 # Only for tools/capture_screenshots.py; not needed to run the program.
 tools = ["pillow>=10"]
+# Only for tools/build_executable.py; not needed to run the program.
+build = ["pyinstaller>=6"]
 dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11", "import-linter>=2.0"]
 
 [project.scripts]
@@ -35,7 +37,7 @@ flash-card = "flash_card.presentation.app:run"
 where = ["src"]
 
 [tool.setuptools.package-data]
-flash_card = ["presentation/assets/*.png"]
+flash_card = ["presentation/assets/*.png", "presentation/assets/*.ico"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

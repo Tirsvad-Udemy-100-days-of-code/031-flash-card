@@ -241,3 +241,50 @@ def test_start_raises_vocabulary_error_for_the_caller(fake_views: None) -> None:
     application = _application(_FakeRoot(), error=True)
     with pytest.raises(VocabularyNotFoundError):
         application.start(Level(100))
+
+
+def test_resolve_data_files_uses_bundled_list_when_default_folder_has_none(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    bundled = tmp_path / "bundle" / "ms-da.csv"
+    monkeypatch.setattr(app, "DEFAULT_DATA_DIR", tmp_path / "data")
+    monkeypatch.setattr(app, "BUNDLED_VOCABULARY_PATH", bundled)
+    vocabulary, progress = app.resolve_data_files(None)
+    assert vocabulary == bundled
+    assert progress == tmp_path / "data" / "words_to_learn.csv"
+
+
+def test_resolve_data_files_prefers_the_default_folder_list(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    (tmp_path / "ms-da.csv").write_text("x", encoding="utf-8")
+    monkeypatch.setattr(app, "DEFAULT_DATA_DIR", tmp_path)
+    monkeypatch.setattr(app, "BUNDLED_VOCABULARY_PATH", tmp_path / "other.csv")
+    vocabulary, _ = app.resolve_data_files(None)
+    assert vocabulary == tmp_path / "ms-da.csv"
+
+
+def test_resolve_data_files_uses_a_given_folder_alone(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    monkeypatch.setattr(app, "BUNDLED_VOCABULARY_PATH", tmp_path / "other.csv")
+    vocabulary, progress = app.resolve_data_files(tmp_path / "given")
+    assert vocabulary == tmp_path / "given" / "ms-da.csv"
+    assert progress == tmp_path / "given" / "words_to_learn.csv"
+
+
+def test_create_application_draws_first_card_from_bundled_list(
+    fake_views: None, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    bundled = tmp_path / "bundle" / "ms-da.csv"
+    bundled.parent.mkdir()
+    bundled.write_text("ms;da\nsaya;jeg\n", encoding="utf-8")
+    data = tmp_path / "data"
+    monkeypatch.setattr(app.tk, "Tk", _FakeRoot)
+    monkeypatch.setattr(app, "DEFAULT_DATA_DIR", data)
+    monkeypatch.setattr(app, "BUNDLED_VOCABULARY_PATH", bundled)
+    application = app.create_application(None, False, Level(None))
+    view = cast(_FakeFlashCardView, application.view)
+    assert view.view_model.text == "saya"
+    view.view_model.is_known()
+    assert (data / "words_to_learn.csv").is_file()

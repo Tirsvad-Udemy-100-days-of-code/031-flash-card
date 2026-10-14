@@ -105,6 +105,22 @@ def test_level_screen_shows_title_with_font_on_window_background(
     assert level_view.frame.cget("bg") == BACKGROUND_COLOR
 
 
+def test_level_screen_sets_window_title_background_and_padding(
+    tk_root: tk.Tk,
+) -> None:
+    tk_root.title("tk")
+    tk_root.config(padx=0, pady=0, bg="white")
+
+    view = LevelView(tk_root, LevelViewModel(), lambda level: None)
+    try:
+        assert tk_root.title() == WINDOW_TITLE
+        assert tk_root.cget("bg") == BACKGROUND_COLOR
+        assert int(str(tk_root.cget("padx"))) == WINDOW_PADDING
+        assert int(str(tk_root.cget("pady"))) == WINDOW_PADDING
+    finally:
+        view.destroy()
+
+
 def test_level_screen_frame_has_the_card_window_size(level_view: LevelView) -> None:
     assert level_view.frame.winfo_width() == CARD_WIDTH
     assert level_view.frame.winfo_height() == LEVEL_SCREEN_HEIGHT

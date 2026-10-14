@@ -16,6 +16,7 @@ from typing import NoReturn
 from flash_card.application.ports.speech_port import SpeechPort
 from flash_card.application.use_cases.open_study_session import open_study_session
 from flash_card.constants import (
+    BUNDLED_VOCABULARY_PATH,
     DEFAULT_DATA_DIR,
     LEVEL_ARGUMENT_VALUES,
     PROGRESS_FILE_NAME,
@@ -151,6 +152,20 @@ class Application:
             self.root.destroy()
 
 
+def resolve_data_files(data_dir: Path | None) -> tuple[Path, Path]:
+    """Find the word list and the progress file.
+
+    @param data_dir Folder given by the user, or None for the default folder.
+    @return The vocabulary path and the progress path. Without a given folder,
+        the delivered word list is used when the default folder has none.
+    """
+    folder = DEFAULT_DATA_DIR if data_dir is None else data_dir
+    vocabulary = folder / VOCABULARY_FILE_NAME
+    if data_dir is None and not vocabulary.exists():
+        vocabulary = BUNDLED_VOCABULARY_PATH
+    return vocabulary, folder / PROGRESS_FILE_NAME
+
+
 def create_application(
     data_dir: Path | None = None,
     speech_enabled: bool = True,
@@ -158,19 +173,20 @@ def create_application(
 ) -> Application:
     """Create the window and show the level screen, or start at the given level.
 
-    @param data_dir Folder of the data files, or None for the default folder.
+    @param data_dir Folder of the data files, or None for the default folder
+        with the delivered word list as fallback.
     @param speech_enabled False to run without spoken words.
     @param level The level to start at, or None to show the level screen.
     @return The application, its window in the root attribute.
     @throws VocabularyError When a level is given and the word list or saved
         progress is unusable.
     """
-    folder = DEFAULT_DATA_DIR if data_dir is None else data_dir
+    vocabulary_path, progress_path = resolve_data_files(data_dir)
     root = tk.Tk()
     application = Application(
         root,
-        CsvVocabularyRepository(folder / VOCABULARY_FILE_NAME),
-        CsvProgressRepository(folder / PROGRESS_FILE_NAME),
+        CsvVocabularyRepository(vocabulary_path),
+        CsvProgressRepository(progress_path),
         build_speech(speech_enabled),
     )
     if level is None:
@@ -209,8 +225,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         "--data-dir",
         type=Path,
-        default=DEFAULT_DATA_DIR,
-        help="folder of the data files",
+        default=None,
+        help="folder of the data files (default: data next to the program)",
     )
     parser.add_argument(
         "--no-speech",

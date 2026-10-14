@@ -58,6 +58,7 @@ updated whenever an artifact instance is created or reviewed.
 | PY-MIL-006 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-028] |
 | PY-MIL-007 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-029] |
 | PY-MIL-008 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-041] |
+| PY-MIL-009 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-048] |
 
 ## Coverage Notes
 
@@ -150,3 +151,5 @@ updated whenever an artifact instance is created or reviewed.
 [MIL-009]: ../milestones/mil-009-executable.md
 [ADR-0004]: ../adr/adr-0004-pyinstaller-executable.md
 [768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
+[RC-048]: ./reviews/rc-048-py-mil-009.md
+[PY-MIL-009]: ../../src/flash_card

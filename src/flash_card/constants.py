@@ -9,6 +9,8 @@ from collections.abc import Mapping
 from pathlib import Path
 from typing import Final
 
+from flash_card.runtime import executable_dir, is_frozen, resource_root
+
 ## @brief Window background colour.
 BACKGROUND_COLOR: Final[str] = "#B1DDC6"
 ## @brief Window title.
@@ -77,12 +79,24 @@ VOCABULARY_FILE_NAME: Final[str] = "ms-da.csv"
 ## @brief File name of the words still to learn.
 PROGRESS_FILE_NAME: Final[str] = "words_to_learn.csv"
 
-## @brief Root folder of the project.
+## @brief Root folder of the project, for a source run.
 PROJECT_ROOT: Final[Path] = Path(__file__).resolve().parents[2]
-## @brief Default folder of the data files.
-DEFAULT_DATA_DIR: Final[Path] = PROJECT_ROOT / "data"
-## @brief Folder of the image assets.
-ASSETS_DIR: Final[Path] = Path(__file__).resolve().parent / "presentation" / "assets"
+## @brief Folder of the image assets, inside the bundle when frozen.
+ASSETS_DIR: Final[Path] = (
+    resource_root() / "flash_card" / "presentation" / "assets"
+    if is_frozen()
+    else Path(__file__).resolve().parent / "presentation" / "assets"
+)
+## @brief Folder of the word list delivered with the program.
+BUNDLED_DATA_DIR: Final[Path] = resource_root() / "data"
+## @brief The word list delivered with the program.
+BUNDLED_VOCABULARY_PATH: Final[Path] = BUNDLED_DATA_DIR / VOCABULARY_FILE_NAME
+## @brief Default folder of the data files, next to the executable when frozen.
+DEFAULT_DATA_DIR: Final[Path] = executable_dir() / "data"
+## @brief File name of the program icon.
+ICON_FILE_NAME: Final[str] = "flash_card.ico"
+## @brief Name of the executable without extension.
+EXECUTABLE_NAME: Final[str] = "flash-card"
 ## @brief File name of the card front image.
 CARD_FRONT_IMAGE_NAME: Final[str] = "card_front.png"
 ## @brief File name of the card back image.

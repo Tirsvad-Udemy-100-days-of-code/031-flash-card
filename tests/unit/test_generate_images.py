@@ -16,6 +16,7 @@ from flash_card.constants import (
     CARD_FRONT_IMAGE_NAME,
     CARD_HEIGHT,
     CARD_WIDTH,
+    ICON_FILE_NAME,
     RIGHT_IMAGE_NAME,
     WRONG_IMAGE_NAME,
 )
@@ -56,3 +57,18 @@ def test_generate_images_writes_png_with_expected_size(
     assert data.startswith(_SIGNATURE)
     assert data[12:16] == b"IHDR"
     assert struct.unpack(">II", data[16:24]) == (width, height)
+
+
+def test_generate_images_writes_icon_with_one_256_pixel_png(generated: Path) -> None:
+    data = (generated / ICON_FILE_NAME).read_bytes()
+    reserved, kind, count = struct.unpack("<HHH", data[:6])
+    width, height, _colors, _zero, planes, bpp, size, offset = struct.unpack(
+        "<BBBBHHII", data[6:22]
+    )
+    assert (reserved, kind, count) == (0, 1, 1)
+    assert (width, height, planes, bpp) == (0, 0, 1, 32)
+    assert offset == 22
+    assert size == len(data) - 22
+    png = data[offset:]
+    assert png.startswith(_SIGNATURE)
+    assert struct.unpack(">II", png[16:24]) == (256, 256)

@@ -1,7 +1,8 @@
 """Generate the PNG assets of the flash card program.
 
 @file generate_images.py
-@brief Draws card_front, card_back, right and wrong as antialiased RGBA PNGs.
+@brief Draws card_front, card_back, right and wrong as antialiased RGBA PNGs,
+plus the program icon flash_card.ico.
 Uses the standard library only; run it to regenerate the assets.
 """
 
@@ -23,6 +24,7 @@ from flash_card.constants import (  # noqa: E402
     CARD_FRONT_IMAGE_NAME,
     CARD_HEIGHT,
     CARD_WIDTH,
+    ICON_FILE_NAME,
     RIGHT_IMAGE_NAME,
     WRONG_IMAGE_NAME,
 )
@@ -57,6 +59,10 @@ _CROSS_SEGMENTS: tuple[Segment, ...] = (
     ((68.0, 32.0), (32.0, 68.0)),
 )
 _PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
+_ICON_SIZE = 256
+_ICON_HEADER_SIZE = 6
+_ICON_ENTRY_SIZE = 16
+_ICON_BITS_PER_PIXEL = 32
 
 
 class _Canvas:
@@ -309,20 +315,27 @@ def _render_card(fill: Color) -> _Canvas:
 
 
 def _render_button(
-    gradient: tuple[Color, Color], segments: Sequence[Segment]
+    gradient: tuple[Color, Color],
+    segments: Sequence[Segment],
+    size: int = _BUTTON_SIZE,
 ) -> _Canvas:
     """Draw a rounded gradient square with a white symbol.
 
     @param gradient Top and bottom colour.
-    @param segments Line segments of the symbol.
+    @param segments Line segments of the symbol, drawn for a 100 px button.
+    @param size Side of the square in pixels; the design is scaled to it.
     @return The canvas.
     """
-    size = _BUTTON_SIZE
+    scale = size / _BUTTON_SIZE
+    scaled = [
+        ((a[0] * scale, a[1] * scale), (b[0] * scale, b[1] * scale))
+        for a, b in segments
+    ]
     canvas = _Canvas(size, size)
     box: Box = (0.0, 0.0, float(size), float(size))
-    square = _rounded_rect_mask(size, size, box, _BUTTON_RADIUS)
+    square = _rounded_rect_mask(size, size, box, _BUTTON_RADIUS * scale)
     canvas.paint(square, _vertical_gradient(gradient[0], gradient[1], size))
-    symbol = _stroke_mask(size, size, segments, _STROKE_WIDTH)
+    symbol = _stroke_mask(size, size, scaled, _STROKE_WIDTH * scale)
     canvas.paint(symbol, _solid(_WHITE))
     return canvas
 
@@ -351,8 +364,24 @@ def encode_png(width: int, height: int, rgba: bytes) -> bytes:
     )
 
 
+def encode_ico(png: bytes, size: int) -> bytes:
+    """Wrap one PNG image in an ICO container.
+
+    @param png The PNG file content.
+    @param size Image side in pixels; 256 is stored as 0.
+    @return The ICO file content.
+    """
+    stored = 0 if size >= _ICON_SIZE else size
+    offset = _ICON_HEADER_SIZE + _ICON_ENTRY_SIZE
+    header = struct.pack("<HHH", 0, 1, 1)
+    entry = struct.pack(
+        "<BBBBHHII", stored, stored, 0, 0, 1, _ICON_BITS_PER_PIXEL, len(png), offset
+    )
+    return header + entry + png
+
+
 def generate_images(output_dir: Path) -> list[Path]:
-    """Write the four PNG assets into a folder.
+    """Write the four PNG assets and the icon into a folder.
 
     @param output_dir Folder to write into; created when missing.
     @return The paths of the written files.
@@ -370,6 +399,11 @@ def generate_images(output_dir: Path) -> list[Path]:
         data = encode_png(canvas.width, canvas.height, canvas.to_rgba_bytes())
         path.write_bytes(data)
         written.append(path)
+    icon = _render_button(_RIGHT_GRADIENT, _CHECK_SEGMENTS, _ICON_SIZE)
+    png = encode_png(icon.width, icon.height, icon.to_rgba_bytes())
+    icon_path = output_dir / ICON_FILE_NAME
+    icon_path.write_bytes(encode_ico(png, _ICON_SIZE))
+    written.append(icon_path)
     return written
 
 

@@ -35,3 +35,27 @@ def test_project_root_contains_pyproject() -> None:
 
 def test_csv_encoding_drops_byte_order_mark() -> None:
     assert constants.CSV_ENCODING == "utf-8-sig"
+
+
+def test_assets_dir_holds_the_four_images_and_the_icon() -> None:
+    names = [
+        constants.CARD_FRONT_IMAGE_NAME,
+        constants.CARD_BACK_IMAGE_NAME,
+        constants.RIGHT_IMAGE_NAME,
+        constants.WRONG_IMAGE_NAME,
+        constants.ICON_FILE_NAME,
+    ]
+    assert len(set(names)) == 5
+    assert all((constants.ASSETS_DIR / name).is_file() for name in names)
+
+
+def test_bundled_vocabulary_is_the_word_list_of_the_bundled_data_dir() -> None:
+    assert constants.BUNDLED_VOCABULARY_PATH == (
+        constants.BUNDLED_DATA_DIR / constants.VOCABULARY_FILE_NAME
+    )
+    assert constants.BUNDLED_VOCABULARY_PATH.is_file()
+
+
+def test_executable_and_icon_names() -> None:
+    assert constants.EXECUTABLE_NAME == "flash-card"
+    assert constants.ICON_FILE_NAME == "flash_card.ico"
