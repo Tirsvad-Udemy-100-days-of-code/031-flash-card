@@ -9,6 +9,7 @@ from flash_card.domain.entities.deck import Deck
 from flash_card.domain.value_objects.language_pair import LanguagePair
 from flash_card.presentation.features.flash_card.flash_card_view_model import (
     FlashCardViewModel,
+    Side,
 )
 
 A = Card("aku", "mig")
@@ -51,3 +52,41 @@ def test_view_model_shows_finished_message_when_no_card_is_left() -> None:
     assert view_model.is_finished
     assert view_model.language_name == ""
     assert view_model.text == FINISHED_MESSAGE
+
+
+def test_view_model_starts_on_front_side() -> None:
+    view_model = FlashCardViewModel(_session("ms", A))
+    assert view_model.side is Side.FRONT
+
+
+def test_flip_card_shows_back_language_and_translation() -> None:
+    view_model = FlashCardViewModel(_session("ms", A))
+    view_model.flip_card()
+    assert view_model.side is Side.BACK
+    assert view_model.language_name == "Danish"
+    assert view_model.text == "mig"
+
+
+def test_flip_card_twice_keeps_back_side() -> None:
+    view_model = FlashCardViewModel(_session("ms", A))
+    view_model.flip_card()
+    view_model.flip_card()
+    assert view_model.side is Side.BACK
+    assert view_model.text == "mig"
+
+
+def test_flip_card_does_nothing_when_finished() -> None:
+    view_model = FlashCardViewModel(_session("ms"))
+    view_model.flip_card()
+    assert view_model.side is Side.FRONT
+    assert view_model.language_name == ""
+    assert view_model.text == FINISHED_MESSAGE
+
+
+def test_next_card_resets_side_to_front() -> None:
+    view_model = FlashCardViewModel(_session("ms", A, B))
+    view_model.flip_card()
+    view_model.next_card()
+    assert view_model.side is Side.FRONT
+    assert view_model.language_name == "Malay"
+    assert view_model.text == "kau"

@@ -8,11 +8,14 @@ import tkinter as tk
 
 from flash_card.constants import (
     ASSETS_DIR,
+    BACK_TEXT_COLOR,
     BACKGROUND_COLOR,
+    CARD_BACK_IMAGE_NAME,
     CARD_CENTER_X,
     CARD_FRONT_IMAGE_NAME,
     CARD_HEIGHT,
     CARD_WIDTH,
+    FLIP_DELAY_MS,
     FRONT_TEXT_COLOR,
     LANGUAGE_FONT,
     LANGUAGE_TEXT_Y,
@@ -25,6 +28,7 @@ from flash_card.constants import (
 )
 from flash_card.presentation.features.flash_card.flash_card_view_model import (
     FlashCardViewModel,
+    Side,
 )
 
 
@@ -47,6 +51,8 @@ class FlashCardView:
         # Kept as attributes: Tkinter drops an image nothing refers to.
         ## @brief Card front image, kept so Tk does not drop it.
         self._card_front_image = tk.PhotoImage(file=ASSETS_DIR / CARD_FRONT_IMAGE_NAME)
+        ## @brief Card back image, kept so Tk does not drop it.
+        self._card_back_image = tk.PhotoImage(file=ASSETS_DIR / CARD_BACK_IMAGE_NAME)
         ## @brief Wrong button image, kept so Tk does not drop it.
         self._wrong_image = tk.PhotoImage(file=ASSETS_DIR / WRONG_IMAGE_NAME)
         ## @brief Right button image, kept so Tk does not drop it.
@@ -101,13 +107,75 @@ class FlashCardView:
         )
         self.right_button.grid(row=1, column=1)
 
+        ## @brief Id of the pending flip timer, or None when none is pending.
+        self.flip_timer: str | None = None
+        self._start_flip_timer()
+
+    @property
+    def card_front_image(self) -> tk.PhotoImage:
+        """Return the card front image.
+
+        @return The image shown while the front side is up.
+        """
+        return self._card_front_image
+
+    @property
+    def card_back_image(self) -> tk.PhotoImage:
+        """Return the card back image.
+
+        @return The image shown while the back side is up.
+        """
+        return self._card_back_image
+
     def next_card(self) -> None:
-        """Show the next card.
+        """Show the next card front and restart the flip timer.
 
         @return Nothing.
         """
+        self._cancel_flip_timer()
         self._view_model.next_card()
+        self._show_card()
+        self._start_flip_timer()
+
+    def flip_card(self) -> None:
+        """Show the back of the current card.
+
+        @return Nothing.
+        """
+        self._cancel_flip_timer()
+        self._view_model.flip_card()
+        self._show_card()
+
+    def _cancel_flip_timer(self) -> None:
+        """Cancel the pending flip timer, if any.
+
+        @return Nothing.
+        """
+        if self.flip_timer is not None:
+            self._root.after_cancel(self.flip_timer)
+            self.flip_timer = None
+
+    def _start_flip_timer(self) -> None:
+        """Schedule the flip unless no card is left.
+
+        @return Nothing.
+        """
+        if not self._view_model.is_finished:
+            self.flip_timer = self._root.after(FLIP_DELAY_MS, self.flip_card)
+
+    def _show_card(self) -> None:
+        """Draw image and texts of the side the view model shows.
+
+        @return Nothing.
+        """
+        if self._view_model.side is Side.BACK:
+            image, color = self._card_back_image, BACK_TEXT_COLOR
+        else:
+            image, color = self._card_front_image, FRONT_TEXT_COLOR
+        self.canvas.itemconfig(self.image_id, image=image)
         self.canvas.itemconfig(
-            self.language_text_id, text=self._view_model.language_name
+            self.language_text_id, text=self._view_model.language_name, fill=color
         )
-        self.canvas.itemconfig(self.word_text_id, text=self._view_model.text)
+        self.canvas.itemconfig(
+            self.word_text_id, text=self._view_model.text, fill=color
+        )
