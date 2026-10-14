@@ -33,6 +33,11 @@ class _RecordingProgress:
         self.saved.append(deck.cards)
 
 
+class _SilentSpeech:
+    def speak(self, text: str, language_code: str) -> None:
+        return None
+
+
 class _MissingRepository:
     def load(self) -> Vocabulary:
         raise VocabularyNotFoundError("missing")
@@ -46,7 +51,9 @@ def test_open_study_session_builds_session_over_all_cards() -> None:
     cards = (Card("aku", "mig"), Card("kau", "du"))
     repository = _FakeRepository(Vocabulary(LanguagePair("ms", "da"), cards))
 
-    session = open_study_session(repository, _RecordingProgress(), _first)
+    session = open_study_session(
+        repository, _RecordingProgress(), _SilentSpeech(), _first
+    )
 
     assert session.remaining == 2
     assert session.next_card() == CardDto("aku", "mig", "ms", "da")
@@ -54,7 +61,9 @@ def test_open_study_session_builds_session_over_all_cards() -> None:
 
 def test_open_study_session_propagates_repository_error() -> None:
     with pytest.raises(VocabularyNotFoundError):
-        open_study_session(_MissingRepository(), _RecordingProgress(), _first)
+        open_study_session(
+            _MissingRepository(), _RecordingProgress(), _SilentSpeech(), _first
+        )
 
 
 def test_open_study_session_prefers_saved_progress() -> None:
@@ -62,7 +71,9 @@ def test_open_study_session_prefers_saved_progress() -> None:
     vocabulary = Vocabulary(pair, (Card("aku", "mig"), Card("kau", "du")))
     progress = _RecordingProgress(Deck(pair, [Card("kau", "du")]))
 
-    session = open_study_session(_FakeRepository(vocabulary), progress, _first)
+    session = open_study_session(
+        _FakeRepository(vocabulary), progress, _SilentSpeech(), _first
+    )
 
     assert session.remaining == 1
     assert session.next_card() == CardDto("kau", "du", "ms", "da")
@@ -71,7 +82,9 @@ def test_open_study_session_prefers_saved_progress() -> None:
 def test_open_study_session_skips_vocabulary_when_progress_exists() -> None:
     progress = _RecordingProgress(Deck(LanguagePair("ms", "da"), []))
 
-    session = open_study_session(_MissingRepository(), progress, _first)
+    session = open_study_session(
+        _MissingRepository(), progress, _SilentSpeech(), _first
+    )
 
     assert session.remaining == 0
 
@@ -80,7 +93,9 @@ def test_open_study_session_never_saves_on_start() -> None:
     vocabulary = Vocabulary(LanguagePair("ms", "da"), (Card("aku", "mig"),))
     progress = _RecordingProgress()
 
-    session = open_study_session(_FakeRepository(vocabulary), progress, _first)
+    session = open_study_session(
+        _FakeRepository(vocabulary), progress, _SilentSpeech(), _first
+    )
     session.next_card()
 
     assert progress.saved == []

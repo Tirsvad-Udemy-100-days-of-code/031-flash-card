@@ -31,11 +31,18 @@ class _RecordingProgress:
         self.saved.append(deck.cards)
 
 
+class _SilentSpeech:
+    def speak(self, text: str, language_code: str) -> None:
+        return None
+
+
 def _session(
     code: str, *cards: Card, progress: _RecordingProgress | None = None
 ) -> StudySession:
     store = _RecordingProgress() if progress is None else progress
-    return StudySession(Deck(LanguagePair(code, "da"), cards), _first, store)
+    return StudySession(
+        Deck(LanguagePair(code, "da"), cards), _first, store, _SilentSpeech()
+    )
 
 
 def test_view_model_draws_first_card_on_construction() -> None:

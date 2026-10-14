@@ -12,6 +12,7 @@ from flash_card.infrastructure.persistence.csv_progress_repository import (
 from flash_card.infrastructure.persistence.csv_vocabulary_repository import (
     CsvVocabularyRepository,
 )
+from flash_card.infrastructure.speech.null_speech import NullSpeech
 
 WORDS = "fr;en\nchaque;each\nparlé;speak\narrivé;come\n"
 
@@ -33,6 +34,7 @@ def _open(folder: Path, choose: Choose = _first) -> StudySession:
     return open_study_session(
         CsvVocabularyRepository(folder / "words.csv"),
         CsvProgressRepository(folder / "words_to_learn.csv"),
+        NullSpeech(),
         choose,
     )
 
