@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-008 and the review records of the level choice (no checklist exists for this type) | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-008 and the review records of the level choice (no checklist exists for this type) | [0b983b7] |
 
 ---
 
@@ -134,3 +134,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-039]: ./reviews/rc-039-design-class-diagram-level.md
 [RC-040]: ./reviews/rc-040-mil-008.md
 [MIL-008]: ../milestones/mil-008-choose-level.md
+[0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1

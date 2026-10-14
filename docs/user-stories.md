@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.06 Choose my level | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.06 Choose my level | [0b983b7] |
 
 ---
 
@@ -121,3 +121,4 @@ All six stories are Independent in delivery order (each builds on the one before
 [MIL-006]: ./milestones/mil-006-malay-speech.md
 [MIL-008]: ./milestones/mil-008-choose-level.md
 [c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
+[0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1

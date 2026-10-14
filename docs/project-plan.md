@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-008 Choose level (new request of S01) | pending |
+| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-008 Choose level (new request of S01) | [0b983b7] |
 
 ---
 
@@ -119,3 +119,4 @@ A No-Go on a phase moves every later date by the days the rework takes; MIL-008 
 [MS-005]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/169
 [MS-006]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/170
 [MS-007]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/171
+[0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1
