@@ -6,7 +6,7 @@ Program dibina dalam empat lapisan di bawah `src/flash_card/`. Import menuju ke 
 
 | Lapisan | Mengandungi | Boleh mengimport |
 | --- | --- | --- |
-| `domain` | `Card`, `LanguagePair`, `Vocabulary`, `Deck`, ralat dan antara muka repositori | tiada |
+| `domain` | `Card`, `LanguagePair`, `Level`, `Vocabulary`, `Deck`, ralat dan antara muka repositori | tiada |
 | `application` | `StudySession`, `open_study_session`, `CardDto` dan `SpeechPort` | `domain` |
 | `infrastructure` | Repositori CSV dan penyesuai suara | `application`, `domain` |
 | `presentation` | `FlashCardView`, `FlashCardViewModel` (MVVM) dan akar komposisi `app.py` | semua lapisan |
@@ -21,6 +21,7 @@ Semua pemalar terdapat dalam `src/flash_card/constants.py`.
 | Langkah 2: baca CSV, perkataan rawak setiap tekanan | `CsvVocabularyRepository` dan `read_word_list` (menggantikan `pandas`), `Deck.draw`, `StudySession.next_card`, `FlashCardView.next_card` |
 | Langkah 3: terbalik selepas 3 saat | `FlashCardView.flip_card`, `FlashCardView.flip_timer` (`after`, `after_cancel`), `FlashCardViewModel.flip_card` |
 | Langkah 4: perkataan diketahui, `words_to_learn.csv` | `FlashCardView.is_known`, `StudySession.mark_known`, `CsvProgressRepository`, `open_study_session` |
+| Tambahan: pilihan tahap | `Level`, `Deck.within`, `StudySession.next_card`, `open_study_session`, `LevelView`, `LevelViewModel`, `Application.start` dalam `presentation/app.py` |
 | Tambahan: suara | `SpeechPort`, `GttsSpeech`, `NullSpeech`, `build_speech` dalam `presentation/app.py` |
 
 ## Mengapa program berlapis untuk tugasan kecil?

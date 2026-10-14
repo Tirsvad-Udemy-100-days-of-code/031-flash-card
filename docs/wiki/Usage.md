@@ -5,12 +5,13 @@
 ## Study the cards
 
 1. Start the program with `python -m flash_card`.
-2. A card shows a Malay word. Try to remember its Danish translation.
-3. After three seconds the card turns over and shows the translation.
-4. Press the green tick when you knew the word, or the red cross when you did not.
-5. A new random word appears. Repeat.
+2. Choose a level: **100 words**, **1000 words** or **All words**. The word list is ordered from the most to the least frequent word, so level 100 is the 100 most frequent words.
+3. A card shows a Malay word. Try to remember its Danish translation.
+4. After three seconds the card turns over and shows the translation.
+5. Press the green tick when you knew the word, or the red cross when you did not.
+6. A new random word of the level appears. Repeat.
 
-A word you marked as known is removed and does not come up again. When no word is left, the card says "Nothing left to learn".
+A word you marked as known is removed and does not come up again. When no word of the level is left, the card says "Nothing left to learn"; restart the program and choose a higher level.
 
 ## Your progress
 
@@ -18,6 +19,8 @@ A word you marked as known is removed and does not come up again. When no word i
 - The next start uses that file. If it does not exist, the program uses the full word list `data/ms-da.csv`.
 - To start again, delete `data/words_to_learn.csv`.
 - The red cross never changes the file.
+- Known words stay known at every level. The level only limits which of the words you do not know yet come up, and the file always keeps every word you do not know, also those outside the level.
+- This list has 1000 words, so "1000 words" and "All words" give the same cards.
 
 ## File format
 
@@ -34,6 +37,7 @@ yang;hvilke
 | Option | Meaning |
 | --- | --- |
 | `--data-dir <folder>` | Folder that holds `ms-da.csv` and `words_to_learn.csv` (default: `data/` of the repository) |
+| `--level {100,1000,all}` | Start at that level and skip the level screen |
 | `--no-speech` | Do not speak the Malay word, even when the speech extra is installed |
 
 ## Use another language pair

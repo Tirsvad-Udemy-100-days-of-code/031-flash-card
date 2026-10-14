@@ -10,6 +10,7 @@ from flash_card.constants import (
 )
 from flash_card.domain.entities.card import Card
 from flash_card.domain.value_objects.language_pair import LanguagePair
+from flash_card.domain.value_objects.level import Level
 from flash_card.infrastructure.persistence.csv_progress_repository import (
     CsvProgressRepository,
 )
@@ -34,7 +35,11 @@ def test_open_study_session_yields_card_from_real_file(tmp_path: Path) -> None:
     cards = repository.load().cards
     progress = CsvProgressRepository(tmp_path / PROGRESS_FILE_NAME)
     session = open_study_session(
-        repository, progress, NullSpeech(), lambda candidates: candidates[0]
+        repository,
+        progress,
+        NullSpeech(),
+        lambda candidates: candidates[0],
+        Level(None),
     )
 
     card = session.next_card()

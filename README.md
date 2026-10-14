@@ -15,7 +15,7 @@ A flash card program for learning the most frequent Malay words with their Danis
 
 ## 🧭 Overview
 
-The program shows a Malay word on a card. After three seconds the card turns over and shows the Danish translation. You press the green tick when you know the word and the red cross when you do not. A known word is removed from the words to learn, and the words still to learn are saved, so the next start continues where you stopped.
+The program first asks for a level: the first 100 words, the first 1000 words or all words of the word list, which is ordered from the most to the least frequent word. Then it shows a Malay word on a card. After three seconds the card turns over and shows the Danish translation. You press the green tick when you know the word and the red cross when you do not. A known word is removed from the words to learn, and the words still to learn are saved, so the next start continues where you stopped.
 
 | Part | What it is for |
 | --- | --- |
@@ -30,9 +30,9 @@ The core program uses only the Python standard library. Spoken Malay words are a
 
 ### Screenshots
 
-| Front: the Malay word | Back: the Danish translation after 3 seconds |
-| --- | --- |
-| ![The front of a card][screenshot-front] | ![The back of a card][screenshot-back] |
+| Choose your level | Front: the Malay word | Back: the Danish translation after 3 seconds |
+| --- | --- | --- |
+| ![The level screen][screenshot-level] | ![The front of a card][screenshot-front] | ![The back of a card][screenshot-back] |
 
 ### Where is each assignment step?
 
@@ -42,6 +42,7 @@ The core program uses only the Python standard library. Spoken Malay words are a
 | 2. New flash cards | `CsvVocabularyRepository` (the standard library `csv` instead of `pandas`), `Deck.draw`, `StudySession.next_card`, `FlashCardView.next_card` |
 | 3. Flip the cards | `FlashCardView.flip_card` and `FlashCardView.flip_timer` (`after`, `after_cancel`), `FlashCardViewModel.flip_card` |
 | 4. Save your progress | `FlashCardView.is_known`, `StudySession.mark_known`, `CsvProgressRepository` |
+| Extra: level choice | `LevelView`, `LevelViewModel`, `Level`, `Deck.within`, `StudySession.next_card`, `open_study_session` |
 | Extra: spoken word | `GttsSpeech`, `NullSpeech`, `build_speech` in `presentation/app.py` |
 
 The wiki ([English][wiki-en], [Dansk][wiki-da], [Bahasa Malaysia][wiki-ms]) explains the same in three languages.
@@ -92,14 +93,15 @@ python -m pip install -e ".[dev]"
 python -m flash_card
 ```
 
-The program is run from the activated `.venv`. The window opens with a card. Press the green tick for a word you know and the red cross for a word you do not. Options:
+The program is run from the activated `.venv`. The window opens with the level screen: choose 100 words, 1000 words or All words. Then a card appears. Press the green tick for a word you know and the red cross for a word you do not. Options:
 
 | Option | Meaning |
 | --- | --- |
 | `--data-dir <folder>` | Folder with `ms-da.csv` and `words_to_learn.csv` |
+| `--level {100,1000,all}` | Start at that level and skip the level screen |
 | `--no-speech` | Do not speak the Malay word |
 
-To start again, delete `data/words_to_learn.csv`.
+Known words stay known at every level: the level only limits which of the words you do not know yet come up. To start again, delete `data/words_to_learn.csv`.
 
 ## 🧪 Tests
 
@@ -149,6 +151,7 @@ The documents a newcomer needs, in reading order.
 ---
 
 [license]: ./LICENSE
+[screenshot-level]: ./docs/images/screenshot-level.png
 [screenshot-front]: ./docs/images/screenshot-front.png
 [screenshot-back]: ./docs/images/screenshot-back.png
 [wiki-en]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/wiki/Home

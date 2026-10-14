@@ -54,6 +54,7 @@ updated whenever an artifact instance is created or reviewed.
 | PY-MIL-005 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-027] |
 | PY-MIL-006 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-028] |
 | PY-MIL-007 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-029] |
+| PY-MIL-008 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-041] |
 
 ## Coverage Notes
 
@@ -135,3 +136,5 @@ updated whenever an artifact instance is created or reviewed.
 [RC-040]: ./reviews/rc-040-mil-008.md
 [MIL-008]: ../milestones/mil-008-choose-level.md
 [0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1
+[RC-041]: ./reviews/rc-041-py-mil-008.md
+[PY-MIL-008]: ../../src/flash_card

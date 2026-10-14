@@ -20,6 +20,8 @@ WINDOW_PADDING: Final[int] = 50
 CARD_WIDTH: Final[int] = 800
 ## @brief Card height in pixels.
 CARD_HEIGHT: Final[int] = 526
+## @brief Level screen height in pixels: card plus the card window button row.
+LEVEL_SCREEN_HEIGHT: Final[int] = 526 + 100
 ## @brief Horizontal centre of the card in pixels.
 CARD_CENTER_X: Final[int] = 400
 ## @brief Vertical position of the language text in pixels.
@@ -42,6 +44,29 @@ BACK_TEXT_COLOR: Final[str] = "white"
 LANGUAGE_NAMES: Final[Mapping[str, str]] = {"ms": "Malay", "da": "Danish"}
 ## @brief Message shown when no word is left to learn.
 FINISHED_MESSAGE: Final[str] = "Nothing left to learn"
+
+## @brief Title of the level screen.
+LEVEL_TITLE: Final[str] = "Choose your level"
+## @brief Level choices in display order: label and word limit (None = all words).
+LEVEL_CHOICES: Final[tuple[tuple[str, int | None], ...]] = (
+    ("100 words", 100),
+    ("1000 words", 1000),
+    ("All words", None),
+)
+## @brief Values of the --level option and the word limit each stands for.
+LEVEL_ARGUMENT_VALUES: Final[Mapping[str, int | None]] = {
+    "100": 100,
+    "1000": 1000,
+    "all": None,
+}
+## @brief Font of the level screen title: family, size, style.
+LEVEL_TITLE_FONT: Final[tuple[str, int, str]] = ("Arial", 40, "italic")
+## @brief Font of the level buttons: family, size, style.
+LEVEL_BUTTON_FONT: Final[tuple[str, int, str]] = ("Arial", 24, "bold")
+## @brief Width of every level button in characters.
+LEVEL_BUTTON_WIDTH: Final[int] = 14
+## @brief Background colour of the level buttons.
+LEVEL_BUTTON_COLOR: Final[str] = "white"
 
 ## @brief Delimiter of the CSV files.
 CSV_DELIMITER: Final[str] = ";"

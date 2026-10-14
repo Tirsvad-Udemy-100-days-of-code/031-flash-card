@@ -6,6 +6,7 @@ from pathlib import Path
 from flash_card.application.use_cases.open_study_session import open_study_session
 from flash_card.application.use_cases.study_session import StudySession
 from flash_card.domain.entities.card import Card
+from flash_card.domain.value_objects.level import Level
 from flash_card.infrastructure.persistence.csv_progress_repository import (
     CsvProgressRepository,
 )
@@ -36,6 +37,7 @@ def _open(folder: Path, choose: Choose = _first) -> StudySession:
         CsvProgressRepository(folder / "words_to_learn.csv"),
         NullSpeech(),
         choose,
+        Level(None),
     )
 
 

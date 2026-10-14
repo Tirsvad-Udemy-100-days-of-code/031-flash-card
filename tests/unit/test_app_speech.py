@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from flash_card.domain.value_objects.level import Level
 from flash_card.infrastructure.speech.gtts_speech import GttsSpeech
 from flash_card.infrastructure.speech.null_speech import NullSpeech
 from flash_card.presentation import app
@@ -14,6 +15,11 @@ from flash_card.presentation import app
 class _FakeRoot:
     def mainloop(self) -> None:
         return None
+
+
+class _FakeApplication:
+    root = _FakeRoot()
+    exit_code = 0
 
 
 def _found(name: str) -> ModuleSpec:
@@ -58,10 +64,12 @@ def test_main_passes_speech_disabled_with_no_speech_option(
     seen: list[bool] = []
 
     def fake_create(
-        data_dir: Path | None = None, speech_enabled: bool = True
-    ) -> tuple[_FakeRoot, object]:
+        data_dir: Path | None = None,
+        speech_enabled: bool = True,
+        level: Level | None = None,
+    ) -> _FakeApplication:
         seen.append(speech_enabled)
-        return _FakeRoot(), object()
+        return _FakeApplication()
 
     monkeypatch.setattr(app, "create_application", fake_create)
 

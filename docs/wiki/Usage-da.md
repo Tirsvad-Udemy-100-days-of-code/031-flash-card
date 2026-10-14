@@ -5,12 +5,13 @@
 ## Øv kortene
 
 1. Start programmet med `python -m flash_card`.
-2. Et kort viser et malajisk ord. Prøv at huske den danske oversættelse.
-3. Efter tre sekunder vender kortet og viser oversættelsen.
-4. Tryk på det grønne flueben, hvis du kendte ordet, eller på det røde kryds, hvis du ikke gjorde.
-5. Et nyt tilfældigt ord vises. Gentag.
+2. Vælg et niveau: **100 words**, **1000 words** eller **All words**. Ordlisten er sorteret fra det hyppigste til det sjældneste ord, så niveau 100 er de 100 hyppigste ord.
+3. Et kort viser et malajisk ord. Prøv at huske den danske oversættelse.
+4. Efter tre sekunder vender kortet og viser oversættelsen.
+5. Tryk på det grønne flueben, hvis du kendte ordet, eller på det røde kryds, hvis du ikke gjorde.
+6. Et nyt tilfældigt ord fra niveauet vises. Gentag.
 
-Et ord, du har markeret som kendt, fjernes og kommer ikke igen. Når der ikke er flere ord, står der "Nothing left to learn" på kortet.
+Et ord, du har markeret som kendt, fjernes og kommer ikke igen. Når der ikke er flere ord på niveauet, står der "Nothing left to learn" på kortet; start programmet igen og vælg et højere niveau.
 
 ## Din fremgang
 
@@ -18,6 +19,8 @@ Et ord, du har markeret som kendt, fjernes og kommer ikke igen. Når der ikke er
 - Næste start bruger den fil. Findes den ikke, bruger programmet hele ordlisten `data/ms-da.csv`.
 - For at starte forfra skal du slette `data/words_to_learn.csv`.
 - Det røde kryds ændrer aldrig filen.
+- Kendte ord forbliver kendte på alle niveauer. Niveauet begrænser kun, hvilke af de ord, du endnu ikke kender, der kommer frem, og filen beholder altid alle ord, du ikke kender, også dem uden for niveauet.
+- Denne liste har 1000 ord, så "1000 words" og "All words" giver de samme kort.
 
 ## Filformat
 
@@ -34,6 +37,7 @@ yang;hvilke
 | Indstilling | Betydning |
 | --- | --- |
 | `--data-dir <mappe>` | Mappen med `ms-da.csv` og `words_to_learn.csv` (standard: `data/` i repositoryet) |
+| `--level {100,1000,all}` | Start på det niveau og spring niveauskærmen over |
 | `--no-speech` | Udtal ikke det malajiske ord, selv om tilvalget til tale er installeret |
 
 ## Brug et andet sprogpar

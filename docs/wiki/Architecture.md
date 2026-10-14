@@ -6,7 +6,7 @@ The program is built in four layers under `src/flash_card/`. Imports point inwar
 
 | Layer | Holds | May import |
 | --- | --- | --- |
-| `domain` | `Card`, `LanguagePair`, `Vocabulary`, `Deck`, the errors and the repository interfaces | nothing |
+| `domain` | `Card`, `LanguagePair`, `Level`, `Vocabulary`, `Deck`, the errors and the repository interfaces | nothing |
 | `application` | `StudySession`, `open_study_session`, `CardDto` and `SpeechPort` | `domain` |
 | `infrastructure` | The CSV repositories and the speech adapters | `application`, `domain` |
 | `presentation` | `FlashCardView`, `FlashCardViewModel` (MVVM) and the composition root `app.py` | all layers |
@@ -21,6 +21,7 @@ All constants are in `src/flash_card/constants.py`.
 | Step 2: read the CSV, random word on each press | `CsvVocabularyRepository` and `read_word_list` (replace `pandas`), `Deck.draw`, `StudySession.next_card`, `FlashCardView.next_card` |
 | Step 3: flip after 3 seconds | `FlashCardView.flip_card`, `FlashCardView.flip_timer` (`after`, `after_cancel`), `FlashCardViewModel.flip_card` |
 | Step 4: known words, `words_to_learn.csv` | `FlashCardView.is_known`, `StudySession.mark_known`, `CsvProgressRepository`, `open_study_session` |
+| Extra: level choice | `Level`, `Deck.within`, `StudySession.next_card`, `open_study_session`, `LevelView`, `LevelViewModel`, `Application.start` in `presentation/app.py` |
 | Extra: speech | `SpeechPort`, `GttsSpeech`, `NullSpeech`, `build_speech` in `presentation/app.py` |
 
 ## Why a layered program for a small assignment?

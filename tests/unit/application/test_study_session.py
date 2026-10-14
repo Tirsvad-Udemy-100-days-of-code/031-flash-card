@@ -1,6 +1,7 @@
 """Tests of the StudySession use case."""
 
-from collections.abc import Sequence
+import itertools
+from collections.abc import Callable, Sequence
 
 from flash_card.application.dto.card_dto import CardDto
 from flash_card.application.use_cases.study_session import StudySession
@@ -150,3 +151,94 @@ def test_mark_known_does_not_speak_but_following_draw_does() -> None:
     assert speech.spoken == [("aku", "ms")]
     session.next_card()
     assert speech.spoken == [("aku", "ms"), ("kau", "ms")]
+
+
+C = Card("ini", "denne")
+D = Card("itu", "den")
+
+
+def _level_session(
+    deck_cards: Sequence[Card],
+    level_cards: Sequence[Card] | None,
+    choose: Callable[[Sequence[Card]], Card] = _first,
+    progress: _RecordingProgress | None = None,
+    speech: _RecordingSpeech | None = None,
+) -> StudySession:
+    store = _RecordingProgress() if progress is None else progress
+    voice = _RecordingSpeech() if speech is None else speech
+    return StudySession(Deck(PAIR, deck_cards), choose, store, voice, level_cards)
+
+
+def _last(cards: Sequence[Card]) -> Card:
+    return cards[-1]
+
+
+def test_next_card_draws_only_cards_of_the_level_over_many_draws() -> None:
+    chooser = itertools.cycle([_first, _last])
+    session = _level_session(
+        [A, B, C, D], [A, B], choose=lambda cards: next(chooser)(cards)
+    )
+    drawn = {session.next_card() for _ in range(40)}
+    assert drawn == {
+        CardDto("aku", "mig", "ms", "da"),
+        CardDto("kau", "du", "ms", "da"),
+    }
+
+
+def test_next_card_never_draws_a_card_outside_the_level() -> None:
+    session = _level_session([A, B, C], [B], choose=_last)
+    for _ in range(5):
+        assert session.next_card() == CardDto("kau", "du", "ms", "da")
+
+
+def test_remaining_counts_whole_deck_and_remaining_in_level_counts_level() -> None:
+    session = _level_session([A, B, C], [A, B])
+    assert session.remaining == 3
+    assert session.remaining_in_level == 2
+
+
+def test_remaining_in_level_counts_whole_deck_without_level() -> None:
+    assert _level_session([A, B, C], None).remaining_in_level == 3
+
+
+def test_remaining_in_level_ignores_level_cards_missing_from_deck() -> None:
+    assert _level_session([B], [A, B]).remaining_in_level == 1
+
+
+def test_mark_known_keeps_cards_outside_the_level_and_saves_whole_deck() -> None:
+    progress = _RecordingProgress()
+    session = _level_session([A, B, C], [A], progress=progress)
+    session.next_card()
+    session.mark_known()
+    assert progress.saved == [(B, C)]
+    assert session.remaining == 2
+    assert session.remaining_in_level == 0
+
+
+def test_next_card_is_none_when_nothing_of_the_level_is_left() -> None:
+    session = _level_session([B, C], [A])
+    assert session.next_card() is None
+    assert session.current_card is None
+
+
+def test_session_finishes_after_last_card_of_level_is_known() -> None:
+    session = _level_session([A, B], [A])
+    session.next_card()
+    session.mark_known()
+    assert session.next_card() is None
+    assert session.remaining == 1
+
+
+def test_next_card_speaks_only_cards_of_the_level() -> None:
+    speech = _RecordingSpeech()
+    session = _level_session([A, B, C], [B], choose=_last, speech=speech)
+    session.next_card()
+    session.next_card()
+    assert speech.spoken == [("kau", "ms"), ("kau", "ms")]
+
+
+def test_next_card_speaks_nothing_when_level_is_finished() -> None:
+    speech = _RecordingSpeech()
+    session = _level_session([B], [A], speech=speech)
+    session.next_card()
+    assert speech.spoken == []

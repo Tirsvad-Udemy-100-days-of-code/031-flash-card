@@ -22,6 +22,7 @@ class StudySession:
         choose: Callable[[Sequence[Card]], Card],
         progress: ProgressRepository,
         speech: SpeechPort,
+        level_cards: Sequence[Card] | None = None,
     ) -> None:
         """Create a session.
 
@@ -29,7 +30,10 @@ class StudySession:
         @param choose Picks one card from a non-empty sequence.
         @param progress Store of the words still to learn.
         @param speech Speaks the front text of each drawn card.
+        @param level_cards The cards of the chosen level, or None for no limit.
         """
+        ## @brief The cards of the chosen level, or None for no limit.
+        self._level_cards = None if level_cards is None else tuple(level_cards)
         ## @brief Speaks the front text of each drawn card.
         self._speech = speech
         ## @brief Store of the words still to learn.
@@ -51,27 +55,36 @@ class StudySession:
 
     @property
     def remaining(self) -> int:
-        """Return the number of cards still to learn.
+        """Return the number of cards still to learn, of every level.
 
         @return The card count.
         """
         return len(self._deck)
 
+    @property
+    def remaining_in_level(self) -> int:
+        """Return the number of cards still to learn in the chosen level.
+
+        @return The card count.
+        """
+        return len(self._candidates())
+
     def next_card(self) -> CardDto | None:
         """Draw the next card, different from the current one when possible.
 
-        @return The new card, or None when the deck is empty.
+        @return The new card, or None when no card of the level is left.
         """
-        if self._deck.is_empty:
+        candidates = self._candidates()
+        if not candidates:
             self._current = None
             return None
-        card = self._deck.draw(self._choose, exclude=self._current)
+        card = self._deck.draw(self._choose, self._current, candidates)
         self._current = card
         self._speech.speak(card.front, self._deck.language_pair.front_code)
         return self._to_dto(card)
 
     def mark_known(self) -> None:
-        """Remove the current card from the deck and save the remaining cards.
+        """Remove the current card from the whole deck and save the whole deck.
 
         Does nothing and saves nothing when no card is shown.
 
@@ -82,6 +95,15 @@ class StudySession:
         self._deck.remove(self._current)
         self._progress.save(self._deck)
         self._current = None
+
+    def _candidates(self) -> tuple[Card, ...]:
+        """Return the cards that may be drawn.
+
+        @return The deck cards of the level, or all deck cards without a level.
+        """
+        if self._level_cards is None:
+            return self._deck.cards
+        return self._deck.within(self._level_cards)
 
     def _to_dto(self, card: Card | None) -> CardDto | None:
         """Map a card to its DTO.

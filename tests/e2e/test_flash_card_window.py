@@ -29,6 +29,7 @@ from flash_card.constants import (
 from flash_card.domain.entities.card import Card
 from flash_card.domain.entities.deck import Deck
 from flash_card.domain.value_objects.language_pair import LanguagePair
+from flash_card.domain.value_objects.level import Level
 from flash_card.infrastructure.persistence.csv_progress_repository import (
     CsvProgressRepository,
 )
@@ -85,18 +86,20 @@ def _shown(view: FlashCardView) -> tuple[str, str]:
     )
 
 
+def _destroy_view(root: tk.Tk, view: FlashCardView) -> None:
+    if view.flip_timer is not None:
+        root.after_cancel(view.flip_timer)
+        view.flip_timer = None
+    for widget in (view.canvas, view.wrong_button, view.right_button):
+        widget.destroy()
+
+
 @pytest.fixture(scope="module")
-def window() -> Iterator[tuple[tk.Tk, FlashCardView]]:
-    # One Tk per module: a second interpreter right after destroying the
-    # first fails to find init.tcl on some Windows Python installs.
-    try:
-        root = tk.Tk()
-    except tk.TclError:
-        pytest.skip("no display available for Tk")
-    view = _build_view(root)
-    root.update_idletasks()
-    yield root, view
-    root.destroy()
+def window(tk_root: tk.Tk) -> Iterator[tuple[tk.Tk, FlashCardView]]:
+    view = _build_view(tk_root)
+    tk_root.update_idletasks()
+    yield tk_root, view
+    _destroy_view(tk_root, view)
 
 
 def test_window_has_title_background_and_padding(
@@ -306,6 +309,7 @@ def files_view(
         CsvProgressRepository(progress),
         NullSpeech(),
         _first,
+        Level(None),
     )
     view = FlashCardView(root, FlashCardViewModel(session))
     yield view, progress

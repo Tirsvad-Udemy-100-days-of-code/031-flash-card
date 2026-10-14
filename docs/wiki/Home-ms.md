@@ -4,6 +4,7 @@
 
 Program kad imbas untuk mempelajari perkataan Melayu yang paling kerap digunakan beserta terjemahan Denmark. Ia ialah penyelesaian hari ke-31 kursus Udemy *100 Days of Code: The Complete Python Pro Bootcamp*.
 
+![Skrin tahap: pilih 100 perkataan, 1000 perkataan atau semua perkataan](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-level.png)
 ![Bahagian depan kad: perkataan Melayu](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-front.png)
 ![Bahagian belakang kad selepas tiga saat: terjemahan Denmark](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-back.png)
 
@@ -22,6 +23,7 @@ Program kad imbas untuk mempelajari perkataan Melayu yang paling kerap digunakan
 | 3. Terbalikkan kad | Selepas 3 saat kad menunjukkan terjemahan Denmark | MIL-004 |
 | 4. Simpan kemajuan anda | Perkataan yang diketahui dibuang dan selebihnya disimpan dalam `words_to_learn.csv` | MIL-005 |
 | Tambahan | Perkataan Melayu disebut (pilihan) | MIL-006 |
+| Tambahan | Anda memilih tahap dahulu: 100 perkataan pertama, 1000 perkataan pertama atau semua perkataan | MIL-008 |
 
 ## Untuk peserta kursus
 

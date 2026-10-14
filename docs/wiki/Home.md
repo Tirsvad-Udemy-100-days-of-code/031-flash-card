@@ -4,6 +4,7 @@
 
 A flash card program for learning the most frequent Malay words with their Danish translations. It is the solution of day 31 of Udemy's *100 Days of Code: The Complete Python Pro Bootcamp*.
 
+![The level screen: choose 100 words, 1000 words or all words](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-level.png)
 ![The front of a card: the Malay word](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-front.png)
 ![The back of the card after three seconds: the Danish translation](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-back.png)
 
@@ -22,6 +23,7 @@ A flash card program for learning the most frequent Malay words with their Danis
 | 3. Flip the cards | After 3 seconds the card shows the Danish translation | MIL-004 |
 | 4. Save your progress | Known words are removed and the rest is saved in `words_to_learn.csv` | MIL-005 |
 | Extra | The Malay word is spoken (optional) | MIL-006 |
+| Extra | You choose a level first: the first 100 words, the first 1000 words or all words | MIL-008 |
 
 ## For course participants
 

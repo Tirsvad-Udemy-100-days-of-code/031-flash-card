@@ -4,6 +4,7 @@
 
 Et flashkortprogram til at lære de mest almindelige malajiske ord med danske oversættelser. Det er løsningen på dag 31 i Udemys kursus *100 Days of Code: The Complete Python Pro Bootcamp*.
 
+![Niveauskærmen: vælg 100 ord, 1000 ord eller alle ord](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-level.png)
 ![Forsiden af et kort: det malajiske ord](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-front.png)
 ![Bagsiden af kortet efter tre sekunder: den danske oversættelse](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-back.png)
 
@@ -22,6 +23,7 @@ Et flashkortprogram til at lære de mest almindelige malajiske ord med danske ov
 | 3. Vend kortene | Efter 3 sekunder viser kortet den danske oversættelse | MIL-004 |
 | 4. Gem din fremgang | Kendte ord fjernes, og resten gemmes i `words_to_learn.csv` | MIL-005 |
 | Ekstra | Det malajiske ord bliver udtalt (valgfrit) | MIL-006 |
+| Ekstra | Du vælger først et niveau: de første 100 ord, de første 1000 ord eller alle ord | MIL-008 |
 
 ## Til kursister
 
