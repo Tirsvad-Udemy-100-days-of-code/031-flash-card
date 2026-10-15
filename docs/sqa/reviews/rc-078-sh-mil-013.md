@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [f8ccfca] |
 
 ---
 
@@ -58,3 +58,4 @@ Container run of the self test: 11 cases ok.
 
 [SH-MIL-013]: ../../../tools/docker
 [QC-SH-001]: ../../../framework/qc/code/qc-programming-shell.md
+[f8ccfca]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/f8ccfca02ef3a518eae472e3acdcd2aef03b5950
