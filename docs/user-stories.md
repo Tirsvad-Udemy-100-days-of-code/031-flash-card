@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.09 to US-001.12 (menu bar) | [2211d0f] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | US-001.08 names the latest release instead of v0.1.0 | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | US-001.08 names the latest release instead of v0.1.0 | [0264b60] |
 
 ---
 
@@ -208,3 +208,4 @@ All twelve stories are Independent in delivery order (each builds on the one bef
 [MIL-010]: ./milestones/mil-010-release.md
 [MIL-011]: ./milestones/mil-011-menu-bar.md
 [2211d0f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/2211d0f4cbd8182314d18cbdefd939ae50c39e6d
+[0264b60]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0264b6084f26bac5af716ea71596ce3be961fec8
