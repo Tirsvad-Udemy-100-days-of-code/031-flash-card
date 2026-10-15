@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [7c1f1b6] |
 
 ---
 
@@ -61,3 +61,4 @@ Milestone MIL-012 tasks 2, 3, 4 and 8 (this change set): 1 the three version pla
 
 [PY-MIL-012]: ../../../src/flash_card/__init__.py
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[7c1f1b6]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/7c1f1b6423a876d25afafd24f7f206d16ac6d669
