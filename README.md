@@ -106,7 +106,7 @@ Known words stay known at every level: the level only limits which of the words 
 
 ### Executable (Windows, no Python needed to run it)
 
-Download `flash-card.exe` and `flash-card.exe.sha256` from the [release page][release-0-1-0] and compare the SHA-256 hash of the file with the checksum file, or build it yourself:
+The [release page][release-0-1-0] of v0.1.0 has the release notes. The executable is not attached there yet, because the server's upload limit rejects a file of this size (HTTP 413). Build it yourself:
 
 ```powershell
 python -m pip install -e ".[build,speech]"
@@ -142,7 +142,7 @@ GNU Affero General Public License v3.0 or later. See [LICENSE][license].
 - [Repository][repository]
 - [Documentation][documentation]
 - [Issue tracker][issues]
-- [Releases][releases] (the Windows executable `flash-card.exe` and its checksum)
+- [Releases][releases] (v0.1.0: release notes; the executable is built from source, see Run)
 
 ## 📎 Appendix: Project documents
 
