@@ -12,7 +12,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.07 Start without Python | [768ca34] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.08 Download the executable | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.08 Download the executable | [9c8e294] |
 
 ---
 
@@ -152,3 +152,4 @@ All eight stories are Independent in delivery order (each builds on the one befo
 [MIL-009]: ./milestones/mil-009-executable.md
 [MIL-010]: ./milestones/mil-010-release.md
 [768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
+[9c8e294]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/9c8e2940217e615f82eda2d48aca9b2fd58f3687

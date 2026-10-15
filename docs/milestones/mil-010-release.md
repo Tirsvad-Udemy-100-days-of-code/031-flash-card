@@ -11,7 +11,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [9c8e294] |
 
 ---
 
@@ -76,3 +76,4 @@ A tag `v0.1.0` on the head of `main`, and a release on the git host with the ass
 [US-001]: ../user-stories.md
 [UC-001]: ../uc-001/uc.md
 [ADR-0004]: ../adr/adr-0004-pyinstaller-executable.md
+[9c8e294]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/9c8e2940217e615f82eda2d48aca9b2fd58f3687

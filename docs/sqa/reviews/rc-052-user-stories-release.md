@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [9c8e294] |
 
 ---
 
@@ -67,3 +67,4 @@ Full review (not a delta) after the change for MIL-010 (release).
 [US-001]: ../../../docs/user-stories.md
 [QC-US-001]: ../../../framework/qc/artifacts/qc-user-story.md
 [QC-LANG-001]: ../../../framework/qc/artifacts/qc-language-domain.md
+[9c8e294]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/9c8e2940217e615f82eda2d48aca9b2fd58f3687

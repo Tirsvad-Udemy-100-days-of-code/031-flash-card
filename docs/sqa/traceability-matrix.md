@@ -13,7 +13,7 @@
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-008 and the review records of the level choice (no checklist exists for this type) | [0b983b7] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [768ca34] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [061b4f4] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [9c8e294] |
 
 ---
 
@@ -166,3 +166,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-053]: ./reviews/rc-053-project-plan-release.md
 [RC-054]: ./reviews/rc-054-mil-010.md
 [MIL-010]: ../milestones/mil-010-release.md
+[9c8e294]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/9c8e2940217e615f82eda2d48aca9b2fd58f3687
