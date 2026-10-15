@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.08 Download the executable | [9c8e294] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.09 to US-001.12 (menu bar) | [2211d0f] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.09 to US-001.12 (menu bar) | [2211d0f] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | US-001.08 names the latest release instead of v0.1.0 | pending |
 
 ---
 
@@ -126,7 +126,7 @@ These stories cover the epic "Study Flash Cards": the four steps of the course a
 
 **Acceptance Criteria**
 
-- Given the release `v0.1.0` exists, when I open the releases page of the repository, then I find `flash-card.exe` and a checksum file attached to it.
+- Given a release exists (for example `v0.2.0`), when I open the releases page of the repository, then I find release notes and, when the git host accepts the upload, `flash-card.exe` and a checksum file attached to it.
 - Given I downloaded `flash-card.exe`, when I compute its SHA-256 hash, then it equals the value in the checksum file and in the release notes.
 - Given I read the release notes, when I look for what the file is, then they say that it is an unsigned Windows build, what the `data` folder next to it holds, and how to build it myself.
 
@@ -207,5 +207,4 @@ All twelve stories are Independent in delivery order (each builds on the one bef
 [MIL-009]: ./milestones/mil-009-executable.md
 [MIL-010]: ./milestones/mil-010-release.md
 [MIL-011]: ./milestones/mil-011-menu-bar.md
-[9c8e294]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/9c8e2940217e615f82eda2d48aca9b2fd58f3687
 [2211d0f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/2211d0f4cbd8182314d18cbdefd939ae50c39e6d

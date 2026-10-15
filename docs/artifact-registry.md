@@ -14,7 +14,7 @@ document of a type. `Primary File` may contain a glob (e.g.
 | BC | Business Case | docs/business-case.md | 002 |
 | SA | Stakeholder Analysis | docs/stakeholder-analysis.md | 002 |
 | PP | Project Plan | docs/project-plan.md | 002 |
-| MIL | Milestone / Gateway | docs/milestones/*.md | 012 |
+| MIL | Milestone / Gateway | docs/milestones/*.md | 013 |
 | UCD | Use Case Diagram | docs/use-case-diagram.md | 002 |
 | US | User Story | docs/user-stories.md | 002 |
 | UC | Use Case | docs/uc-*/uc.md | 002 |
@@ -25,7 +25,7 @@ document of a type. `Primary File` may contain a glob (e.g.
 | DCD | Design Class Diagram | docs/dcd.md | 002 |
 | DICT | Domain Dictionary | docs/dictionary.md | 002 |
 | ADR | Architecture Decision Record | docs/adr/adr-NNNN-*.md | 0005 |
-| RC | SQA Review Record | docs/sqa/reviews/rc-*.md | 067 |
+| RC | SQA Review Record | docs/sqa/reviews/rc-*.md | 071 |
 | TM | Traceability Matrix | docs/sqa/traceability-matrix.md | 002 |
 
 ## Languages
