@@ -11,7 +11,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [f86bc91] |
 
 ---
 
@@ -85,3 +85,4 @@ Decide whether the program can be built, tested and run without touching the Pro
 [DCD-001]: ../dcd.md
 [ADR-0004]: ../adr/adr-0004-pyinstaller-executable.md
 [MIL-012]: ./mil-012-release-0-2-0.md
+[f86bc91]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/f86bc9136e7719fbcd049a4f803959019b7d2df3
