@@ -58,7 +58,7 @@ The window test in `tests/e2e/` is skipped when no display is available.
 
 ## Release and executable (Windows)
 
-The [release page](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0) of v0.1.0 has the release notes. The executable is not attached there yet, because the server's upload limit rejects a file of this size (HTTP 413); build it as described below. The file is not signed, so Windows may show a SmartScreen warning.
+The release pages of [v0.2.0](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.2.0) and [v0.1.0](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0) have the release notes. The executable is not attached there yet, because the server's upload limit rejects a file of this size (HTTP 413); build it as described below. The file is not signed, so Windows may show a SmartScreen warning.
 
 ## Build an executable (Windows)
 

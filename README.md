@@ -120,7 +120,7 @@ The progress of the delivered `ms-da.csv` is `data/words_to_learn.csv`; another 
 
 ### Executable (Windows, no Python needed to run it)
 
-The [release page][release-0-1-0] of v0.1.0 has the release notes. The executable is not attached there yet, because the server's upload limit rejects a file of this size (HTTP 413). Build it yourself:
+The release pages of [v0.2.0][release-0-2-0] and [v0.1.0][release-0-1-0] have the release notes. The executable is not attached there yet, because the server's upload limit rejects a file of this size (HTTP 413). Build it yourself:
 
 ```powershell
 python -m pip install -e ".[build,speech]"
@@ -156,7 +156,7 @@ GNU Affero General Public License v3.0 or later. See [LICENSE][license].
 - [Repository][repository]
 - [Documentation][documentation]
 - [Issue tracker][issues]
-- [Releases][releases] (v0.1.0: release notes; the executable is built from source, see Run)
+- [Releases][releases] (v0.2.0 and v0.1.0: release notes; the executable is built from source, see Run)
 
 ## 📎 Appendix: Project documents
 
@@ -191,6 +191,7 @@ The documents a newcomer needs, in reading order.
 [issues]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/issues
 [releases]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases
 [release-0-1-0]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0
+[release-0-2-0]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.2.0
 [agents]: ./AGENTS.md
 [BC-001]: ./docs/business-case.md
 [SA-001]: ./docs/stakeholder-analysis.md
