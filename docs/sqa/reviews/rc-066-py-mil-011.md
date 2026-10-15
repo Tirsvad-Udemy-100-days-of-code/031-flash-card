@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [ce4aacb] |
 
 ---
 
@@ -61,3 +61,4 @@ Milestone MIL-011 Go criteria: 1 the menu bar structure and order are read from 
 
 [PY-MIL-011]: ../../../src/flash_card
 [QC-PY-001]: ../../../framework/qc/code/qc-programming-python.md
+[ce4aacb]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/ce4aacb4bc7ce742e3b2397e05a43572497402ef
