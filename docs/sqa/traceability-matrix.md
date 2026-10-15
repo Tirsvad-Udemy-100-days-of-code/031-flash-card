@@ -15,7 +15,8 @@
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [061b4f4] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [9c8e294] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [2211d0f] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [0264b60] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [0264b60] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | pending |
 
 ---
 
@@ -29,9 +30,9 @@ updated whenever an artifact instance is created or reviewed.
 
 | Artifact Instance | Type | Language | Domain | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- | --- | --- |
-| BC-001 | Business Case | en | it | - | SA-001, PP-001 | [RC-067] |
+| BC-001 | Business Case | en | it | - | SA-001, PP-001 | [RC-073] |
 | SA-001 | Stakeholder Analysis | en | it | BC-001 | PP-001, DICT-001 | [RC-002] |
-| PP-001 | Project Plan | en | it | BC-001, SA-001 | MIL-001 to MIL-008 | [RC-069] |
+| PP-001 | Project Plan | en | it | BC-001, SA-001 | MIL-001 to MIL-008 | [RC-074] |
 | UCD-001 | Use Case Diagram | en | it | SA-001, BC-001 | US-001, UC-001 | [RC-004] |
 | US-001 | User Story | en | it | UCD-001, BC-001 | MIL-002 to MIL-006, MIL-008 | [RC-068] |
 | UC-001 | Use Case | en | it | UCD-001, US-001 | DM-001, SSD-001 | [RC-058] |
@@ -57,6 +58,8 @@ updated whenever an artifact instance is created or reviewed.
 | MIL-010 | Milestone / Gateway | en | it | BC-001 | - | [RC-054], [RC-055] |
 | MIL-011 | Milestone / Gateway | en | it | BC-001 | - | [RC-065] |
 | MIL-012 | Milestone / Gateway | en | it | BC-001 | - | [RC-070], [RC-072] |
+| MIL-013 | Milestone / Gateway | en | it | BC-001 | - | [RC-076] |
+| ADR-0005 | Architecture Decision Record | - | - | BC-001 | - | [RC-075] |
 | PY-MIL-001 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-023] |
 | PY-MIL-002 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-024] |
 | PY-MIL-003 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-025] |
@@ -197,3 +200,9 @@ updated whenever an artifact instance is created or reviewed.
 [RC-071]: ./reviews/rc-071-py-mil-012.md
 [PY-MIL-012]: ../../src/flash_card/__init__.py
 [RC-072]: ./reviews/rc-072-release-v0-2-0.md
+[RC-073]: ./reviews/rc-073-business-case-containers.md
+[RC-074]: ./reviews/rc-074-project-plan-containers.md
+[RC-075]: ./reviews/rc-075-adr-0005.md
+[RC-076]: ./reviews/rc-076-mil-013.md
+[MIL-013]: ../milestones/mil-013-container-checks.md
+[ADR-0005]: ../adr/adr-0005-container-and-sandbox-checks.md
