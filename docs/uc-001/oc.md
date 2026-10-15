@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added chooseLevel; startStudySession returns the levels | [0b983b7] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added chooseLevel; startStudySession returns the levels | [0b983b7] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the menu contracts | [2211d0f] |
 
 ---
 
@@ -93,6 +93,119 @@ The turn-over of the card after 3000 ms is started by the system's own timer, no
 | --- | --- |
 | `current_card` is `None` (no card is shown) | Nothing is changed and nothing is stored |
 
+## Contract: openWordList
+
+| Item | Value |
+| --- | --- |
+| Operation | `openWordList(path: Path): tuple[Level, ...]` |
+| Traces to | `openWordList` in [SSD-001] |
+| Domain Model concepts | Word List, Study Session, Words To Learn ([DM-001]); IT terms `Vocabulary`, `StudySession`, `Deck` ([DICT-001]) |
+
+**Preconditions**
+
+- `path` names an existing file.
+
+**Postconditions**
+
+- The `Vocabulary` of `path` is the word list in use and its progress file (`words_to_learn.csv` for `ms-da.csv`, else `words_to_learn_<name>.csv` in the data folder) is the progress in use.
+- Any earlier `StudySession` was dropped and the levels are returned; no card is shown until a level is chosen.
+
+**Exceptions**
+
+| Condition (failing precondition) | Outcome |
+| --- | --- |
+| The file does not exist or is not a word list (no header of two language codes, a row that is not two cells, or no card) | `VocabularyNotFoundError` or `VocabularyFormatError` is raised; the earlier word list and session stay in use and no file is changed |
+
+## Contract: changeLevel
+
+| Item | Value |
+| --- | --- |
+| Operation | `changeLevel(): tuple[Level, ...]` |
+| Traces to | `changeLevel` in [SSD-001] |
+| Domain Model concepts | Level, Study Session ([DM-001]); IT terms `Level`, `StudySession` ([DICT-001]) |
+
+**Preconditions**
+
+- A word list is in use.
+
+**Postconditions**
+
+- The pending flip timer was cancelled, the `StudySession` was dropped and the levels are returned; the progress file was not changed.
+
+**Exceptions**
+
+| Condition (failing precondition) | Outcome |
+| --- | --- |
+| None | – |
+
+## Contract: resetWordList
+
+| Item | Value |
+| --- | --- |
+| Operation | `resetWordList(): tuple[Level, ...]` |
+| Traces to | `resetWordList` in [SSD-001] |
+| Domain Model concepts | Words To Learn, Word List ([DM-001]); IT terms `Deck`, `Vocabulary` ([DICT-001]) |
+
+**Preconditions**
+
+- A word list is in use and the Learner confirmed.
+
+**Postconditions**
+
+- The progress file of the word list in use does not exist; the word list file and the progress files of other word lists are unchanged.
+- The `StudySession` was dropped and the levels are returned; the next session starts from a `Deck` of the whole `Vocabulary`.
+
+**Exceptions**
+
+| Condition (failing precondition) | Outcome |
+| --- | --- |
+| The progress file does not exist | Nothing is deleted and no error is raised |
+| The progress file cannot be deleted (`OSError`) | The error is logged and shown to the Learner; the earlier session stays |
+
+## Contract: showContact
+
+| Item | Value |
+| --- | --- |
+| Operation | `showContact(): tuple[str, str, str]` |
+| Traces to | `showContact` in [SSD-001] |
+| Domain Model concepts | none (author information, outside the domain) |
+
+**Preconditions**
+
+- None.
+
+**Postconditions**
+
+- The name, the title and the link of the author are returned and the link was opened in the web browser.
+
+**Exceptions**
+
+| Condition (failing precondition) | Outcome |
+| --- | --- |
+| No web browser can be started | The failure is logged; nothing else changes |
+
+## Contract: exit
+
+| Item | Value |
+| --- | --- |
+| Operation | `exit(): None` |
+| Traces to | `exit` in [SSD-001] |
+| Domain Model concepts | Study Session ([DM-001]); IT term `StudySession` ([DICT-001]) |
+
+**Preconditions**
+
+- None.
+
+**Postconditions**
+
+- The pending flip timer was cancelled, the window was closed and the program ended with exit code 0; the progress file is as it was after the last `markKnown`.
+
+**Exceptions**
+
+| Condition (failing precondition) | Outcome |
+| --- | --- |
+| None | – |
+
 ## Contract: markUnknown
 
 | Item | Value |
@@ -124,5 +237,5 @@ The turn-over of the card after 3000 ms is started by the system's own timer, no
 [DM-001]: ../domain-model.md
 [DICT-001]: ../dictionary.md
 [SD-001]: ./sd.md
-[c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
 [0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1
+[2211d0f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/2211d0f4cbd8182314d18cbdefd939ae50c39e6d

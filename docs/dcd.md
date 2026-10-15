@@ -9,9 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added Level, Deck.within, the level argument and the level screen | [0b983b7] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope note: runtime path rules and the executable build are packaging support, not design classes | [768ca34] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope note: runtime path rules and the executable build are packaging support, not design classes | [768ca34] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the menu classes, Application and ProgressRepository.reset | [2211d0f] |
 
 ---
 
@@ -56,6 +55,7 @@ package domain {
   interface ProgressRepository {
     +load() : Deck | None
     +save(deck : Deck) : None
+    +reset() : None
   }
   class VocabularyError
   class VocabularyFormatError
@@ -102,6 +102,29 @@ package infrastructure {
   }
 }
 package presentation {
+  class MenuEntry <<frozen>> {
+    +label : str
+    +command : str
+  }
+  class MenuViewModel {
+    +file_entries : tuple[MenuEntry, ...]
+    +contact_label : str
+    +contact_url : str
+  }
+  class MenuView {
+    +open_word_list() : None
+    +change_level() : None
+    +reset_word_list() : None
+    +show_contact() : None
+    +exit_program() : None
+  }
+  class Application {
+    +start(level : Level) : None
+    +open_word_list(path : Path) : None
+    +change_level() : None
+    +reset_word_list() : None
+    +exit_application() : None
+  }
   class LevelChoice <<frozen>> {
     +label : str
     +level : Level
@@ -162,6 +185,12 @@ Main ..> CsvVocabularyRepository : composes
 Main ..> CsvProgressRepository : composes
 Main ..> GttsSpeech : composes
 Main ..> FlashCardView : composes
+Main ..> Application : creates
+Main ..> MenuView : composes
+MenuView "1" --> "1" MenuViewModel
+MenuViewModel "1" *-- "5" MenuEntry
+MenuView "1" --> "1" Application
+Application ..> ProgressRepository : resets
 @enduml
 ```
 
@@ -183,6 +212,9 @@ Main ..> FlashCardView : composes
 | `GttsSpeech`, `NullSpeech` | (none) | Adapters for speech: the gTTS service, and silence | none | `speak` |
 | `FlashCardViewModel` | Study Session | Exposes the side, language name and text of the card shown, and the three commands | `_session`, `side`, `language_name`, `text` | `next_card`, `flip_card`, `is_known` |
 | `LevelChoice`, `LevelViewModel` | Level | Plain data and view model of the level screen: the title and the three choices with their labels | `title`, `choices` | none |
+| `MenuEntry`, `MenuViewModel` | (none: user interface) | Plain data and view model of the menu bar: the labels and the order of the File entries, the contact label and link | `file_entries`, `contact_label`, `contact_url` | none |
+| `MenuView` | (none: user interface) | Draws the menu bar, asks the dialogs (file, confirmation, messages) and forwards the command | menus | `open_word_list`, `change_level`, `reset_word_list`, `show_contact`, `exit_program` |
+| `Application` | Study Session | Holds the window, the word list and the progress in use; starts, drops and replaces sessions on level choice and menu commands | `root`, `view`, `exit_code` | `start`, `open_word_list`, `change_level`, `reset_word_list`, `exit_application` |
 | `LevelView` | (none: user interface) | Draws the level screen and forwards the chosen level | buttons | `choose` |
 | `FlashCardView` | (none: user interface) | Draws the window, forwards the buttons, owns the 3000 ms timer | `flip_timer`, widgets | `next_card`, `flip_card`, `is_known` |
 
@@ -193,6 +225,11 @@ Main ..> FlashCardView : composes
 | `open_study_session(vocabulary_repository, progress_repository, speech, choose, level) -> StudySession` | [OC-001] `chooseLevel`, [SD-001] sequence chooseLevel (loads the words to learn and the level's cards) |
 | `Level.first(cards) -> tuple[Card, ...]`, `Deck.within(cards) -> tuple[Card, ...]` | [OC-001] `chooseLevel` postcondition (the level's cards); [SD-001] |
 | `LevelViewModel.choices -> tuple[LevelChoice, ...]` | [OC-001] `startStudySession`; [SD-001] sequence startStudySession |
+| `Application.open_word_list(path) -> None` | [OC-001] `openWordList`; [SD-001] sequence openWordList |
+| `Application.change_level() -> None` | [OC-001] `changeLevel` |
+| `Application.reset_word_list() -> None`, `ProgressRepository.reset() -> None` | [OC-001] `resetWordList`; [SD-001] sequence resetWordList |
+| `MenuView.show_contact() -> None` | [OC-001] `showContact` |
+| `Application.exit_application() -> None`, `MenuView.exit_program() -> None` | [OC-001] `exit` |
 | `LevelView.choose(level) -> None` | [OC-001] `chooseLevel` (forwards the level to the composition root) |
 | `StudySession.next_card() -> CardDto \| None` | [OC-001] `chooseLevel` (first card), `markUnknown`; [SD-001] |
 | `StudySession.mark_known() -> None` | [OC-001] `markKnown` (remove and save); [SD-001] |
@@ -208,8 +245,9 @@ Main ..> FlashCardView : composes
 | Repository | `VocabularyRepository`, `ProgressRepository`, CSV adapters | The domain does not know the CSV file |
 | Ports and adapters | `SpeechPort`, `GttsSpeech`, `NullSpeech` | Speech is an optional extra; the core runs without it |
 | Null Object | `NullSpeech` | No `if speech:` checks in the use case |
-| MVVM | `FlashCardView`, `FlashCardViewModel`, `LevelView`, `LevelViewModel` | Behaviour is tested without Tkinter ([ADR-0002]) |
+| MVVM | `FlashCardView`, `FlashCardViewModel`, `LevelView`, `LevelViewModel`, `MenuView`, `MenuViewModel` | Behaviour is tested without Tkinter ([ADR-0002]) |
 | Composition root | `app.main` | The one place that names the adapters, shows the level screen and chooses the word list file (beside the executable, else inside it) |
+| Controller (GRASP) | `Application` | One object receives the menu and level commands and coordinates repositories and sessions |
 | Value object | `Level`, `Card`, `LanguagePair` | Immutable data with its own rule (`Level.first`) |
 
 ## Dependency Check
@@ -225,6 +263,5 @@ Imports point inward: `domain` imports nothing from the other packages; `applica
 [SD-001]: ./uc-001/sd.md
 [ADR-0002]: ./adr/adr-0002-clean-architecture-and-mvvm.md
 [ADR-0004]: ./adr/adr-0004-pyinstaller-executable.md
-[c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
-[0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1
 [768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
+[2211d0f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/2211d0f4cbd8182314d18cbdefd939ae50c39e6d

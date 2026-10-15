@@ -60,3 +60,27 @@ The Product Owner gave this screen in the first prompt (the course's target scre
 | Front (first 3000 ms) | `card_front.png` | Malay | the Malay word | black |
 | Back (after 3000 ms) | `card_back.png` | Danish | the Danish translation | white |
 | Finished | `card_front.png` | (empty) | "Nothing left to learn" | black |
+
+## Menu bar and dialogs (all screens)
+
+```text
++----------------------------------------------------------+
+| File   About                                             |   classic menu bar of the window
++----------------------------------------------------------+
+  File                       About
+  +------------------------+ +-----------------------------------------------+
+  | Open...                | | Contact >                                     |
+  | Change level...        | |    +-----------------------------------------+|
+  | Reset word list...     | |    | Jens Tirsvad Nielsen, Software engineer ||
+  | ---------------------- | |    |  (LinkedIn)                             ||
+  | Exit                   | |    +-----------------------------------------+|
+  +------------------------+ +-----------------------------------------------+
+```
+
+| Element | Behaviour |
+| --- | --- |
+| File, Open... | Standard file dialog for `*.csv` (all files allowed), starting in the data folder; a refused file shows an error message with the reason |
+| File, Change level... | Replaces the screen by Screen 1 |
+| File, Reset word list... | Question "Start `<name>` from the beginning? All words will be to learn again." with Yes and No; Yes replaces the screen by Screen 1 |
+| File, Exit | Closes the window |
+| About, Contact, the author entry | Opens https://www.linkedin.com/in/tirsvad74 in the web browser |

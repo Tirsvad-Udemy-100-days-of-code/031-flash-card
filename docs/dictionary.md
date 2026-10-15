@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the term Level | [0b983b7] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the term Level | [0b983b7] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the term Reset | [2211d0f] |
 
 ---
 
@@ -31,6 +31,7 @@ Maps each Product Owner (PO) term to its professional IT term. PO language: Engl
 | Level | en | `Level` | The number of the most frequent words of the word list that a study session uses: 100, 1000 or all. | DM, UC, US | DCD |
 | Language pair | en | `LanguagePair` | The two languages of a word list, the language learned and the language of the translation. | DM, UC | DCD |
 | Progress file | en | `ProgressRepository` | The file `words_to_learn.csv` that keeps the words to learn between runs. | UC, US | DCD |
+| Reset | en | `reset` | Removing the kept progress of a word list so that all its words are to learn again. | UC, US | DCD, OC |
 | Spoken word | en | `SpeechPort` | The Malay word read aloud when its card is shown. | UC, US | DCD |
 
 ## Rules
@@ -44,5 +45,5 @@ Maps each Product Owner (PO) term to its professional IT term. PO language: Engl
 [BC-001]: ./business-case.md
 [SA-001]: ./stakeholder-analysis.md
 [DM-001]: ./domain-model.md
-[c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
 [0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1
+[2211d0f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/2211d0f4cbd8182314d18cbdefd939ae50c39e6d
