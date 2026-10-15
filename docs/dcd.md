@@ -10,7 +10,7 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope note: runtime path rules and the executable build are packaging support, not design classes | [768ca34] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the menu classes, Application and ProgressRepository.reset | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the menu classes, Application and ProgressRepository.reset | [2211d0f] |
 
 ---
 
@@ -264,3 +264,4 @@ Imports point inward: `domain` imports nothing from the other packages; `applica
 [ADR-0002]: ./adr/adr-0002-clean-architecture-and-mvvm.md
 [ADR-0004]: ./adr/adr-0004-pyinstaller-executable.md
 [768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
+[2211d0f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/2211d0f4cbd8182314d18cbdefd939ae50c39e6d

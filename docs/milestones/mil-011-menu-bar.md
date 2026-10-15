@@ -11,7 +11,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [2211d0f] |
 
 ---
 
@@ -81,3 +81,4 @@ The window has a menu bar. File: Open (a CSV word list), Change level, Reset wor
 [US-001]: ../user-stories.md
 [UC-001]: ../uc-001/uc.md
 [DCD-001]: ../dcd.md
+[2211d0f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/2211d0f4cbd8182314d18cbdefd939ae50c39e6d
