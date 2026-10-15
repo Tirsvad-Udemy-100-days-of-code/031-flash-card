@@ -26,6 +26,7 @@ Python Pro Bootcamp*, for Malay words with Danish translations.
 ### Known limits
 
 - The executable is not signed; Windows SmartScreen may warn about it.
+- The executable is not attached to the release: the upload limit of the server rejects a file of its size. Build it with `python tools/build_executable.py`.
 - The executable is built for Windows (x64); on Linux and macOS run the program
   from source or build it on that system.
 - The Danish column of the word list is machine translated.

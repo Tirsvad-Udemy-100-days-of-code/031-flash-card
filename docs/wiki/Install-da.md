@@ -56,9 +56,9 @@ python -m pytest
 
 Vinduestesten i `tests/e2e/` springes over, når der ikke er en skærm.
 
-## Download programfilen (Windows)
+## Udgivelse og programfil (Windows)
 
-Hent `flash-card.exe` og `flash-card.exe.sha256` fra [udgivelsessiden](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0). Sammenlign filens SHA-256-hash med kontrolsumfilen (`certutil -hashfile flash-card.exe SHA256` i Windows). Filen er ikke signeret, så Windows kan vise en SmartScreen-advarsel.
+[Udgivelsessiden](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0) for v0.1.0 har udgivelsesnoterne. Programfilen er endnu ikke vedhæftet, fordi serverens grænse for upload afviser en fil af denne størrelse (HTTP 413); byg den som beskrevet nedenfor. Filen er ikke signeret, så Windows kan vise en SmartScreen-advarsel.
 
 ## Byg en programfil (Windows)
 

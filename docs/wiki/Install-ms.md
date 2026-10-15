@@ -56,9 +56,9 @@ python -m pytest
 
 Ujian tetingkap dalam `tests/e2e/` dilangkau apabila tiada paparan.
 
-## Muat turun fail boleh laku (Windows)
+## Keluaran dan fail boleh laku (Windows)
 
-Muat turun `flash-card.exe` dan `flash-card.exe.sha256` daripada [halaman keluaran](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0). Bandingkan cincangan SHA-256 fail dengan fail semak jumlah (`certutil -hashfile flash-card.exe SHA256` pada Windows). Fail tidak ditandatangani, jadi Windows mungkin menunjukkan amaran SmartScreen.
+[Halaman keluaran](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0) v0.1.0 mempunyai nota keluaran. Fail boleh laku belum dilampirkan di sana kerana had muat naik pelayan menolak fail sebesar ini (HTTP 413); bina seperti yang diterangkan di bawah. Fail tidak ditandatangani, jadi Windows mungkin menunjukkan amaran SmartScreen.
 
 ## Bina fail boleh laku (Windows)
 
