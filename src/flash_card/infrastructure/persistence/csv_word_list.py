@@ -67,7 +67,8 @@ def read_word_list(path: Path) -> tuple[LanguagePair, tuple[Card, ...]]:
     @param path The CSV file: a header of two language codes, then one card a row.
     @return The language pair and the cards in file order.
     @throws VocabularyNotFoundError When the file does not exist.
-    @throws VocabularyFormatError When the file is empty or a row is malformed.
+    @throws VocabularyFormatError When the file is empty, not UTF-8 text, cannot
+        be read or a row is malformed.
     """
     pair: LanguagePair | None = None
     cards: list[Card] = []
@@ -83,6 +84,10 @@ def read_word_list(path: Path) -> tuple[LanguagePair, tuple[Card, ...]]:
                     cards.append(_parse_card(path, reader.line_num, row))
     except FileNotFoundError as error:
         raise VocabularyNotFoundError(f"word list not found: {path}") from error
+    except UnicodeDecodeError as error:
+        raise VocabularyFormatError(f"{path}: file is not UTF-8 text") from error
+    except OSError as error:
+        raise VocabularyFormatError(f"{path}: cannot be read: {error}") from error
     if pair is None:
         raise _format_error(path, 1, "file is empty")
     return pair, tuple(cards)

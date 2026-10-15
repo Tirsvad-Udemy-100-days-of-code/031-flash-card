@@ -27,3 +27,11 @@ class ProgressRepository(Protocol):
         @return Nothing.
         """
         ...
+
+    def reset(self) -> None:
+        """Forget the saved words to learn, so every word is to learn again.
+
+        @return Nothing.
+        @throws OSError When the saved progress cannot be removed.
+        """
+        ...

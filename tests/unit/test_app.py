@@ -63,6 +63,15 @@ class _FakeLevelView:
 class _FakeFlashCardView:
     def __init__(self, root: object, view_model: FlashCardViewModel) -> None:
         self.view_model = view_model
+        self.closed = False
+
+    def close(self) -> None:
+        self.closed = True
+
+
+class _FakeMenuView:
+    def __init__(self, root: object, view_model: object, application: object) -> None:
+        self.application = application
 
 
 class _Vocabulary:
@@ -76,11 +85,17 @@ class _Vocabulary:
 
 
 class _Progress:
+    def __init__(self) -> None:
+        self.resets = 0
+
     def load(self) -> Deck | None:
         return None
 
     def save(self, deck: Deck) -> None:
         return None
+
+    def reset(self) -> None:
+        self.resets += 1
 
 
 class _Speech:
@@ -96,6 +111,7 @@ def _first(cards: Sequence[Card]) -> Card:
 def fake_tk_root(monkeypatch: pytest.MonkeyPatch) -> None:
     """Keep every test in this module away from a real Tk root."""
     monkeypatch.setattr(app.tk, "Tk", _FakeRoot)
+    monkeypatch.setattr(app, "MenuView", _FakeMenuView)
 
 
 @pytest.fixture
@@ -104,9 +120,31 @@ def fake_views(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(app, "FlashCardView", _FakeFlashCardView)
 
 
-def _application(root: _FakeRoot, error: bool = False) -> app.Application:
+LIST_PATH = Path("lists") / "ms-da.csv"
+OTHER_PATH = Path("lists") / "animals.csv"
+
+
+class _Factory:
+    """Repositories for a path, recorded; the paths in bad are unusable."""
+
+    def __init__(self, error: bool = False, bad: tuple[Path, ...] = ()) -> None:
+        self._error = error
+        self._bad = bad
+        self.progress: dict[Path, _Progress] = {}
+        self.calls: list[Path] = []
+
+    def __call__(self, path: Path) -> tuple[_Vocabulary, _Progress]:
+        self.calls.append(path)
+        progress = self.progress.setdefault(path, _Progress())
+        return _Vocabulary(self._error or path in self._bad), progress
+
+
+def _application(
+    root: _FakeRoot, error: bool = False, factory: _Factory | None = None
+) -> app.Application:
+    repositories_for = _Factory(error) if factory is None else factory
     return app.Application(
-        cast(tk.Tk, root), _Vocabulary(error), _Progress(), _Speech(), _first
+        cast(tk.Tk, root), _Speech(), _first, repositories_for, LIST_PATH
     )
 
 
@@ -293,3 +331,106 @@ def test_create_application_draws_first_card_from_bundled_list(
     assert view.view_model.text == "saya"
     view.view_model.is_known()
     assert (data / "words_to_learn.csv").is_file()
+
+
+def test_word_list_name_and_folder_are_those_of_the_list_in_use() -> None:
+    application = _application(_FakeRoot())
+    assert application.word_list_name == "ms-da.csv"
+    assert application.word_list_folder == Path("lists")
+
+
+def test_open_word_list_replaces_repositories_and_shows_level_screen(
+    fake_views: None,
+) -> None:
+    factory = _Factory()
+    application = _application(_FakeRoot(), factory=factory)
+    application.start(Level(None))
+    card_view = application.view
+    assert isinstance(card_view, _FakeFlashCardView)
+
+    application.open_word_list(OTHER_PATH)
+
+    assert card_view.closed
+    assert isinstance(application.view, _FakeLevelView)
+    assert application.word_list_name == "animals.csv"
+    application.start(Level(None))
+    application.reset_word_list()
+    assert factory.progress[OTHER_PATH].resets == 1
+    assert factory.progress[LIST_PATH].resets == 0
+
+
+def test_open_word_list_raises_and_changes_nothing_when_list_is_invalid(
+    fake_views: None,
+) -> None:
+    factory = _Factory(bad=(OTHER_PATH,))
+    application = _application(_FakeRoot(), factory=factory)
+    application.start(Level(None))
+    card_view = application.view
+    assert isinstance(card_view, _FakeFlashCardView)
+
+    with pytest.raises(VocabularyNotFoundError):
+        application.open_word_list(OTHER_PATH)
+
+    assert application.view is card_view
+    assert not card_view.closed
+    assert application.word_list_name == "ms-da.csv"
+    application.reset_word_list()
+    assert factory.progress[LIST_PATH].resets == 1
+    assert factory.progress[OTHER_PATH].resets == 0
+
+
+def test_change_level_closes_the_card_screen_and_shows_the_level_screen(
+    fake_views: None,
+) -> None:
+    application = _application(_FakeRoot())
+    application.start(Level(None))
+    card_view = application.view
+    assert isinstance(card_view, _FakeFlashCardView)
+
+    application.change_level()
+
+    assert card_view.closed
+    assert isinstance(application.view, _FakeLevelView)
+
+
+def test_change_level_destroys_the_level_screen_it_replaces(
+    fake_views: None,
+) -> None:
+    application = _application(_FakeRoot())
+    application.show_level_screen()
+    first = application.view
+    assert isinstance(first, _FakeLevelView)
+
+    application.change_level()
+
+    assert first.destroyed
+    assert application.view is not first
+
+
+def test_reset_word_list_resets_progress_then_shows_the_level_screen(
+    fake_views: None,
+) -> None:
+    factory = _Factory()
+    application = _application(_FakeRoot(), factory=factory)
+    application.start(Level(None))
+
+    application.reset_word_list()
+
+    assert factory.progress[LIST_PATH].resets == 1
+    assert isinstance(application.view, _FakeLevelView)
+
+
+def test_exit_application_closes_the_screen_and_destroys_the_root(
+    fake_views: None,
+) -> None:
+    root = _FakeRoot()
+    application = _application(root)
+    application.start(Level(None))
+    card_view = application.view
+    assert isinstance(card_view, _FakeFlashCardView)
+
+    application.exit_application()
+
+    assert card_view.closed
+    assert root.destroyed
+    assert application.exit_code == 0

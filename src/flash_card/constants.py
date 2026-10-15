@@ -78,6 +78,12 @@ CSV_ENCODING: Final[str] = "utf-8-sig"
 VOCABULARY_FILE_NAME: Final[str] = "ms-da.csv"
 ## @brief File name of the words still to learn.
 PROGRESS_FILE_NAME: Final[str] = "words_to_learn.csv"
+## @brief File name of the words to learn of another word list; {stem} is its stem.
+PROGRESS_FILE_NAME_TEMPLATE: Final[str] = "words_to_learn_{stem}.csv"
+## @brief Pattern of the characters replaced in a stem (not letter, digit, - or _).
+PROGRESS_STEM_FORBIDDEN: Final[str] = r"[^\w-]"
+## @brief Replacement of a forbidden character in the progress file name.
+PROGRESS_STEM_REPLACEMENT: Final[str] = "_"
 
 ## @brief Root folder of the project, for a source run.
 PROJECT_ROOT: Final[Path] = Path(__file__).resolve().parents[2]
@@ -105,3 +111,71 @@ CARD_BACK_IMAGE_NAME: Final[str] = "card_back.png"
 RIGHT_IMAGE_NAME: Final[str] = "right.png"
 ## @brief File name of the wrong button image.
 WRONG_IMAGE_NAME: Final[str] = "wrong.png"
+
+## @brief Label of the File menu.
+MENU_FILE_LABEL: Final[str] = "File"
+## @brief Label of the File, Open entry.
+MENU_OPEN_LABEL: Final[str] = "Open..."
+## @brief Label of the File, Change level entry.
+MENU_CHANGE_LEVEL_LABEL: Final[str] = "Change level..."
+## @brief Label of the File, Reset word list entry.
+MENU_RESET_LABEL: Final[str] = "Reset word list..."
+## @brief Label of the File, Exit entry.
+MENU_EXIT_LABEL: Final[str] = "Exit"
+## @brief Label of the About menu.
+MENU_ABOUT_LABEL: Final[str] = "About"
+## @brief Label of the About, Contact submenu.
+MENU_CONTACT_LABEL: Final[str] = "Contact"
+## @brief Index of the mnemonic letter of the File menu.
+MENU_FILE_UNDERLINE: Final[int] = 0
+## @brief Index of the mnemonic letter of the Open entry.
+MENU_OPEN_UNDERLINE: Final[int] = 0
+## @brief Index of the mnemonic letter of the Change level entry.
+MENU_CHANGE_LEVEL_UNDERLINE: Final[int] = 0
+## @brief Index of the mnemonic letter of the Reset word list entry.
+MENU_RESET_UNDERLINE: Final[int] = 0
+## @brief Index of the mnemonic letter of the Exit entry.
+MENU_EXIT_UNDERLINE: Final[int] = 1
+## @brief Index of the mnemonic letter of the About menu.
+MENU_ABOUT_UNDERLINE: Final[int] = 0
+## @brief Index of the mnemonic letter of the Contact submenu.
+MENU_CONTACT_UNDERLINE: Final[int] = 0
+## @brief Command name of the Open entry, as the menu view maps it.
+MENU_COMMAND_OPEN: Final[str] = "open_word_list"
+## @brief Command name of the Change level entry.
+MENU_COMMAND_CHANGE_LEVEL: Final[str] = "change_level"
+## @brief Command name of the Reset word list entry.
+MENU_COMMAND_RESET: Final[str] = "reset_word_list"
+## @brief Command name of the Exit entry.
+MENU_COMMAND_EXIT: Final[str] = "exit_program"
+
+## @brief Name of the author shown under About, Contact.
+CONTACT_NAME: Final[str] = "Jens Tirsvad Nielsen"
+## @brief Title of the author shown under About, Contact.
+CONTACT_TITLE: Final[str] = "Software engineer"
+## @brief LinkedIn page of the author.
+CONTACT_URL: Final[str] = "https://www.linkedin.com/in/tirsvad74"
+## @brief Text of the contact entry: name and title; {name} and {title}.
+CONTACT_LABEL_TEMPLATE: Final[str] = "{name}, {title}"
+
+## @brief Title of the open file dialog.
+OPEN_DIALOG_TITLE: Final[str] = "Open a word list"
+## @brief File types of the open file dialog: description and pattern.
+OPEN_FILE_TYPES: Final[tuple[tuple[str, str], ...]] = (
+    ("CSV files", "*.csv"),
+    ("All files", "*.*"),
+)
+## @brief Title of the reset confirmation.
+RESET_CONFIRM_TITLE: Final[str] = "Reset word list"
+## @brief Question of the reset confirmation; {name} is the word list file name.
+RESET_CONFIRM_TEMPLATE: Final[str] = (
+    "Start {name} from the beginning? All words will be to learn again."
+)
+## @brief Title of the message that tells a word list could not be opened.
+OPEN_ERROR_TITLE: Final[str] = "Cannot open word list"
+## @brief Message of a word list that could not be opened; {name} and {reason}.
+OPEN_ERROR_TEMPLATE: Final[str] = "{name} could not be used.\n{reason}"
+## @brief Title of the message that tells a word list could not be reset.
+RESET_ERROR_TITLE: Final[str] = "Cannot reset word list"
+## @brief Message of a word list that could not be reset; {name} and {reason}.
+RESET_ERROR_TEMPLATE: Final[str] = "{name} could not be reset.\n{reason}"

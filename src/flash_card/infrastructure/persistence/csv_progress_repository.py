@@ -42,3 +42,11 @@ class CsvProgressRepository:
         @return Nothing.
         """
         write_word_list(self._path, deck.language_pair, deck.cards)
+
+    def reset(self) -> None:
+        """Delete the words to learn file; nothing happens when it is absent.
+
+        @return Nothing.
+        @throws OSError When the file cannot be deleted.
+        """
+        self._path.unlink(missing_ok=True)

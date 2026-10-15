@@ -13,11 +13,13 @@ from __future__ import annotations
 
 import argparse
 import ctypes
+import ctypes.wintypes
 import random
 import shutil
 import sys
 import tempfile
 import time
+import tkinter as tk
 from collections.abc import Sequence
 from pathlib import Path
 
@@ -51,6 +53,21 @@ def _make_dpi_aware() -> None:
         ctypes.windll.shcore.SetProcessDpiAwareness(2)  # type: ignore[attr-defined,unused-ignore]
 
 
+def _frame_box(root: tk.Tk) -> tuple[int, int, int, int]:
+    """Return the screen box of the whole window, with title bar and menu bar.
+
+    @param root The Tk root window.
+    @return Left, top, right and bottom in screen pixels.
+    """
+    handle = ctypes.windll.user32.GetParent(root.winfo_id())  # type: ignore[attr-defined,unused-ignore]
+    rect = ctypes.wintypes.RECT()
+    ctypes.windll.user32.GetWindowRect(handle, ctypes.byref(rect))  # type: ignore[attr-defined,unused-ignore]
+    # Windows 11 adds an invisible resize border of about 7 pixels at the left,
+    # the right and the bottom; cut it so no other window is in the picture.
+    border = 7
+    return rect.left + border, rect.top, rect.right - border, rect.bottom - border
+
+
 def _pump(root: object, seconds: float) -> None:
     """Run the Tk event loop for a while.
 
@@ -67,13 +84,15 @@ def capture(output_dir: Path) -> list[Path]:
     """Capture the level screen, then the front and the back of one card.
 
     @param output_dir Folder to write `screenshot-level.png`,
-        `screenshot-front.png` and `screenshot-back.png` into.
-    @return The three files written: level, front, back.
+        `screenshot-front.png`, `screenshot-back.png` and `screenshot-menu.png`
+        (the whole window with its menu bar) into.
+    @return The four files written: level, front, back, menu.
     """
     _make_dpi_aware()
     output_dir.mkdir(parents=True, exist_ok=True)
     random.seed(SCREENSHOT_SEED)
     level = output_dir / "screenshot-level.png"
+    menu = output_dir / "screenshot-menu.png"
     front = output_dir / "screenshot-front.png"
     back = output_dir / "screenshot-back.png"
     with tempfile.TemporaryDirectory() as data_dir:
@@ -105,10 +124,11 @@ def capture(output_dir: Path) -> list[Path]:
             + 20,
         )
         ImageGrab.grab(bbox=box).save(front)
+        ImageGrab.grab(bbox=_frame_box(root)).save(menu)
         _pump(root, FLIP_DELAY_MS / 1000 + SETTLE_SECONDS)
         ImageGrab.grab(bbox=box).save(back)
         root.destroy()
-    return [level, front, back]
+    return [level, front, back, menu]
 
 
 def main(argv: Sequence[str] | None = None) -> int:

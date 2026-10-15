@@ -110,3 +110,18 @@ def test_progress_save_then_load_returns_same_cards(tmp_path: Path) -> None:
     assert deck is not None
     assert deck.cards == CARDS
     assert deck.language_pair == PAIR
+
+
+def test_reset_deletes_the_progress_file(tmp_path: Path) -> None:
+    path = tmp_path / "words_to_learn.csv"
+    path.write_text("ms;da\naku;mig\n", encoding="utf-8")
+    repository = CsvProgressRepository(path)
+
+    repository.reset()
+
+    assert not path.exists()
+    assert repository.load() is None
+
+
+def test_reset_does_nothing_when_the_file_is_absent(tmp_path: Path) -> None:
+    CsvProgressRepository(tmp_path / "words_to_learn.csv").reset()

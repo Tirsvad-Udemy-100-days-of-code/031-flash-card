@@ -6,7 +6,7 @@
 
 import shutil
 import tkinter as tk
-from collections.abc import Iterator, Sequence
+from collections.abc import Callable, Iterator, Sequence
 from pathlib import Path
 
 import pytest
@@ -21,19 +21,23 @@ from flash_card.constants import (
     LEVEL_SCREEN_HEIGHT,
     LEVEL_TITLE,
     LEVEL_TITLE_FONT,
-    PROGRESS_FILE_NAME,
     VOCABULARY_FILE_NAME,
     WINDOW_PADDING,
     WINDOW_TITLE,
 )
 from flash_card.domain.entities.card import Card
 from flash_card.domain.entities.deck import Deck
+from flash_card.domain.repositories.progress_repository import ProgressRepository
+from flash_card.domain.repositories.vocabulary_repository import VocabularyRepository
 from flash_card.domain.value_objects.level import Level
 from flash_card.infrastructure.persistence.csv_progress_repository import (
     CsvProgressRepository,
 )
 from flash_card.infrastructure.persistence.csv_vocabulary_repository import (
     CsvVocabularyRepository,
+)
+from flash_card.infrastructure.persistence.progress_file_name import (
+    progress_file_name,
 )
 from flash_card.infrastructure.speech.null_speech import NullSpeech
 from flash_card.presentation import app
@@ -57,13 +61,23 @@ def _word(view: FlashCardView) -> str:
 def _clear(root: tk.Tk, view: object) -> None:
     """Destroy the widgets of whichever screen is shown, and pending timers."""
     if isinstance(view, FlashCardView):
-        if view.flip_timer is not None:
-            root.after_cancel(view.flip_timer)
-            view.flip_timer = None
-        for widget in (view.canvas, view.wrong_button, view.right_button):
-            widget.destroy()
+        view.close()
     elif isinstance(view, LevelView):
         view.destroy()
+
+
+def repositories_for(
+    folder: Path,
+) -> Callable[[Path], tuple[VocabularyRepository, ProgressRepository]]:
+    """Build the CSV repositories of a list, its progress file in folder."""
+
+    def build(list_path: Path) -> tuple[VocabularyRepository, ProgressRepository]:
+        return (
+            CsvVocabularyRepository(list_path),
+            CsvProgressRepository(folder / progress_file_name(list_path)),
+        )
+
+    return build
 
 
 @pytest.fixture
@@ -76,10 +90,10 @@ def data_dir(tmp_path: Path) -> Path:
 def application(tk_root: tk.Tk, data_dir: Path) -> Iterator[app.Application]:
     instance = app.Application(
         tk_root,
-        CsvVocabularyRepository(data_dir / VOCABULARY_FILE_NAME),
-        CsvProgressRepository(data_dir / PROGRESS_FILE_NAME),
         NullSpeech(),
         _last,
+        repositories_for(data_dir),
+        data_dir / VOCABULARY_FILE_NAME,
     )
     yield instance
     _clear(tk_root, instance.view)
@@ -185,7 +199,7 @@ def test_level_whose_words_are_all_known_shows_the_finished_message(
 ) -> None:
     cards = CsvVocabularyRepository(data_dir / VOCABULARY_FILE_NAME).load().cards
     pair = CsvVocabularyRepository(data_dir / VOCABULARY_FILE_NAME).load().language_pair
-    CsvProgressRepository(data_dir / PROGRESS_FILE_NAME).save(Deck(pair, cards[100:]))
+    CsvProgressRepository(data_dir / "words_to_learn.csv").save(Deck(pair, cards[100:]))
     application.show_level_screen()
     level_view = application.view
     assert isinstance(level_view, LevelView)
@@ -207,8 +221,10 @@ def test_create_application_with_level_skips_the_level_screen(
     try:
         assert isinstance(application.view, FlashCardView)
         assert not [c for c in tk_root.winfo_children() if isinstance(c, tk.Frame)]
+        assert str(tk_root.cget("menu"))
     finally:
         _clear(tk_root, application.view)
+        tk_root.config(menu="")
 
 
 def test_create_application_without_level_shows_the_level_screen(
@@ -221,5 +237,28 @@ def test_create_application_without_level_shows_the_level_screen(
     try:
         assert isinstance(application.view, LevelView)
         assert application.root is tk_root
+        assert str(tk_root.cget("menu"))
     finally:
         _clear(tk_root, application.view)
+        tk_root.config(menu="")
+
+
+def test_create_application_with_word_list_keeps_progress_in_the_data_folder(
+    tk_root: tk.Tk, data_dir: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(tk, "Tk", lambda: tk_root)
+    other = tmp_path / "other" / "animals.csv"
+    other.parent.mkdir()
+    other.write_text("ms;da\nkucing;kat\n", encoding="utf-8")
+
+    application = app.create_application(data_dir, False, Level(None), other)
+
+    try:
+        view = application.view
+        assert isinstance(view, FlashCardView)
+        assert application.word_list_name == "animals.csv"
+        view.right_button.invoke()
+        assert (data_dir / "words_to_learn_animals.csv").is_file()
+    finally:
+        _clear(tk_root, application.view)
+        tk_root.config(menu="")

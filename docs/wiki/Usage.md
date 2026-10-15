@@ -13,6 +13,20 @@
 
 A word you marked as known is removed and does not come up again. When no word of the level is left, the card says "Nothing left to learn"; restart the program and choose a higher level.
 
+## The menu bar
+
+![The window with the menu bar](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-menu.png)
+
+| Menu | Command | What it does |
+| --- | --- | --- |
+| File | Open... | Opens another word list from a CSV file (header with two language codes, for example `en;da`). Progress is kept apart for each list |
+| File | Change level... | Shows the level choice again without a restart; known words stay known |
+| File | Reset word list... | After a confirmation removes the progress of the open list, so all its words are to learn again; the list file is not changed |
+| File | Exit | Closes the program |
+| About | Contact | The author, Jens Tirsvad Nielsen, Software engineer; opens the LinkedIn page in your browser |
+
+The progress of the delivered `ms-da.csv` is `data/words_to_learn.csv`; another list gets `data/words_to_learn_<name>.csv`. The opened list is not remembered after a restart.
+
 ## Your progress
 
 - The first time you press the green tick, the program writes `data/words_to_learn.csv` with the words you do not know yet.

@@ -1,7 +1,7 @@
 """Entry point and composition root of the flash card program.
 
 @file app.py
-@brief Creates the window, shows the level screen and then the card screen.
+@brief Creates the window and menu bar, shows the level screen and then the card.
 """
 
 import argparse
@@ -19,7 +19,6 @@ from flash_card.constants import (
     BUNDLED_VOCABULARY_PATH,
     DEFAULT_DATA_DIR,
     LEVEL_ARGUMENT_VALUES,
-    PROGRESS_FILE_NAME,
     VOCABULARY_FILE_NAME,
 )
 from flash_card.domain.entities.card import Card
@@ -33,6 +32,9 @@ from flash_card.infrastructure.persistence.csv_progress_repository import (
 from flash_card.infrastructure.persistence.csv_vocabulary_repository import (
     CsvVocabularyRepository,
 )
+from flash_card.infrastructure.persistence.progress_file_name import (
+    progress_file_name,
+)
 from flash_card.infrastructure.speech.gtts_speech import GttsSpeech
 from flash_card.infrastructure.speech.null_speech import NullSpeech
 from flash_card.presentation.features.flash_card.flash_card_view import FlashCardView
@@ -41,6 +43,8 @@ from flash_card.presentation.features.flash_card.flash_card_view_model import (
 )
 from flash_card.presentation.features.level.level_view import LevelView
 from flash_card.presentation.features.level.level_view_model import LevelViewModel
+from flash_card.presentation.features.menu.menu_view import MenuView
+from flash_card.presentation.features.menu.menu_view_model import MenuViewModel
 
 ## @brief Logger of the entry point.
 _logger = logging.getLogger(__name__)
@@ -64,34 +68,42 @@ def build_speech(enabled: bool) -> SpeechPort:
 
 
 class Application:
-    """The running program: one window that shows the level screen, then the card."""
+    """The running program: one window with a menu, the level screen and the card."""
 
     def __init__(
         self,
         root: tk.Tk,
-        vocabulary_repository: VocabularyRepository,
-        progress_repository: ProgressRepository,
         speech: SpeechPort,
-        choose: Callable[[Sequence[Card]], Card] = random.choice,
+        choose: Callable[[Sequence[Card]], Card],
+        repositories_for: Callable[
+            [Path], tuple[VocabularyRepository, ProgressRepository]
+        ],
+        list_path: Path,
     ) -> None:
         """Create the application on a window; no screen is shown yet.
 
         @param root The Tk root window.
-        @param vocabulary_repository Source of the delivered word list.
-        @param progress_repository Store of the words still to learn.
         @param speech Speaks the front text of each drawn card.
         @param choose Picks one card from a non-empty sequence.
+        @param repositories_for Builds the word list and progress repositories of
+            a word list file; the composition root supplies it.
+        @param list_path The word list file in use.
         """
         ## @brief The Tk root window.
         self.root = root
-        ## @brief Source of the delivered word list.
-        self._vocabulary_repository = vocabulary_repository
-        ## @brief Store of the words still to learn.
-        self._progress_repository = progress_repository
         ## @brief Speaks the front text of each drawn card.
         self._speech = speech
         ## @brief Picks one card from a non-empty sequence.
         self._choose = choose
+        ## @brief Builds the repositories of a word list file.
+        self._repositories_for = repositories_for
+        ## @brief The word list file in use.
+        self._list_path = list_path
+        vocabulary_repository, progress_repository = repositories_for(list_path)
+        ## @brief Source of the word list in use.
+        self._vocabulary_repository = vocabulary_repository
+        ## @brief Store of the words still to learn of the word list in use.
+        self._progress_repository = progress_repository
         ## @brief The screen shown now, or None before the first one.
         self._view: LevelView | FlashCardView | None = None
         ## @brief The exit code of the program.
@@ -112,6 +124,22 @@ class Application:
         @return 0, or 1 when a session could not be started after a choice.
         """
         return self._exit_code
+
+    @property
+    def word_list_name(self) -> str:
+        """Return the file name of the word list in use.
+
+        @return The file name.
+        """
+        return self._list_path.name
+
+    @property
+    def word_list_folder(self) -> Path:
+        """Return the folder of the word list in use.
+
+        @return The folder that holds the word list file.
+        """
+        return self._list_path.parent
 
     def show_level_screen(self) -> None:
         """Show the level screen; a choice starts the session.
@@ -134,9 +162,60 @@ class Application:
             self._choose,
             level,
         )
+        self._close_screen()
+        self._view = FlashCardView(self.root, FlashCardViewModel(session))
+
+    def open_word_list(self, path: Path) -> None:
+        """Switch to another word list and show the level screen.
+
+        The file is loaded first; nothing changes when it is unusable.
+
+        @param path The CSV word list file.
+        @return Nothing.
+        @throws VocabularyError When the file is missing or malformed.
+        """
+        vocabulary_repository, progress_repository = self._repositories_for(path)
+        vocabulary_repository.load()
+        self._vocabulary_repository = vocabulary_repository
+        self._progress_repository = progress_repository
+        self._list_path = path
+        self.change_level()
+
+    def change_level(self) -> None:
+        """Drop the current screen and its timer and show the level screen.
+
+        @return Nothing.
+        """
+        self._close_screen()
+        self.show_level_screen()
+
+    def reset_word_list(self) -> None:
+        """Forget the progress of the word list in use and show the level screen.
+
+        @return Nothing.
+        @throws OSError When the progress cannot be removed.
+        """
+        self._progress_repository.reset()
+        self.change_level()
+
+    def exit_application(self) -> None:
+        """Drop the current screen and its timer and close the window.
+
+        @return Nothing.
+        """
+        self._close_screen()
+        self.root.destroy()
+
+    def _close_screen(self) -> None:
+        """Remove the screen shown now, if any.
+
+        @return Nothing.
+        """
         if isinstance(self._view, LevelView):
             self._view.destroy()
-        self._view = FlashCardView(self.root, FlashCardViewModel(session))
+        elif isinstance(self._view, FlashCardView):
+            self._view.close()
+        self._view = None
 
     def _choose_level(self, level: Level) -> None:
         """Start the session after a click; close the window when it fails.
@@ -163,20 +242,42 @@ def resolve_data_files(data_dir: Path | None) -> tuple[Path, Path]:
     vocabulary = folder / VOCABULARY_FILE_NAME
     if data_dir is None and not vocabulary.exists():
         vocabulary = BUNDLED_VOCABULARY_PATH
-    return vocabulary, folder / PROGRESS_FILE_NAME
+    return vocabulary, folder / progress_file_name(vocabulary)
+
+
+def _repository_builder(
+    folder: Path,
+) -> Callable[[Path], tuple[VocabularyRepository, ProgressRepository]]:
+    """Make the function that builds the CSV repositories of a word list.
+
+    @param folder The data folder that holds every progress file.
+    @return A function from a word list path to its repositories; the progress
+        file is in the data folder, named after the list.
+    """
+
+    def build(list_path: Path) -> tuple[VocabularyRepository, ProgressRepository]:
+        return (
+            CsvVocabularyRepository(list_path),
+            CsvProgressRepository(folder / progress_file_name(list_path)),
+        )
+
+    return build
 
 
 def create_application(
     data_dir: Path | None = None,
     speech_enabled: bool = True,
     level: Level | None = None,
+    word_list: Path | None = None,
 ) -> Application:
-    """Create the window and show the level screen, or start at the given level.
+    """Create the window with its menu bar and show the level screen, or start.
 
     @param data_dir Folder of the data files, or None for the default folder
         with the delivered word list as fallback.
     @param speech_enabled False to run without spoken words.
     @param level The level to start at, or None to show the level screen.
+    @param word_list A word list file to use instead of the one of the data
+        folder, or None; its progress file is still in the data folder.
     @return The application, its window in the root attribute.
     @throws VocabularyError When a level is given and the word list or saved
         progress is unusable.
@@ -185,10 +286,12 @@ def create_application(
     root = tk.Tk()
     application = Application(
         root,
-        CsvVocabularyRepository(vocabulary_path),
-        CsvProgressRepository(progress_path),
         build_speech(speech_enabled),
+        random.choice,
+        _repository_builder(progress_path.parent),
+        vocabulary_path if word_list is None else word_list,
     )
+    MenuView(root, MenuViewModel(), application)
     if level is None:
         application.show_level_screen()
         return application
