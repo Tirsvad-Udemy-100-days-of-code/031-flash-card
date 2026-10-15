@@ -1,0 +1,36 @@
+<!--
+  Windows Sandbox configuration of the flash card smoke test (ADR-0005).
+  Do not open this file directly: tools/sandbox/run.ps1 replaces the three
+  @...@ placeholders with absolute host paths and starts the sandbox.
+
+  dist     read-only   the built flash-card.exe
+  scripts  read-only   smoke.ps1, which runs inside the sandbox
+  out      read-write  result.json and screenshots written by smoke.ps1
+-->
+<Configuration>
+  <VGpu>Disable</VGpu>
+  <Networking>Disable</Networking>
+  <AudioInput>Disable</AudioInput>
+  <VideoInput>Disable</VideoInput>
+  <ClipboardRedirection>Disable</ClipboardRedirection>
+  <MappedFolders>
+    <MappedFolder>
+      <HostFolder>@DIST@</HostFolder>
+      <SandboxFolder>C:\fc\dist</SandboxFolder>
+      <ReadOnly>true</ReadOnly>
+    </MappedFolder>
+    <MappedFolder>
+      <HostFolder>@SCRIPTS@</HostFolder>
+      <SandboxFolder>C:\fc\scripts</SandboxFolder>
+      <ReadOnly>true</ReadOnly>
+    </MappedFolder>
+    <MappedFolder>
+      <HostFolder>@OUT@</HostFolder>
+      <SandboxFolder>C:\fc\out</SandboxFolder>
+      <ReadOnly>false</ReadOnly>
+    </MappedFolder>
+  </MappedFolders>
+  <LogonCommand>
+    <Command>powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\fc\scripts\smoke.ps1 -Runs @RUNS@</Command>
+  </LogonCommand>
+</Configuration>

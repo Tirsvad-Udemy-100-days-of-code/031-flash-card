@@ -74,6 +74,26 @@ The script uses PyInstaller and writes `dist/flash-card.exe`: one file, no conso
 - `python tools/build_executable.py --no-speech` leaves the speech packages out; `--clean` rebuilds from scratch.
 - The executable is not committed to the repository. Build it on the system you want to run it on; Windows may show a SmartScreen warning because the file is not signed.
 
+## Checks without a desktop (Docker)
+
+The tests, the linters, the screenshots and a smoke test of a Linux binary run in a Debian container on a virtual screen, so no window opens on your own desktop.
+
+```bash
+docker build -f docker/debian.Dockerfile -t flash-card-debian .
+# linters and the whole test suite, including the real window tests
+docker run --rm -v "$PWD:/repo:ro" flash-card-debian bash /repo/tools/docker/in-container.sh run-checks.sh
+# screenshots into ./build/container-out
+docker run --rm -v "$PWD:/repo:ro" -v "$PWD/build/container-out:/out" flash-card-debian bash /repo/tools/docker/in-container.sh screenshots.sh /out
+# build the Linux binary and press the known button 5 times (binary and source)
+docker run --rm -v "$PWD:/repo:ro" flash-card-debian bash /repo/tools/docker/in-container.sh smoke-binary.sh 5
+```
+
+On Windows PowerShell write `${PWD}` for `$PWD`. The repository is mounted read-only and copied inside the container.
+
+- The desktop is Xvfb with GNOME's window manager (mutter). GNOME Shell is tried first and does not start in a container (it needs a login manager), so the scripts fall back to mutter and print which one ran.
+- The Windows executable is checked in **Windows Sandbox** (Windows 11 Pro, feature enabled): `powershell -File tools\sandbox\run.ps1 -Runs 5` after `python tools/build_executable.py`. The sandbox shows its own window while it runs; the click is made inside the sandbox.
+- Not covered: macOS (it cannot be run in Docker on Windows or Linux and Apple's licence allows it only on Apple hardware), and Windows itself in the Debian container.
+
 ## Documentation of the source code
 
 ```bash

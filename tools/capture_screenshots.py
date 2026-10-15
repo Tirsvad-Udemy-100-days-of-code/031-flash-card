@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import argparse
 import ctypes
-import ctypes.wintypes
+import os
 import random
 import shutil
 import sys
@@ -23,7 +23,7 @@ import tkinter as tk
 from collections.abc import Sequence
 from pathlib import Path
 
-from PIL import ImageGrab
+from PIL import Image, ImageGrab
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
@@ -45,6 +45,46 @@ DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "docs" / "images"
 SCREENSHOT_SEED = 7
 ## @brief Extra time in seconds to let the window settle before a grab.
 SETTLE_SECONDS = 0.5
+## @brief Height in pixels of the menu bar above the client area on X11.
+MENU_BAR_HEIGHT_X11 = 28
+## @brief Platform kind of Windows.
+KIND_WINDOWS = "windows"
+## @brief Platform kind of every other platform (an X11 display).
+KIND_X11 = "x11"
+
+
+def platform_kind(platform: str) -> str:
+    """Choose how to grab the screen.
+
+    @param platform A `sys.platform` value.
+    @return "windows" for win32, otherwise "x11".
+    """
+    return KIND_WINDOWS if platform == "win32" else KIND_X11
+
+
+def window_box(
+    kind: str, rootx: int, rooty: int, width: int, height: int, menu_height: int
+) -> tuple[int, int, int, int]:
+    """Return the screen box to grab for a window.
+
+    @param kind The platform kind from `platform_kind`.
+    @param rootx Left edge of the client area.
+    @param rooty Top edge of the client area.
+    @param width Width of the client area.
+    @param height Height of the client area.
+    @param menu_height Height of the menu bar above the client area; it is
+        added on X11 only, as on Windows the frame box is read from the system.
+    @return Left, top, right and bottom in screen pixels.
+    """
+    top = rooty - menu_height if kind == KIND_X11 else rooty
+    return rootx, top, rootx + width, rooty + height
+
+
+def _grab(box: tuple[int, int, int, int]) -> Image.Image:
+    """Grab a screen box on the current platform."""
+    if platform_kind(sys.platform) == KIND_X11:
+        return ImageGrab.grab(bbox=box, xdisplay=os.environ.get("DISPLAY"))
+    return ImageGrab.grab(bbox=box)
 
 
 def _make_dpi_aware() -> None:
@@ -59,6 +99,8 @@ def _frame_box(root: tk.Tk) -> tuple[int, int, int, int]:
     @param root The Tk root window.
     @return Left, top, right and bottom in screen pixels.
     """
+    import ctypes.wintypes  # Windows only, so it is imported here
+
     handle = ctypes.windll.user32.GetParent(root.winfo_id())  # type: ignore[attr-defined,unused-ignore]
     rect = ctypes.wintypes.RECT()
     ctypes.windll.user32.GetWindowRect(handle, ctypes.byref(rect))  # type: ignore[attr-defined,unused-ignore]
@@ -102,13 +144,14 @@ def capture(output_dir: Path) -> list[Path]:
         root.lift()
         root.attributes("-topmost", True)
         _pump(root, SETTLE_SECONDS)
-        window_box = (
+        kind = platform_kind(sys.platform)
+        client = (
             root.winfo_rootx(),
             root.winfo_rooty(),
-            root.winfo_rootx() + root.winfo_width(),
-            root.winfo_rooty() + root.winfo_height(),
+            root.winfo_width(),
+            root.winfo_height(),
         )
-        ImageGrab.grab(bbox=window_box).save(level)
+        _grab(window_box(kind, *client, 0)).save(level)
         application.start(Level(None))
         view = application.view
         if not isinstance(view, FlashCardView):
@@ -123,10 +166,14 @@ def capture(output_dir: Path) -> list[Path]:
             + view.right_button.winfo_height()
             + 20,
         )
-        ImageGrab.grab(bbox=box).save(front)
-        ImageGrab.grab(bbox=_frame_box(root)).save(menu)
+        _grab(box).save(front)
+        if kind == KIND_WINDOWS:
+            menu_box = _frame_box(root)
+        else:
+            menu_box = window_box(kind, *client, MENU_BAR_HEIGHT_X11)
+        _grab(menu_box).save(menu)
         _pump(root, FLIP_DELAY_MS / 1000 + SETTLE_SECONDS)
-        ImageGrab.grab(bbox=box).save(back)
+        _grab(box).save(back)
         root.destroy()
     return [level, front, back, menu]
 
