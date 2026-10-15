@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | In Scope: menu bar (new request of S01) | [2211d0f] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: tagged releases v0.1.0 and v0.2.0 (new request of S01) | [0264b60] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: tagged releases v0.1.0 and v0.2.0 (new request of S01) | [0264b60] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: container and sandbox checks (new request of S01) | [f86bc91] |
 
 ---
 
@@ -55,6 +55,7 @@ A small, well-structured reference solution gives the Product Owner a language l
 - Optional spoken Malay word (text to speech) as an extra that can be installed.
 - A choice of level (the first 100 words, the first 1000 words or all words of the frequency ordered word list) before learning starts.
 - A menu bar with the commands to open another word list (CSV), change the level, reset a word list, exit, and the author's contact.
+- Checks that do not use the user's desktop: a Debian based Docker image with a virtual GNOME desktop for the tests, headless screenshots and a Linux binary, and Windows Sandbox for the Windows executable.
 - A single Windows executable file, built with PyInstaller by a script of this repository, that runs without an installed Python.
 - Tagged releases of the repository (`v0.1.0`, `v0.2.0`), each with release notes and, when the git host accepts the upload, the executable and its SHA-256 checksum attached.
 - `pyproject.toml`, `.gitignore`, `Doxyfile`, virtual environment instructions, `pytest` tests and `constants.py`.
@@ -66,6 +67,7 @@ A small, well-structured reference solution gives the Product Owner a language l
 
 - Other languages: the user interface labels are Malay and Danish only; another word list works by changing the data file but is not delivered.
 - Spaced repetition scheduling, statistics, accounts, cloud synchronisation and mobile apps.
+- Running macOS or a Windows virtual machine other than Windows Sandbox in the checks (macOS is not run in Docker: Apple's licence allows it only on Apple hardware).
 - Packaging for distribution on PyPI, an installer and a signed executable (the executable built with PyInstaller and its release on the git host are in scope; the file itself is not committed to the repository).
 - Redistribution of the course's own image files; the card and button images are generated for this project.
 - A translation quality review of the word list.
@@ -151,5 +153,5 @@ Proceed — the scope is small, the risks are mitigated, and the result serves t
 ---
 
 [SA-001]: ./stakeholder-analysis.md
-[2211d0f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/2211d0f4cbd8182314d18cbdefd939ae50c39e6d
 [0264b60]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0264b6084f26bac5af716ea71596ce3be961fec8
+[f86bc91]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/f86bc9136e7719fbcd049a4f803959019b7d2df3

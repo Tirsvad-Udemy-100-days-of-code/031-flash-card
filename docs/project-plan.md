@@ -4,15 +4,15 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012] |
+| CrossReference | [BC-001], [SA-001], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011], [MIL-012], [MIL-013] |
 | Language | en |
 | Domain | it |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-011 Menu bar (new request of S01) | [2211d0f] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-012 Release v0.2.0 (new request of S01) | [0264b60] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-012 Release v0.2.0 (new request of S01) | [0264b60] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-013 Container checks (new request of S01) | [f86bc91] |
 
 ---
 
@@ -44,6 +44,7 @@ This plan schedules the seven phases (gateways) that deliver the flash card prog
 | Release v0.1.0 | [MIL-010] | 2026-10-16 | 2026-10-16 | S01 | US-001.08 | Tag v0.1.0 and a release with `flash-card.exe`, its checksum and release notes | |
 | Menu bar | [MIL-011] | 2026-10-17 | 2026-10-17 | S01 | US-001.09 to US-001.12 | File menu (open word list, change level, reset word list, exit) and About menu (contact); documents, wiki and screenshots updated | |
 | Release v0.2.0 | [MIL-012] | 2026-10-18 | 2026-10-18 | S01 | US-001.08 | Version 0.2.0, tag `v0.2.0` and a release with the menu bar, notes and, if the host accepts it, the executable | |
+| Container checks | [MIL-013] | 2026-10-19 | 2026-10-19 | S01 | none | A Debian (GNOME) container and Windows Sandbox that run the tests, screenshots and the smoke tests without the host desktop | |
 
 ```plantuml
 @startgantt
@@ -72,6 +73,8 @@ Project starts 2026-10-14
 [Menu bar Go/No-Go] happens 2026-10-17
 [Release 0.2.0] starts 2026-10-18 and ends 2026-10-18
 [Release 0.2.0 Go/No-Go] happens 2026-10-18
+[Container checks] starts 2026-10-19 and ends 2026-10-19
+[Container checks Go/No-Go] happens 2026-10-19
 @endgantt
 ```
 
@@ -91,12 +94,13 @@ Project starts 2026-10-14
 | Release with the executable attached (new request after MIL-009) | MIL-010 |
 | Menu bar with File and About menus (new request after MIL-009) | MIL-011 |
 | Release v0.2.0 with the menu bar (new request after MIL-011) | MIL-012 |
+| Debian container for tests and headless runs (new request after MIL-012) | MIL-013 |
 | Framework documents of the baseline | Baseline pull request before MIL-001 |
 
 ## Dependencies
 
 ```
-Baseline → MIL-001 → MIL-002 → MIL-003 → MIL-004 → MIL-005 → MIL-006 → MIL-007 → MIL-008 → MIL-009 → MIL-010 → MIL-011 → MIL-012
+Baseline → MIL-001 → MIL-002 → MIL-003 → MIL-004 → MIL-005 → MIL-006 → MIL-007 → MIL-008 → MIL-009 → MIL-010 → MIL-011 → MIL-012 → MIL-013
 ```
 
 A No-Go on a phase moves every later date by the days the rework takes; MIL-008 was added after MIL-007 and takes the unplanned day 2026-10-20, so no buffer is left inside the window; a No-Go moves the end date past 2026-10-21 and S01 decides whether to accept that.
@@ -131,6 +135,7 @@ A No-Go on a phase moves every later date by the days the rework takes; MIL-008 
 [MIL-010]: ./milestones/mil-010-release.md
 [MIL-011]: ./milestones/mil-011-menu-bar.md
 [MIL-012]: ./milestones/mil-012-release-0-2-0.md
+[MIL-013]: ./milestones/mil-013-container-checks.md
 [MS-001]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/165
 [MS-002]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/166
 [MS-003]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/167
@@ -138,5 +143,5 @@ A No-Go on a phase moves every later date by the days the rework takes; MIL-008 
 [MS-005]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/169
 [MS-006]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/170
 [MS-007]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/171
-[2211d0f]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/2211d0f4cbd8182314d18cbdefd939ae50c39e6d
 [0264b60]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0264b6084f26bac5af716ea71596ce3be961fec8
+[f86bc91]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/f86bc9136e7719fbcd049a4f803959019b7d2df3
