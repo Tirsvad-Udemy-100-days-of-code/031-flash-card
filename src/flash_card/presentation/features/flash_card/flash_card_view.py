@@ -146,6 +146,15 @@ class FlashCardView:
         """
         return self._card_back_image
 
+    def close(self) -> None:
+        """Cancel the flip timer and remove the widgets of the screen.
+
+        @return Nothing.
+        """
+        self._cancel_flip_timer()
+        for widget in (self.canvas, self.wrong_button, self.right_button):
+            widget.destroy()
+
     def next_card(self) -> None:
         """Show the next card front and restart the flip timer.
 

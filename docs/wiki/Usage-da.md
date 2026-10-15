@@ -13,6 +13,20 @@
 
 Et ord, du har markeret som kendt, fjernes og kommer ikke igen. Når der ikke er flere ord på niveauet, står der "Nothing left to learn" på kortet; start programmet igen og vælg et højere niveau.
 
+## Menulinjen
+
+![Vinduet med menulinjen](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-menu.png)
+
+| Menu | Kommando | Hvad den gør |
+| --- | --- | --- |
+| File | Open... | Åbner en anden ordliste fra en CSV-fil (overskrift med to sprogkoder, fx `en;da`). Fremgang gemmes adskilt for hver liste |
+| File | Change level... | Viser niveauvalget igen uden genstart; kendte ord forbliver kendte |
+| File | Reset word list... | Fjerner efter en bekræftelse fremgangen for den åbne liste, så alle dens ord skal læres igen; listefilen ændres ikke |
+| File | Exit | Lukker programmet |
+| About | Contact | Forfatteren, Jens Tirsvad Nielsen, softwareudvikler; åbner LinkedIn-siden i din browser |
+
+Fremgangen for den medfølgende `ms-da.csv` er `data/words_to_learn.csv`; en anden liste får `data/words_to_learn_<navn>.csv`. Den åbnede liste huskes ikke efter en genstart.
+
 ## Din fremgang
 
 - Første gang du trykker på det grønne flueben, skriver programmet `data/words_to_learn.csv` med de ord, du endnu ikke kan.

@@ -93,3 +93,18 @@ def test_repository_load_raises_format_error_when_no_card(tmp_path: Path) -> Non
     path = _write(tmp_path / "w.csv", "ms;da\n")
     with pytest.raises(VocabularyFormatError):
         CsvVocabularyRepository(path).load()
+
+
+@pytest.mark.parametrize(
+    "content",
+    [b"ms;da\n\xff\xfe;x\n", "ms;da\nkøkken;x\n".encode("latin-1")],
+    ids=["invalid-utf8", "latin-1"],
+)
+def test_read_word_list_raises_format_error_when_not_utf8(
+    tmp_path: Path, content: bytes
+) -> None:
+    path = tmp_path / "w.csv"
+    path.write_bytes(content)
+    with pytest.raises(VocabularyFormatError, match=r"w\.csv.*not UTF-8") as info:
+        read_word_list(path)
+    assert isinstance(info.value.__cause__, UnicodeDecodeError)

@@ -102,7 +102,21 @@ The program is run from the activated `.venv`. The window opens with the level s
 | `--level {100,1000,all}` | Start at that level and skip the level screen |
 | `--no-speech` | Do not speak the Malay word |
 
-Known words stay known at every level: the level only limits which of the words you do not know yet come up. To start again, delete `data/words_to_learn.csv`.
+Known words stay known at every level: the level only limits which of the words you do not know yet come up. To start again, delete `data/words_to_learn.csv` or use the menu.
+
+### Menu bar
+
+![The window with the menu bar][screenshot-menu]
+
+| Menu | Command | What it does |
+| --- | --- | --- |
+| File | Open... | Opens another word list from a CSV file (header with two language codes, for example `en;da`). Progress is kept apart for each list |
+| File | Change level... | Shows the level choice again without a restart; known words stay known |
+| File | Reset word list... | After a confirmation removes the progress of the open list, so all its words are to learn again; the list file is not changed |
+| File | Exit | Closes the program |
+| About | Contact | The author, Jens Tirsvad Nielsen, Software engineer; opens the LinkedIn page in your browser |
+
+The progress of the delivered `ms-da.csv` is `data/words_to_learn.csv`; another list gets `data/words_to_learn_<name>.csv`. The opened list is not remembered after a restart.
 
 ### Executable (Windows, no Python needed to run it)
 
@@ -166,6 +180,7 @@ The documents a newcomer needs, in reading order.
 [license]: ./LICENSE
 [screenshot-level]: ./docs/images/screenshot-level.png
 [screenshot-front]: ./docs/images/screenshot-front.png
+[screenshot-menu]: ./docs/images/screenshot-menu.png
 [screenshot-back]: ./docs/images/screenshot-back.png
 [wiki-en]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/wiki/Home
 [wiki-da]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/wiki/Home-da

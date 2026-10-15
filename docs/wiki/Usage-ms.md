@@ -13,6 +13,20 @@
 
 Perkataan yang anda tandakan sebagai diketahui dibuang dan tidak muncul lagi. Apabila tiada perkataan lagi pada tahap itu, kad menunjukkan "Nothing left to learn"; mulakan program semula dan pilih tahap yang lebih tinggi.
 
+## Bar menu
+
+![Tetingkap dengan bar menu](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/raw/branch/main/docs/images/screenshot-menu.png)
+
+| Menu | Perintah | Apa yang dilakukan |
+| --- | --- | --- |
+| File | Open... | Membuka senarai perkataan lain daripada fail CSV (baris pertama dengan dua kod bahasa, contohnya `en;da`). Kemajuan disimpan berasingan bagi setiap senarai |
+| File | Change level... | Menunjukkan pilihan tahap semula tanpa memulakan semula; perkataan yang diketahui kekal diketahui |
+| File | Reset word list... | Selepas pengesahan membuang kemajuan senarai yang dibuka, supaya semua perkataannya perlu dipelajari semula; fail senarai tidak diubah |
+| File | Exit | Menutup program |
+| About | Contact | Pengarang, Jens Tirsvad Nielsen, jurutera perisian; membuka halaman LinkedIn dalam pelayar anda |
+
+Kemajuan bagi `ms-da.csv` yang disertakan ialah `data/words_to_learn.csv`; senarai lain mendapat `data/words_to_learn_<nama>.csv`. Senarai yang dibuka tidak diingati selepas dimulakan semula.
+
 ## Kemajuan anda
 
 - Kali pertama anda menekan tanda semak hijau, program menulis `data/words_to_learn.csv` dengan perkataan yang anda belum tahu.

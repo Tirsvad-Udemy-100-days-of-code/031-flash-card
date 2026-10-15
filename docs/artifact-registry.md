@@ -25,7 +25,7 @@ document of a type. `Primary File` may contain a glob (e.g.
 | DCD | Design Class Diagram | docs/dcd.md | 002 |
 | DICT | Domain Dictionary | docs/dictionary.md | 002 |
 | ADR | Architecture Decision Record | docs/adr/adr-NNNN-*.md | 0005 |
-| RC | SQA Review Record | docs/sqa/reviews/rc-*.md | 066 |
+| RC | SQA Review Record | docs/sqa/reviews/rc-*.md | 067 |
 | TM | Traceability Matrix | docs/sqa/traceability-matrix.md | 002 |
 
 ## Languages
