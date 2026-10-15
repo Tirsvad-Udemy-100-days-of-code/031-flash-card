@@ -56,6 +56,10 @@ python -m pytest
 
 The window test in `tests/e2e/` is skipped when no display is available.
 
+## Download the executable (Windows)
+
+Download `flash-card.exe` and `flash-card.exe.sha256` from the [release page](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0). Compare the SHA-256 hash of the file with the checksum file (`certutil -hashfile flash-card.exe SHA256` on Windows). The file is not signed, so Windows may show a SmartScreen warning.
+
 ## Build an executable (Windows)
 
 ```powershell

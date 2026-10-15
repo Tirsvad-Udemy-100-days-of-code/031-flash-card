@@ -106,6 +106,8 @@ Known words stay known at every level: the level only limits which of the words 
 
 ### Executable (Windows, no Python needed to run it)
 
+Download `flash-card.exe` and `flash-card.exe.sha256` from the [release page][release-0-1-0] and compare the SHA-256 hash of the file with the checksum file, or build it yourself:
+
 ```powershell
 python -m pip install -e ".[build,speech]"
 python tools/build_executable.py
@@ -140,6 +142,7 @@ GNU Affero General Public License v3.0 or later. See [LICENSE][license].
 - [Repository][repository]
 - [Documentation][documentation]
 - [Issue tracker][issues]
+- [Releases][releases] (the Windows executable `flash-card.exe` and its checksum)
 
 ## 📎 Appendix: Project documents
 
@@ -171,6 +174,8 @@ The documents a newcomer needs, in reading order.
 [repository]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card
 [documentation]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/wiki
 [issues]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/issues
+[releases]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases
+[release-0-1-0]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0
 [agents]: ./AGENTS.md
 [BC-001]: ./docs/business-case.md
 [SA-001]: ./docs/stakeholder-analysis.md

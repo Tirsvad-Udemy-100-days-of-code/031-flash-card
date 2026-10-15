@@ -4,22 +4,21 @@
 | Key | Value |
 | --- | --- |
 | ID | US-001 |
-| CrossReference | [UCD-001], [BC-001], [UC-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-008], [MIL-009] |
+| CrossReference | [UCD-001], [BC-001], [UC-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-008], [MIL-009], [MIL-010] |
 | Language | en |
 | Domain | it |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.06 Choose my level | [0b983b7] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.07 Start without Python | [768ca34] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.07 Start without Python | [768ca34] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.08 Download the executable | [9c8e294] |
 
 ---
 
 ## Purpose and Scope
 
-These stories cover the epic "Study Flash Cards": the four steps of the course assignment (the window, new cards, flipping the cards, saving progress), the spoken Malay word the choice of level and the start without an installed Python. Each story is delivered by one milestone. The wireframe the stories follow is in `docs/uc-001/wireframe.md`.
+These stories cover the epic "Study Flash Cards": the four steps of the course assignment (the window, new cards, flipping the cards, saving progress), the spoken Malay word the choice of level the start without an installed Python and the download of the executable from a release. Each story is delivered by one milestone. The wireframe the stories follow is in `docs/uc-001/wireframe.md`.
 
 ## Story List
 
@@ -121,9 +120,23 @@ These stories cover the epic "Study Flash Cards": the four steps of the course a
 | --- | --- | --- |
 | [MIL-009], [UC-001] | fits one iteration | none |
 
+### US-001.08 — Download the executable
+
+**As a** Learner, **I want** to download the executable from a release page of the repository, **so that** I can use the program without building it.
+
+**Acceptance Criteria**
+
+- Given the release `v0.1.0` exists, when I open the releases page of the repository, then I find `flash-card.exe` and a checksum file attached to it.
+- Given I downloaded `flash-card.exe`, when I compute its SHA-256 hash, then it equals the value in the checksum file and in the release notes.
+- Given I read the release notes, when I look for what the file is, then they say that it is an unsigned Windows build, what the `data` folder next to it holds, and how to build it myself.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [MIL-010], [UC-001] | fits one iteration | none |
+
 ## INVEST Check
 
-All seven stories are Independent in delivery order (each builds on the one before but can be accepted alone), Negotiable in wording, Valuable to the Learner, Estimable, Small (one milestone each) and Testable (every criterion is Given/When/Then). Exception: US-001.02 to US-001.07 depend on the window of US-001.01, which is stated in their milestones' Dependencies.
+All eight stories are Independent in delivery order (each builds on the one before but can be accepted alone), Negotiable in wording, Valuable to the Learner, Estimable, Small (one milestone each) and Testable (every criterion is Given/When/Then). Exception: US-001.02 to US-001.08 depend on the window of US-001.01, which is stated in their milestones' Dependencies.
 
 ---
 
@@ -137,6 +150,6 @@ All seven stories are Independent in delivery order (each builds on the one befo
 [MIL-006]: ./milestones/mil-006-malay-speech.md
 [MIL-008]: ./milestones/mil-008-choose-level.md
 [MIL-009]: ./milestones/mil-009-executable.md
-[c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
-[0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1
+[MIL-010]: ./milestones/mil-010-release.md
 [768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
+[9c8e294]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/9c8e2940217e615f82eda2d48aca9b2fd58f3687
