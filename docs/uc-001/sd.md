@@ -9,8 +9,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the sequences startStudySession (levels) and chooseLevel (level filter) | [0b983b7] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the sequences startStudySession (levels) and chooseLevel (level filter) | [0b983b7] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the sequences openWordList and resetWordList | pending |
 
 ---
 
@@ -108,6 +108,92 @@ deactivate S
 ### Responsibility Check
 
 The composition root only wires; the level selects, the deck holds, the session coordinates; no object receives all messages.
+
+## Sequence: openWordList
+
+**Realizes:** `openWordList` in [OC-001]
+
+### Diagram
+
+```plantuml
+@startuml
+participant ":MenuView" as V
+participant ":Application" as A
+participant ":CsvVocabularyRepository" as VR
+V -> A : open_word_list(path)
+activate A
+create VR
+A -> VR : create(path)
+A -> VR : load()
+alt file is a word list
+  VR --> A : vocabulary
+  A -> A : drop session, use progress file of path
+  A --> V : levels
+else file is refused
+  VR --> A : VocabularyError
+  A --> V : message, earlier list stays
+end
+deactivate A
+@enduml
+```
+
+### Pattern Annotations
+
+| Pattern (GRASP / GoF) | Applied to | Rationale |
+| --- | --- | --- |
+| Controller | `Application` | Receives the menu command and coordinates the repositories and the session |
+| Repository | `CsvVocabularyRepository` | The file format stays in the adapter |
+
+### Postcondition Coverage
+
+| Postcondition (from contract) | Satisfied by message |
+| --- | --- |
+| The vocabulary and the progress file of `path` are in use | `load()`, `use progress file of path` |
+| The earlier session was dropped and the levels are returned | `drop session`, `levels` |
+| A refused file leaves everything as it was | the `else` branch |
+
+### Responsibility Check
+
+The view forwards the command; the application validates through the repository before it replaces anything.
+
+## Sequence: resetWordList
+
+**Realizes:** `resetWordList` in [OC-001]
+
+### Diagram
+
+```plantuml
+@startuml
+participant ":MenuView" as V
+participant ":Application" as A
+participant ":CsvProgressRepository" as PR
+V -> A : reset_word_list()
+activate A
+A -> PR : reset()
+PR --> A : done
+A -> A : drop session
+A --> V : levels
+deactivate A
+@enduml
+```
+
+### Pattern Annotations
+
+| Pattern (GRASP / GoF) | Applied to | Rationale |
+| --- | --- | --- |
+| Controller | `Application` | Sequences the reset and the return to the level screen |
+| Repository | `CsvProgressRepository` | Knows where the progress file is |
+
+### Postcondition Coverage
+
+| Postcondition (from contract) | Satisfied by message |
+| --- | --- |
+| The progress file of the word list in use does not exist | `reset()` |
+| The session was dropped and the levels are returned | `drop session`, `levels` |
+
+### Responsibility Check
+
+The confirmation is asked by the view before `reset_word_list` is called; the repository deletes only its own file.
 
 ## Sequence: markKnown
 
@@ -209,5 +295,4 @@ Same as `markKnown`; the session is the only object that speaks and draws.
 [OC-001]: ./oc.md
 [DCD-001]: ../dcd.md
 [DICT-001]: ../dictionary.md
-[c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
 [0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1

@@ -13,7 +13,8 @@
 | 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added MIL-008 and the review records of the level choice (no checklist exists for this type) | [0b983b7] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [768ca34] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [061b4f4] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [9c8e294] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [9c8e294] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | pending |
 
 ---
 
@@ -27,18 +28,18 @@ updated whenever an artifact instance is created or reviewed.
 
 | Artifact Instance | Type | Language | Domain | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- | --- | --- |
-| BC-001 | Business Case | en | it | - | SA-001, PP-001 | [RC-051] |
+| BC-001 | Business Case | en | it | - | SA-001, PP-001 | [RC-056] |
 | SA-001 | Stakeholder Analysis | en | it | BC-001 | PP-001, DICT-001 | [RC-002] |
-| PP-001 | Project Plan | en | it | BC-001, SA-001 | MIL-001 to MIL-008 | [RC-053] |
+| PP-001 | Project Plan | en | it | BC-001, SA-001 | MIL-001 to MIL-008 | [RC-064] |
 | UCD-001 | Use Case Diagram | en | it | SA-001, BC-001 | US-001, UC-001 | [RC-004] |
-| US-001 | User Story | en | it | UCD-001, BC-001 | MIL-002 to MIL-006, MIL-008 | [RC-052] |
-| UC-001 | Use Case | en | it | UCD-001, US-001 | DM-001, SSD-001 | [RC-033] |
+| US-001 | User Story | en | it | UCD-001, BC-001 | MIL-002 to MIL-006, MIL-008 | [RC-057] |
+| UC-001 | Use Case | en | it | UCD-001, US-001 | DM-001, SSD-001 | [RC-058] |
 | DM-001 | Domain Model | en | it | UC-001 | SSD-001, DICT-001, DCD-001 | [RC-034] |
-| SSD-001 | System Sequence Diagram | en | it | UC-001, DM-001 | DCD-001 | [RC-036] |
-| OC-001 | Operation Contract | - | - | SSD-001, DM-001 | SD-001 | [RC-037] |
-| SD-001 | Sequence Diagram | - | - | OC-001 | DCD-001 | [RC-038] |
-| DCD-001 | Design Class Diagram | - | - | DM-001, SD-001, DICT-001 | src/flash_card | [RC-045] |
-| DICT-001 | Domain Dictionary | en | it | BC-001, SA-001, DM-001 | DCD-001 | [RC-035] |
+| SSD-001 | System Sequence Diagram | en | it | UC-001, DM-001 | DCD-001 | [RC-059] |
+| OC-001 | Operation Contract | - | - | SSD-001, DM-001 | SD-001 | [RC-060] |
+| SD-001 | Sequence Diagram | - | - | OC-001 | DCD-001 | [RC-061] |
+| DCD-001 | Design Class Diagram | - | - | DM-001, SD-001, DICT-001 | src/flash_card | [RC-062] |
+| DICT-001 | Domain Dictionary | en | it | BC-001, SA-001, DM-001 | DCD-001 | [RC-063] |
 | ADR-0001 | Architecture Decision Record | - | - | BC-001 | MIL-001, MIL-003, MIL-006 | [RC-013] |
 | ADR-0002 | Architecture Decision Record | - | - | BC-001 | DCD-001 | [RC-014] |
 | ADR-0003 | Architecture Decision Record | - | - | BC-001 | - | [RC-015] |
@@ -53,6 +54,7 @@ updated whenever an artifact instance is created or reviewed.
 | MIL-009 | Milestone / Gateway | en | it | BC-001 | - | [RC-050] |
 | ADR-0004 | Architecture Decision Record | - | - | BC-001 | - | [RC-046] |
 | MIL-010 | Milestone / Gateway | en | it | BC-001 | - | [RC-054], [RC-055] |
+| MIL-011 | Milestone / Gateway | en | it | BC-001 | - | [RC-065] |
 | PY-MIL-001 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-023] |
 | PY-MIL-002 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-024] |
 | PY-MIL-003 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-025] |
@@ -168,3 +170,14 @@ updated whenever an artifact instance is created or reviewed.
 [MIL-010]: ../milestones/mil-010-release.md
 [9c8e294]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/9c8e2940217e615f82eda2d48aca9b2fd58f3687
 [RC-055]: ./reviews/rc-055-release-v0-1-0.md
+[RC-056]: ./reviews/rc-056-business-case-menu.md
+[RC-057]: ./reviews/rc-057-user-stories-menu.md
+[RC-058]: ./reviews/rc-058-use-case-menu.md
+[RC-059]: ./reviews/rc-059-system-sequence-diagram-menu.md
+[RC-060]: ./reviews/rc-060-operation-contracts-menu.md
+[RC-061]: ./reviews/rc-061-sequence-diagrams-menu.md
+[RC-062]: ./reviews/rc-062-design-class-diagram-menu.md
+[RC-063]: ./reviews/rc-063-domain-dictionary-menu.md
+[RC-064]: ./reviews/rc-064-project-plan-menu.md
+[RC-065]: ./reviews/rc-065-mil-011.md
+[MIL-011]: ../milestones/mil-011-menu-bar.md

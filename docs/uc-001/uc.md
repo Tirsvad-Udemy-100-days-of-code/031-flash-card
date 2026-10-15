@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [c3fbcbc] |
-| 2026-10-14 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the choice of level (US-001.06) | [0b983b7] |
+| 2026-10-14 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the choice of level (US-001.06) | [0b983b7] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the menu commands as an extension (US-001.09 to US-001.12) | pending |
 
 ---
 
@@ -59,6 +59,12 @@
   1. The system tells the Learner that there is nothing left to learn at this level, and further answers change nothing.
 - 4a. The kept progress or the word list is unreadable:
   1. The system reports the problem to the Learner and ends; it does not overwrite the kept progress.
+- *a. At any time the Learner uses a menu command:
+  1. Open a word list: the system asks for a file and checks it; when it is a word list, the system replaces the word list in use and goes on at step 2; when it is not, the system tells the Learner why and keeps the word list in use. When the Learner cancels nothing changes.
+  2. Change level: the system goes on at step 2 with the word list in use; the kept progress stays.
+  3. Reset word list: the system asks the Learner to confirm; on yes it removes the kept progress of the word list in use and goes on at step 2, so all its words are to learn again; on no nothing changes.
+  4. Contact: the system shows the author's name and title and opens the author's LinkedIn page in the web browser.
+  5. Exit: the system ends the program.
 
 ### Special Requirements / Business Rules
 
@@ -70,6 +76,7 @@
 | 6 | The turn-over comes three seconds after the card appears |
 | 8 | A word is identified by its Malay and Danish text; the first equal word is removed; known words stay known at every level and words outside the level are kept |
 | 4 | The word list names its two languages and holds one word and one translation per card |
+| *a | The kept progress of each word list is separate; resetting one word list never changes another word list or the word list itself |
 
 ### Open Issues
 
@@ -83,5 +90,4 @@
 [SA-001]: ../stakeholder-analysis.md
 [DM-001]: ../domain-model.md
 [SSD-001]: ./ssd.md
-[c3fbcbc]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/c3fbcbcfaf799e0ae34aed7e14d3bc8a62f03db3
 [0b983b7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0b983b7fdadf6958717c1d0227d0f2ebe037f7b1

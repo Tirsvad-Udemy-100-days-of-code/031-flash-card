@@ -4,15 +4,15 @@
 | Key | Value |
 | --- | --- |
 | ID | PP-001 |
-| CrossReference | [BC-001], [SA-001], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010] |
+| CrossReference | [BC-001], [SA-001], [US-001], [MIL-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-007], [MIL-008], [MIL-009], [MIL-010], [MIL-011] |
 | Language | en |
 | Domain | it |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-009 Executable with PyInstaller (new request of S01) | [768ca34] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-010 Release v0.1.0 (new request of S01) | [9c8e294] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-010 Release v0.1.0 (new request of S01) | [9c8e294] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-011 Menu bar (new request of S01) | pending |
 
 ---
 
@@ -42,6 +42,7 @@ This plan schedules the seven phases (gateways) that deliver the flash card prog
 | Choose level | [MIL-008] | 2026-10-20 | 2026-10-20 | S01 | US-001.06 | A level choice (100, 1000, all words) before the cards; documents, wiki and screenshots updated | |
 | Executable with PyInstaller | [MIL-009] | 2026-10-16 | 2026-10-16 | S01 | US-001.07 | One Windows executable that runs without Python, built by a script; documents, wiki and README updated | |
 | Release v0.1.0 | [MIL-010] | 2026-10-16 | 2026-10-16 | S01 | US-001.08 | Tag v0.1.0 and a release with `flash-card.exe`, its checksum and release notes | |
+| Menu bar | [MIL-011] | 2026-10-17 | 2026-10-17 | S01 | US-001.09 to US-001.12 | File menu (open word list, change level, reset word list, exit) and About menu (contact); documents, wiki and screenshots updated | |
 
 ```plantuml
 @startgantt
@@ -66,6 +67,8 @@ Project starts 2026-10-14
 [Executable Go/No-Go] happens 2026-10-16
 [Release] starts 2026-10-16 and ends 2026-10-16
 [Release Go/No-Go] happens 2026-10-16
+[Menu bar] starts 2026-10-17 and ends 2026-10-17
+[Menu bar Go/No-Go] happens 2026-10-17
 @endgantt
 ```
 
@@ -83,12 +86,13 @@ Project starts 2026-10-14
 | Choice of level (new request after MIL-007) | MIL-008 |
 | Executable built with PyInstaller (new request after MIL-008) | MIL-009 |
 | Release with the executable attached (new request after MIL-009) | MIL-010 |
+| Menu bar with File and About menus (new request after MIL-009) | MIL-011 |
 | Framework documents of the baseline | Baseline pull request before MIL-001 |
 
 ## Dependencies
 
 ```
-Baseline → MIL-001 → MIL-002 → MIL-003 → MIL-004 → MIL-005 → MIL-006 → MIL-007 → MIL-008 → MIL-009 → MIL-010
+Baseline → MIL-001 → MIL-002 → MIL-003 → MIL-004 → MIL-005 → MIL-006 → MIL-007 → MIL-008 → MIL-009 → MIL-010 → MIL-011
 ```
 
 A No-Go on a phase moves every later date by the days the rework takes; MIL-008 was added after MIL-007 and takes the unplanned day 2026-10-20, so no buffer is left inside the window; a No-Go moves the end date past 2026-10-21 and S01 decides whether to accept that.
@@ -121,6 +125,7 @@ A No-Go on a phase moves every later date by the days the rework takes; MIL-008 
 [MIL-008]: ./milestones/mil-008-choose-level.md
 [MIL-009]: ./milestones/mil-009-executable.md
 [MIL-010]: ./milestones/mil-010-release.md
+[MIL-011]: ./milestones/mil-011-menu-bar.md
 [MS-001]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/165
 [MS-002]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/166
 [MS-003]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/167
@@ -128,5 +133,4 @@ A No-Go on a phase moves every later date by the days the rework takes; MIL-008 
 [MS-005]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/169
 [MS-006]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/170
 [MS-007]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/milestone/171
-[768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
 [9c8e294]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/9c8e2940217e615f82eda2d48aca9b2fd58f3687

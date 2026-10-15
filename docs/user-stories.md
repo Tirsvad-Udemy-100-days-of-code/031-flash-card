@@ -4,21 +4,21 @@
 | Key | Value |
 | --- | --- |
 | ID | US-001 |
-| CrossReference | [UCD-001], [BC-001], [UC-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-008], [MIL-009], [MIL-010] |
+| CrossReference | [UCD-001], [BC-001], [UC-001], [MIL-002], [MIL-003], [MIL-004], [MIL-005], [MIL-006], [MIL-008], [MIL-009], [MIL-010], [MIL-011] |
 | Language | en |
 | Domain | it |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.07 Start without Python | [768ca34] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.08 Download the executable | [9c8e294] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.08 Download the executable | [9c8e294] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added US-001.09 to US-001.12 (menu bar) | pending |
 
 ---
 
 ## Purpose and Scope
 
-These stories cover the epic "Study Flash Cards": the four steps of the course assignment (the window, new cards, flipping the cards, saving progress), the spoken Malay word the choice of level the start without an installed Python and the download of the executable from a release. Each story is delivered by one milestone. The wireframe the stories follow is in `docs/uc-001/wireframe.md`.
+These stories cover the epic "Study Flash Cards": the four steps of the course assignment (the window, new cards, flipping the cards, saving progress), the spoken Malay word the choice of level the start without an installed Python the download of the executable from a release and the menu bar. Each story is delivered by one milestone. The wireframe the stories follow is in `docs/uc-001/wireframe.md`.
 
 ## Story List
 
@@ -134,9 +134,64 @@ These stories cover the epic "Study Flash Cards": the four steps of the course a
 | --- | --- | --- |
 | [MIL-010], [UC-001] | fits one iteration | none |
 
+### US-001.09 — Open another word list
+
+**As a** Learner, **I want** to open another word list from a CSV file with the File menu, **so that** I can learn another language pair than the one delivered.
+
+**Acceptance Criteria**
+
+- Given the program is running, when I choose File, Open, then a file dialog lets me pick a CSV file that starts in the data folder.
+- Given I picked a valid word list, when the dialog closes, then I choose a level and the cards come from that list, and my progress in it is kept apart from the progress in other lists.
+- Given I picked a file that is not a word list (no header of two language codes, or a row that is not two cells), when the dialog closes, then a message names the problem and the earlier word list stays in use.
+- Given I cancel the dialog, when it closes, then nothing changes.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [MIL-011], [UC-001] | fits one iteration | none |
+
+### US-001.10 — Change the level while learning
+
+**As a** Learner, **I want** to change the level from the File menu, **so that** I do not have to restart the program to make the word list easier or harder.
+
+**Acceptance Criteria**
+
+- Given a card is shown, when I choose File, Change level, then I see the level choices again.
+- Given I choose a level, when the cards continue, then they come from that level and the words I know stay known.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [MIL-011], [UC-001] | fits one iteration | none |
+
+### US-001.11 — Learn a word list from the start again
+
+**As a** Learner, **I want** to reset the current word list from the File menu, **so that** all its words are to learn again.
+
+**Acceptance Criteria**
+
+- Given a word list is open, when I choose File, Reset word list, then I am asked to confirm and the message names the word list.
+- Given I confirm, when the reset is done, then the progress of that word list is gone, all its words are to learn again and the level choice is shown; the progress of other word lists and the word list file itself are not changed.
+- Given I do not confirm, when the question closes, then nothing changes.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [MIL-011], [UC-001] | fits one iteration | none |
+
+### US-001.12 — Find the author and leave the program
+
+**As a** Learner, **I want** an About menu with the author's contact and a File, Exit command, **so that** I can reach the author and close the program in the usual way.
+
+**Acceptance Criteria**
+
+- Given the program is running, when I choose About, Contact, then I see an entry with the author's name and title (Jens Tirsvad Nielsen, Software engineer) and, when I choose it, the author's LinkedIn page opens in my web browser.
+- Given the program is running, when I choose File, Exit, then the window closes and the program ends.
+
+| Traces to | Size | INVEST exceptions |
+| --- | --- | --- |
+| [MIL-011], [UC-001] | fits one iteration | none |
+
 ## INVEST Check
 
-All eight stories are Independent in delivery order (each builds on the one before but can be accepted alone), Negotiable in wording, Valuable to the Learner, Estimable, Small (one milestone each) and Testable (every criterion is Given/When/Then). Exception: US-001.02 to US-001.08 depend on the window of US-001.01, which is stated in their milestones' Dependencies.
+All twelve stories are Independent in delivery order (each builds on the one before but can be accepted alone), Negotiable in wording, Valuable to the Learner, Estimable, Small (one milestone each) and Testable (every criterion is Given/When/Then). Exception: US-001.02 to US-001.12 depend on the window of US-001.01, which is stated in their milestones' Dependencies.
 
 ---
 
@@ -151,5 +206,5 @@ All eight stories are Independent in delivery order (each builds on the one befo
 [MIL-008]: ./milestones/mil-008-choose-level.md
 [MIL-009]: ./milestones/mil-009-executable.md
 [MIL-010]: ./milestones/mil-010-release.md
-[768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
+[MIL-011]: ./milestones/mil-011-menu-bar.md
 [9c8e294]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/9c8e2940217e615f82eda2d48aca9b2fd58f3687

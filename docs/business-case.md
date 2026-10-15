@@ -11,8 +11,8 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: executable built with PyInstaller (new request of S01) | [768ca34] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: release of the executable (new request of S01) | [9c8e294] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: release of the executable (new request of S01) | [9c8e294] |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | In Scope: menu bar (new request of S01) | pending |
 
 ---
 
@@ -54,6 +54,7 @@ A small, well-structured reference solution gives the Product Owner a language l
 - Saving the words still to learn to `data/words_to_learn.csv` and using that file on the next start.
 - Optional spoken Malay word (text to speech) as an extra that can be installed.
 - A choice of level (the first 100 words, the first 1000 words or all words of the frequency ordered word list) before learning starts.
+- A menu bar with the commands to open another word list (CSV), change the level, reset a word list, exit, and the author's contact.
 - A single Windows executable file, built with PyInstaller by a script of this repository, that runs without an installed Python.
 - A tagged release `v0.1.0` of the repository with the executable, its SHA-256 checksum and release notes attached.
 - `pyproject.toml`, `.gitignore`, `Doxyfile`, virtual environment instructions, `pytest` tests and `constants.py`.
@@ -150,5 +151,4 @@ Proceed — the scope is small, the risks are mitigated, and the result serves t
 ---
 
 [SA-001]: ./stakeholder-analysis.md
-[768ca34]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/768ca344c95d4f21e565e37ac96661c2f8dc8f54
 [9c8e294]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/9c8e2940217e615f82eda2d48aca9b2fd58f3687
