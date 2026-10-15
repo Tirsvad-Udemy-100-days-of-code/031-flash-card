@@ -164,7 +164,7 @@ docker run --rm -v "$PWD:/repo:ro" flash-card-debian bash /repo/tools/docker/in-
 On Windows PowerShell write `${PWD}` for `$PWD`. The repository is mounted read-only and copied inside the container.
 
 - The desktop is Xvfb with GNOME's window manager (mutter). GNOME Shell is tried first and does not start in a container (it needs a login manager), so the scripts fall back to mutter and print which one ran.
-- The Windows executable is checked in **Windows Sandbox** (Windows 11 Pro, feature enabled): `powershell -File tools\sandbox\run.ps1 -Runs 5` after `python tools/build_executable.py`. The sandbox shows its own window while it runs; the click is made inside the sandbox.
+- The Windows executable is checked in **Windows Sandbox** (Windows 11 Pro, feature enabled; the version 0.2.0 build passed 5 of 5 runs, see RC-080): `powershell -File tools\sandbox\run.ps1 -Runs 5` after `python tools/build_executable.py`. The sandbox shows its own window while it runs; the click is made inside the sandbox.
 - Not covered: macOS (it cannot be run in Docker on Windows or Linux and Apple's licence allows it only on Apple hardware), and Windows itself in the Debian container.
 
 ## 📄 License
