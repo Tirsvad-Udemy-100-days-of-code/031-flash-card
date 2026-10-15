@@ -56,7 +56,7 @@ updated whenever an artifact instance is created or reviewed.
 | ADR-0004 | Architecture Decision Record | - | - | BC-001 | - | [RC-046] |
 | MIL-010 | Milestone / Gateway | en | it | BC-001 | - | [RC-054], [RC-055] |
 | MIL-011 | Milestone / Gateway | en | it | BC-001 | - | [RC-065] |
-| MIL-012 | Milestone / Gateway | en | it | BC-001 | - | [RC-070] |
+| MIL-012 | Milestone / Gateway | en | it | BC-001 | - | [RC-070], [RC-072] |
 | PY-MIL-001 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-023] |
 | PY-MIL-002 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-024] |
 | PY-MIL-003 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-025] |
@@ -196,3 +196,4 @@ updated whenever an artifact instance is created or reviewed.
 [0264b60]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0264b6084f26bac5af716ea71596ce3be961fec8
 [RC-071]: ./reviews/rc-071-py-mil-012.md
 [PY-MIL-012]: ../../src/flash_card/__init__.py
+[RC-072]: ./reviews/rc-072-release-v0-2-0.md
