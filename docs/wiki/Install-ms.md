@@ -58,7 +58,7 @@ Ujian tetingkap dalam `tests/e2e/` dilangkau apabila tiada paparan.
 
 ## Keluaran dan fail boleh laku (Windows)
 
-[Halaman keluaran](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0) v0.1.0 mempunyai nota keluaran. Fail boleh laku belum dilampirkan di sana kerana had muat naik pelayan menolak fail sebesar ini (HTTP 413); bina seperti yang diterangkan di bawah. Fail tidak ditandatangani, jadi Windows mungkin menunjukkan amaran SmartScreen.
+Halaman keluaran [v0.2.0](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.2.0) dan [v0.1.0](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0) mempunyai nota keluaran. Fail boleh laku belum dilampirkan di sana kerana had muat naik pelayan menolak fail sebesar ini (HTTP 413); bina seperti yang diterangkan di bawah. Fail tidak ditandatangani, jadi Windows mungkin menunjukkan amaran SmartScreen.
 
 ## Bina fail boleh laku (Windows)
 

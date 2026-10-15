@@ -4,6 +4,35 @@ All notable changes of the flash card program. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); the version follows
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-10-15
+
+Adds the classic menu bar and keeps the progress of each word list apart.
+
+### Added
+
+- A menu bar. File: Open... (another word list from a CSV file with a header
+  of two language codes), Change level... (the level choice without a restart),
+  Reset word list... (after a confirmation the progress of the open list is
+  removed and all its words are to learn again), Exit. About: Contact (the
+  author's name and title, and a link to the author's LinkedIn page).
+- The progress of each word list is a file of its own: `words_to_learn.csv` for
+  `ms-da.csv` (unchanged) and `words_to_learn_<name>.csv` for another list.
+
+### Fixed
+
+- A word list that is not UTF-8 text gives a message that names the file,
+  instead of an error.
+- The level screen has the same window title, padding and background as the
+  card screen.
+
+### Known limits
+
+- The executable is not signed; Windows SmartScreen may warn about it.
+- The executable is not attached to the release: the upload limit of the git
+  host rejects a file of its size (HTTP 413, already at 1 MB). Build it with
+  `python tools/build_executable.py`.
+- An opened word list is not remembered after a restart.
+
 ## [0.1.0] - 2026-10-15
 
 First release. The solution of day 31 of Udemy's *100 Days of Code: The Complete
@@ -32,3 +61,4 @@ Python Pro Bootcamp*, for Malay words with Danish translations.
 - The Danish column of the word list is machine translated.
 
 [0.1.0]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0
+[0.2.0]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.2.0

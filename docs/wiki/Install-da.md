@@ -58,7 +58,7 @@ Vinduestesten i `tests/e2e/` springes over, når der ikke er en skærm.
 
 ## Udgivelse og programfil (Windows)
 
-[Udgivelsessiden](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0) for v0.1.0 har udgivelsesnoterne. Programfilen er endnu ikke vedhæftet, fordi serverens grænse for upload afviser en fil af denne størrelse (HTTP 413); byg den som beskrevet nedenfor. Filen er ikke signeret, så Windows kan vise en SmartScreen-advarsel.
+Udgivelsessiderne for [v0.2.0](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.2.0) og [v0.1.0](https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0) har udgivelsesnoterne. Programfilen er endnu ikke vedhæftet, fordi serverens grænse for upload afviser en fil af denne størrelse (HTTP 413); byg den som beskrevet nedenfor. Filen er ikke signeret, så Windows kan vise en SmartScreen-advarsel.
 
 ## Byg en programfil (Windows)
 
