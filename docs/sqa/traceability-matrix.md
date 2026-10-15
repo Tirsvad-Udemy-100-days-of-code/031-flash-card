@@ -57,7 +57,7 @@ updated whenever an artifact instance is created or reviewed.
 | ADR-0004 | Architecture Decision Record | - | - | BC-001 | - | [RC-046] |
 | MIL-010 | Milestone / Gateway | en | it | BC-001 | - | [RC-054], [RC-055] |
 | MIL-011 | Milestone / Gateway | en | it | BC-001 | - | [RC-065] |
-| MIL-012 | Milestone / Gateway | en | it | BC-001 | - | [RC-070], [RC-072] |
+| MIL-012 | Milestone / Gateway | en | it | BC-001 | - | [RC-070], [RC-072], [RC-081] |
 | MIL-013 | Milestone / Gateway | en | it | BC-001 | - | [RC-076], [RC-079], [RC-080] |
 | ADR-0005 | Architecture Decision Record | - | - | BC-001 | - | [RC-075] |
 | PY-MIL-001 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-023] |
@@ -215,3 +215,4 @@ updated whenever an artifact instance is created or reviewed.
 [SH-MIL-013]: ../../tools/docker
 [RC-079]: ./reviews/rc-079-container-checks.md
 [RC-080]: ./reviews/rc-080-sandbox-run.md
+[RC-081]: ./reviews/rc-081-tag-annotated.md
