@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | pending |
+| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version | [db87a6d] |
 
 ---
 
@@ -47,3 +47,4 @@ Go-with-conditions — the tag and the release page exist and the build was veri
 ---
 
 [MIL-010]: ../milestones/mil-010-release.md
+[db87a6d]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/db87a6d33bcaaef5a8bc62bf3f804502130b76a9
