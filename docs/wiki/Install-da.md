@@ -74,6 +74,26 @@ Scriptet bruger PyInstaller og skriver `dist/flash-card.exe`: én fil uden konso
 - `python tools/build_executable.py --no-speech` udelader talepakkerne; `--clean` bygger forfra.
 - Programfilen er ikke i repositoryet. Byg den på det system, hvor den skal køre; Windows kan vise en SmartScreen-advarsel, fordi filen ikke er signeret.
 
+## Kontroller uden skrivebord (Docker)
+
+Testene, linterne, skærmbillederne og en røgtest af en Linux-binær kører i en Debian-container på en virtuel skærm, så der ikke åbnes noget vindue på dit eget skrivebord.
+
+```bash
+docker build -f docker/debian.Dockerfile -t flash-card-debian .
+# linters og hele testsuiten, også testene af det rigtige vindue
+docker run --rm -v "$PWD:/repo:ro" flash-card-debian bash /repo/tools/docker/in-container.sh run-checks.sh
+# skærmbilleder til ./build/container-out
+docker run --rm -v "$PWD:/repo:ro" -v "$PWD/build/container-out:/out" flash-card-debian bash /repo/tools/docker/in-container.sh screenshots.sh /out
+# byg Linux-binæren og tryk på "kender" 5 gange (binær og kildekode)
+docker run --rm -v "$PWD:/repo:ro" flash-card-debian bash /repo/tools/docker/in-container.sh smoke-binary.sh 5
+```
+
+I Windows PowerShell skriver du `${PWD}` i stedet for `$PWD`. Repositoryet monteres skrivebeskyttet og kopieres inde i containeren.
+
+- Skrivebordet er Xvfb med GNOMEs vindueshåndtering (mutter). GNOME Shell prøves først og starter ikke i en container (den kræver en login-manager), så scripts falder tilbage til mutter og skriver hvilken der kørte.
+- Windows-programfilen kontrolleres i **Windows Sandbox** (Windows 11 Pro, funktionen aktiveret): `powershell -File tools\sandbox\run.ps1 -Runs 5` efter `python tools/build_executable.py`. Sandboxen viser sit eget vindue, mens den kører; klikket sker inde i sandboxen.
+- Ikke dækket: macOS (kan ikke køres i Docker på Windows eller Linux, og Apples licens tillader det kun på Apple-hardware), og selve Windows i Debian-containeren.
+
 ## Dokumentation af kildekoden
 
 ```bash

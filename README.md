@@ -147,6 +147,26 @@ The window test in `tests/e2e/` is skipped when no display is available.
 
 Build the source code documentation (Doxygen comments) with `doxygen Doxyfile`; the HTML is written to `docs/doxygen/html/`. The screenshots are made with `python tools/capture_screenshots.py` after `python -m pip install -e ".[tools]"` (Pillow, tool only).
 
+### Checks without a desktop (Docker)
+
+The tests, the linters, the screenshots and a smoke test of a Linux binary run in a Debian container on a virtual screen, so no window opens on your own desktop.
+
+```bash
+docker build -f docker/debian.Dockerfile -t flash-card-debian .
+# linters and the whole test suite, including the real window tests
+docker run --rm -v "$PWD:/repo:ro" flash-card-debian bash /repo/tools/docker/in-container.sh run-checks.sh
+# screenshots into ./build/container-out
+docker run --rm -v "$PWD:/repo:ro" -v "$PWD/build/container-out:/out" flash-card-debian bash /repo/tools/docker/in-container.sh screenshots.sh /out
+# build the Linux binary and press the known button 5 times (binary and source)
+docker run --rm -v "$PWD:/repo:ro" flash-card-debian bash /repo/tools/docker/in-container.sh smoke-binary.sh 5
+```
+
+On Windows PowerShell write `${PWD}` for `$PWD`. The repository is mounted read-only and copied inside the container.
+
+- The desktop is Xvfb with GNOME's window manager (mutter). GNOME Shell is tried first and does not start in a container (it needs a login manager), so the scripts fall back to mutter and print which one ran.
+- The Windows executable is checked in **Windows Sandbox** (Windows 11 Pro, feature enabled): `powershell -File tools\sandbox\run.ps1 -Runs 5` after `python tools/build_executable.py`. The sandbox shows its own window while it runs; the click is made inside the sandbox.
+- Not covered: macOS (it cannot be run in Docker on Windows or Linux and Apple's licence allows it only on Apple hardware), and Windows itself in the Debian container.
+
 ## 📄 License
 
 GNU Affero General Public License v3.0 or later. See [LICENSE][license].

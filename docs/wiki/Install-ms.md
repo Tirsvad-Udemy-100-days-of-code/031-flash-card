@@ -74,6 +74,26 @@ Skrip menggunakan PyInstaller dan menulis `dist/flash-card.exe`: satu fail tanpa
 - `python tools/build_executable.py --no-speech` meninggalkan pakej suara; `--clean` membina semula dari awal.
 - Fail boleh laku tidak disimpan dalam repositori. Bina di sistem tempat ia akan dijalankan; Windows mungkin menunjukkan amaran SmartScreen kerana fail tidak ditandatangani.
 
+## Semakan tanpa desktop (Docker)
+
+Ujian, linter, tangkapan skrin dan ujian asap bagi binari Linux dijalankan dalam kontena Debian pada skrin maya, jadi tiada tetingkap dibuka pada desktop anda sendiri.
+
+```bash
+docker build -f docker/debian.Dockerfile -t flash-card-debian .
+# linter dan seluruh suite ujian, termasuk ujian tetingkap sebenar
+docker run --rm -v "$PWD:/repo:ro" flash-card-debian bash /repo/tools/docker/in-container.sh run-checks.sh
+# tangkapan skrin ke ./build/container-out
+docker run --rm -v "$PWD:/repo:ro" -v "$PWD/build/container-out:/out" flash-card-debian bash /repo/tools/docker/in-container.sh screenshots.sh /out
+# bina binari Linux dan tekan butang "tahu" 5 kali (binari dan kod sumber)
+docker run --rm -v "$PWD:/repo:ro" flash-card-debian bash /repo/tools/docker/in-container.sh smoke-binary.sh 5
+```
+
+Dalam Windows PowerShell tulis `${PWD}` untuk `$PWD`. Repositori dipasang baca sahaja dan disalin di dalam kontena.
+
+- Desktop ialah Xvfb dengan pengurus tetingkap GNOME (mutter). GNOME Shell dicuba dahulu dan tidak bermula dalam kontena (ia memerlukan pengurus log masuk), jadi skrip beralih kepada mutter dan mencetak yang mana dijalankan.
+- Fail boleh laku Windows disemak dalam **Windows Sandbox** (Windows 11 Pro, ciri diaktifkan): `powershell -File tools\sandbox\run.ps1 -Runs 5` selepas `python tools/build_executable.py`. Sandbox menunjukkan tetingkapnya sendiri semasa berjalan; klik dibuat di dalam sandbox.
+- Tidak dilindungi: macOS (tidak boleh dijalankan dalam Docker pada Windows atau Linux dan lesen Apple hanya membenarkannya pada perkakasan Apple), dan Windows sebenar dalam kontena Debian.
+
 ## Dokumentasi kod sumber
 
 ```bash

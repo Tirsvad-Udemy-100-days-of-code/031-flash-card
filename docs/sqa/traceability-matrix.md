@@ -72,6 +72,8 @@ updated whenever an artifact instance is created or reviewed.
 | PY-MIL-011 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-066] |
 | PY-FIX-001 | Python Source Code | - | - | PY-MIL-008 | - | [RC-049] |
 | PY-MIL-012 | Python Source Code | - | - | MIL-012 | - | [RC-071] |
+| PY-MIL-013 | Python Source Code | - | - | MIL-013 | - | [RC-077] |
+| SH-MIL-013 | Shell Script | - | - | MIL-013 | - | [RC-078] |
 
 ## Coverage Notes
 
@@ -207,3 +209,7 @@ updated whenever an artifact instance is created or reviewed.
 [MIL-013]: ../milestones/mil-013-container-checks.md
 [ADR-0005]: ../adr/adr-0005-container-and-sandbox-checks.md
 [f86bc91]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/f86bc9136e7719fbcd049a4f803959019b7d2df3
+[RC-077]: ./reviews/rc-077-py-mil-013.md
+[RC-078]: ./reviews/rc-078-sh-mil-013.md
+[PY-MIL-013]: ../../tools
+[SH-MIL-013]: ../../tools/docker
