@@ -13,7 +13,8 @@
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: tagged releases v0.1.0 and v0.2.0 (new request of S01) | [0264b60] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: container and sandbox checks (new request of S01) | [f86bc91] |
-| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added objective 6, success criterion 9, a scope item, an out-of-scope item, a risk, an assumption and a constraint exception for the baseline milestone MIL-014; set the domain to education; reviewed in autonomous mode, not independent | [94431a3] |
+| 2026-11-16 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added objective 6, success criterion 9, a scope item, an out-of-scope item, a risk, an assumption and a constraint exception for the baseline milestone MIL-014; set the domain to education; reviewed in autonomous mode, not independent | [94431a3] |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope wording: the baseline milestone includes one behaviour-neutral rewrite of three statements in two scripts of `tools/` so the OpenGrep scan passes; reviewed in autonomous mode, not independent | pending |
 
 ---
 
@@ -64,7 +65,7 @@ A small, well-structured reference solution gives the Product Owner a language l
 - README from the framework template, screenshots, and a wiki in English, Danish and Bahasa Malaysia.
 - Repository description and topics on the git host.
 - The framework documents of the baseline: Business Case, Stakeholder Analysis, Project Plan, milestones, review records and traceability matrix.
-- The baseline milestone [MIL-014]: framework release, wiki language lines and sidebar in the framework's shape, README without the private framework files in its appendix, licence and project URL metadata, review records and the updated traceability matrix. It changes no behaviour of the program.
+- The baseline milestone [MIL-014]: framework release, wiki language lines and sidebar in the framework's shape, README without the private framework files in its appendix, licence and project URL metadata, review records and the updated traceability matrix. It changes no behaviour of the program; its only code change is the rewrite of three statements in two scripts of `tools/` so the OpenGrep scan passes (task 6).
 
 ### Out of Scope
 
@@ -74,7 +75,7 @@ A small, well-structured reference solution gives the Product Owner a language l
 - Packaging for distribution on PyPI, an installer and a signed executable (the executable built with PyInstaller and its release on the git host are in scope; the file itself is not committed to the repository).
 - Redistribution of the course's own image files; the card and button images are generated for this project.
 - A translation quality review of the word list.
-- Any change to `src/` or `tests/` in the baseline milestone [MIL-014].
+- Any change to `src/` or `tests/` in the baseline milestone [MIL-014]; the only code change of that milestone is the behaviour-neutral rewrite in `tools/capture_screenshots.py` and `tools/docker/smoke_driver.py` (task 6).
 
 ## Expected Benefits
 

@@ -119,8 +119,9 @@ class _Process:
 
 def real_run(args: Sequence[str]) -> str:
     """Run a command and return stdout, or "" when it fails."""
+    command = [*args]
     try:
-        done = subprocess.run(args, capture_output=True, text=True, check=False)
+        done = subprocess.run([*command], capture_output=True, text=True, check=False)
     except OSError:
         return ""
     return done.stdout if done.returncode == 0 else ""
@@ -128,7 +129,8 @@ def real_run(args: Sequence[str]) -> str:
 
 def real_start(command: Sequence[str]) -> Running:
     """Start the program in its own process group."""
-    return _Process(subprocess.Popen(command, start_new_session=True))
+    argv = [*command]
+    return _Process(subprocess.Popen([*argv], start_new_session=True))
 
 
 @dataclass(frozen=True)

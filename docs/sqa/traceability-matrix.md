@@ -17,7 +17,8 @@
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [2211d0f] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [0264b60] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [f86bc91] |
-| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the baseline milestone and the wiki row, the new review records and the domain education of the changed documents; reviewed in autonomous mode, not independent | [94431a3] |
+| 2026-11-16 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the baseline milestone and the wiki row, the new review records and the domain education of the changed documents; reviewed in autonomous mode, not independent | [94431a3] |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the re-review records of BC-001 and MIL-014 for task 6 and corrected the coverage note about source files; reviewed in autonomous mode, not independent | pending |
 
 ---
 
@@ -31,7 +32,7 @@ updated whenever an artifact instance is created or reviewed.
 
 | Artifact Instance | Type | Language | Domain | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- | --- | --- |
-| BC-001 | Business Case | en | education | - | SA-001, PP-001, MIL-014 | [RC-082] (Go, re-review of the whole document), [RC-073] |
+| BC-001 | Business Case | en | education | - | SA-001, PP-001, MIL-014 | [RC-086] (Go, re-review after the scope wording change), [RC-082] (Go, re-review of the whole document), [RC-073] |
 | SA-001 | Stakeholder Analysis | en | it | BC-001 | PP-001, DICT-001 | [RC-002] |
 | PP-001 | Project Plan | en | education | BC-001, SA-001 | MIL-001 to MIL-008, MIL-014 | [RC-083] (Go, review of the whole document against QC-PP-001, which the plan had not met before), [RC-074] |
 | UCD-001 | Use Case Diagram | en | it | SA-001, BC-001 | US-001, UC-001 | [RC-004] |
@@ -60,7 +61,7 @@ updated whenever an artifact instance is created or reviewed.
 | MIL-011 | Milestone / Gateway | en | it | BC-001 | - | [RC-065] |
 | MIL-012 | Milestone / Gateway | en | it | BC-001 | - | [RC-070], [RC-072], [RC-081] |
 | MIL-013 | Milestone / Gateway | en | it | BC-001 | - | [RC-076], [RC-079], [RC-080] |
-| MIL-014 | Milestone / Gateway | en | education | BC-001, PP-001, MIL-013 | - | [RC-084] (Go) |
+| MIL-014 | Milestone / Gateway | en | education | BC-001, PP-001, MIL-013 | - | [RC-087] (Go, re-review after task 6), [RC-084] (Go) |
 | ADR-0005 | Architecture Decision Record | - | - | BC-001 | - | [RC-075] |
 | PY-MIL-001 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-023] |
 | PY-MIL-002 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-024] |
@@ -85,7 +86,7 @@ updated whenever an artifact instance is created or reviewed.
 - Source code (`PY`) is added as `src/` is reviewed, one row per milestone.
 - The domain of BC-001, PP-001, MIL-014 and this matrix is `education` since [MIL-014]. The other documents keep the domain `it` they were accepted with; a change of their domain would need a new review of each (see the Open Issues of PP-001).
 - [PP-001] is reviewed against `QC-PP-001` for the first time in [RC-083]; the earlier records of the plan used no checklist. The review found that the dates of MIL-009 to MIL-013 precede the date of MIL-008, which MIL-009 depends on; the verdict is `Go-with-conditions` (an Open Issue of PP-001).
-- The source code, the tools and the scripts are reviewed in the records of their milestones and not again in [MIL-014], which changes no source file.
+- The source code, the tools and the scripts are reviewed in the records of their milestones and not again in [MIL-014]; its task 6 rewrites three statements in two tool scripts without changing behaviour, and the unit tests, ruff, mypy, import-linter and OpenGrep check it.
 - The review records and this matrix have no QC checklist for themselves and are not reviewed.
 
 ---
@@ -229,3 +230,5 @@ updated whenever an artifact instance is created or reviewed.
 [RC-084]: ./reviews/rc-084-milestone-014.md
 [RC-085]: ./reviews/rc-085-wiki.md
 [94431a3]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/94431a39b6ef3859341ddc17384b90bd97fb8944
+[RC-086]: ./reviews/rc-086-business-case-task-6.md
+[RC-087]: ./reviews/rc-087-milestone-014-task-6.md
