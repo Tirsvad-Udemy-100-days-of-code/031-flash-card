@@ -13,7 +13,7 @@
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-012 Release v0.2.0 (new request of S01) | [0264b60] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added gateway MIL-013 Container checks (new request of S01) | [f86bc91] |
-| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the baseline gateway MIL-014 with its schedule row, scope coverage, dependency, risk and Gantt entries and the No-Go rule; linked the milestones MIL-008 to MIL-013 to their git host milestones; stated why some gateways have no user story; corrected the number of phases in the Purpose; recorded the open issues found in the review; set the domain to education; reviewed in autonomous mode, not independent | pending |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the baseline gateway MIL-014 with its schedule row, scope coverage, dependency, risk and Gantt entries and the No-Go rule; linked the milestones MIL-008 to MIL-013 to their git host milestones; stated why some gateways have no user story; corrected the number of phases in the Purpose; recorded the open issues found in the review; set the domain to education; reviewed in autonomous mode, not independent | [94431a3] |
 
 ---
 
@@ -163,3 +163,4 @@ A No-Go on a phase moves every later date by the days the rework takes; MIL-008 
 [0264b60]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0264b6084f26bac5af716ea71596ce3be961fec8
 [f86bc91]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/f86bc9136e7719fbcd049a4f803959019b7d2df3
 [MIL-014]: ./milestones/mil-014-framework-baseline.md
+[94431a3]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/94431a39b6ef3859341ddc17384b90bd97fb8944

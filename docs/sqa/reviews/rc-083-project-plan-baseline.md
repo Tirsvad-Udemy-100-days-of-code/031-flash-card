@@ -9,7 +9,7 @@
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
-| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial review record; verdict Go-with-conditions (autonomous, not independent) | pending |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial review record; verdict Go-with-conditions (autonomous, not independent) | [94431a3] |
 
 ---
 
@@ -73,3 +73,4 @@ Go-with-conditions — every Mandatory criterion of QC-PP-001 and QC-LANG-001 pa
 [PP-001]: ../../project-plan.md
 [QC-PP-001]: ../../../framework/qc/artifacts/qc-project-plan.md
 [QC-LANG-001]: ../../../framework/qc/artifacts/qc-language-domain.md
+[94431a3]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/94431a39b6ef3859341ddc17384b90bd97fb8944

@@ -17,7 +17,7 @@
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [2211d0f] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [0264b60] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [f86bc91] |
-| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the baseline milestone and the wiki row, the new review records and the domain education of the changed documents; reviewed in autonomous mode, not independent | pending |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the baseline milestone and the wiki row, the new review records and the domain education of the changed documents; reviewed in autonomous mode, not independent | [94431a3] |
 
 ---
 
@@ -228,3 +228,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-083]: ./reviews/rc-083-project-plan-baseline.md
 [RC-084]: ./reviews/rc-084-milestone-014.md
 [RC-085]: ./reviews/rc-085-wiki.md
+[94431a3]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/94431a39b6ef3859341ddc17384b90bd97fb8944
