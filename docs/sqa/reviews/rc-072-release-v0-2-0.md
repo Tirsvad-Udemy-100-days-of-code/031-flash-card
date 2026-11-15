@@ -50,5 +50,5 @@ Go-with-conditions — the version, the CHANGELOG, the tag (lightweight) and the
 
 ---
 
-[MIL-012]: ../milestones/mil-012-release-0-2-0.md
+[MIL-012]: ../../milestones/mil-012-release-0-2-0.md
 [5345fd7]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/5345fd77d404b7a8b7c3722fa5ada2bf14f234a7

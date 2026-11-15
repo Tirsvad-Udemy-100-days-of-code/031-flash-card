@@ -1,6 +1,6 @@
-# Flash Card
+[English](Home) · **Dansk** · [Bahasa Malaysia](Home-ms)
 
-🌐 [English](Home) · **Dansk** · [Bahasa Malaysia](Home-ms)
+# Flash Card
 
 Et flashkortprogram til at lære de mest almindelige malajiske ord med danske oversættelser. Det er løsningen på dag 31 i Udemys kursus *100 Days of Code: The Complete Python Pro Bootcamp*.
 

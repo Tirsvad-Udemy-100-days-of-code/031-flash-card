@@ -1,6 +1,6 @@
-# Architecture
+**English** · [Dansk](Architecture-da) · [Bahasa Malaysia](Architecture-ms)
 
-🌐 **English** · [Dansk](Architecture-da) · [Bahasa Malaysia](Architecture-ms)
+# Architecture
 
 The program is built in four layers under `src/flash_card/`. Imports point inward; `lint-imports` checks this.
 

@@ -1,6 +1,6 @@
-# Arkitektur
+[English](Architecture) · **Dansk** · [Bahasa Malaysia](Architecture-ms)
 
-🌐 [English](Architecture) · **Dansk** · [Bahasa Malaysia](Architecture-ms)
+# Arkitektur
 
 Programmet er bygget i fire lag under `src/flash_card/`. Importer peger indad; `lint-imports` kontrollerer det.
 

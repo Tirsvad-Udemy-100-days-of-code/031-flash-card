@@ -1,6 +1,6 @@
-# Flash Card
+**English** · [Dansk](Home-da) · [Bahasa Malaysia](Home-ms)
 
-🌐 **English** · [Dansk](Home-da) · [Bahasa Malaysia](Home-ms)
+# Flash Card
 
 A flash card program for learning the most frequent Malay words with their Danish translations. It is the solution of day 31 of Udemy's *100 Days of Code: The Complete Python Pro Bootcamp*.
 

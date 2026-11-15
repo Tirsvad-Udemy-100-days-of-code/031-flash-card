@@ -25,6 +25,9 @@ The program first asks for a level: the first 100 words, the first 1000 words or
 | `docs/` | Project documents (business case, plan, design, review records), `docs/wiki/` and `docs/images/` |
 | `tools/` | Helper scripts: `generate_images.py`, `capture_screenshots.py` and `build_executable.py` |
 | `Doxyfile` | Doxygen configuration for the source code documentation |
+| `framework/` | The SQA and QC framework (git submodule) |
+| `.editorconfig` | Editor settings of the framework baseline |
+| `.env.example` | Placeholders for the tokens of the framework scripts |
 
 The core program uses only the Python standard library. Spoken Malay words are an optional extra.
 
@@ -184,7 +187,6 @@ The documents a newcomer needs, in reading order.
 
 | Document | What it tells you |
 | --- | --- |
-| [AGENTS.md][agents] | The rules AI agents follow in this repository |
 | [Business Case][BC-001] | Why the project exists, its scope and success criteria |
 | [Stakeholder Analysis][SA-001] | Who is involved; the stakeholder IDs used for owners and reviewers |
 | [Project Plan][PP-001] | The gateways and their schedule |
@@ -192,8 +194,6 @@ The documents a newcomer needs, in reading order.
 | [Artifact registry][registry] | Where each artifact type lives, the next version, the PO language and domain |
 | [Domain dictionary][DICT-001] | The PO terms and the IT terms |
 | [Traceability matrix][TM-001] | How the artifacts link and when each was last reviewed |
-| [Framework README][framework-readme] | The framework this project uses |
-| [Framework changelog][framework-changelog] | What changed in each framework release |
 
 ---
 
@@ -212,7 +212,6 @@ The documents a newcomer needs, in reading order.
 [releases]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases
 [release-0-1-0]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.1.0
 [release-0-2-0]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/releases/tag/v0.2.0
-[agents]: ./AGENTS.md
 [BC-001]: ./docs/business-case.md
 [SA-001]: ./docs/stakeholder-analysis.md
 [PP-001]: ./docs/project-plan.md
@@ -220,5 +219,3 @@ The documents a newcomer needs, in reading order.
 [registry]: ./docs/artifact-registry.md
 [DICT-001]: ./docs/dictionary.md
 [TM-001]: ./docs/sqa/traceability-matrix.md
-[framework-readme]: ./framework/README.md
-[framework-changelog]: ./framework/CHANGELOG.md

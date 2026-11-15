@@ -50,5 +50,5 @@ Go-with-conditions — everything that can run without the host desktop runs and
 
 ---
 
-[MIL-013]: ../milestones/mil-013-container-checks.md
+[MIL-013]: ../../milestones/mil-013-container-checks.md
 [2f192b6]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/2f192b6936a92f85c6c200de3cac3d6cf3572903

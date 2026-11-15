@@ -4,21 +4,22 @@
 | Key | Value |
 | --- | --- |
 | ID | BC-001 |
-| CrossReference | [SA-001] |
+| CrossReference | [SA-001], [MIL-014] |
 | Language | en |
-| Domain | it |
+| Domain | education |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: tagged releases v0.1.0 and v0.2.0 (new request of S01) | [0264b60] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: container and sandbox checks (new request of S01) | [f86bc91] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: container and sandbox checks (new request of S01) | [f86bc91] |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added objective 6, success criterion 9, a scope item, an out-of-scope item, a risk, an assumption and a constraint exception for the baseline milestone MIL-014; set the domain to education; reviewed in autonomous mode, not independent | pending |
 
 ---
 
 ## Executive Summary
 
-The Day 31 assignment of Udemy's *100 Days of Code: The Complete Python Pro Bootcamp* asks the course participant to build a flash card program that helps learn the most frequent words of a foreign language. The program shows a word in the target language, flips the card after three seconds to show its translation, and keeps only the words the learner does not yet know. This project delivers that program for a Malay to Danish word list, built from the four assignment steps (user interface, new flash cards, flipping the cards, saving progress) and extended with spoken Malay words. It is delivered as readable, tested, documented code that other course participants can run and compare with their own solution.
+The Day 31 assignment of Udemy's *100 Days of Code: The Complete Python Pro Bootcamp* asks the course participant to build a flash card program that helps learn the most frequent words of a foreign language. The program shows a word in the target language, flips the card after three seconds to show its translation, and keeps only the words the learner does not yet know. This project delivers that program for a Malay to Danish word list, built from the four assignment steps (user interface, new flash cards, flipping the cards, saving progress) and extended with spoken Malay words. It is delivered as readable, tested, documented code that other course participants can run and compare with their own solution. A later milestone, [MIL-014], brings the finished project to the common baseline of the framework without changing the program.
 
 ## Methodological and Standards Foundation
 
@@ -44,6 +45,7 @@ A small, well-structured reference solution gives the Product Owner a language l
 3. Keep the core program free of third-party runtime dependencies.
 4. Provide a repository others can use: README, wiki in English, Danish and Bahasa Malaysia, screenshots, a repository description and topics.
 5. Keep track of the work step by step, with one reviewed milestone and one pull request per step.
+6. Bring the finished project to the common baseline of the framework: the adopted framework release, the wiki in the framework's shape, complete licence metadata and review records for every changed document ([MIL-014]).
 
 ## Scope
 
@@ -62,6 +64,7 @@ A small, well-structured reference solution gives the Product Owner a language l
 - README from the framework template, screenshots, and a wiki in English, Danish and Bahasa Malaysia.
 - Repository description and topics on the git host.
 - The framework documents of the baseline: Business Case, Stakeholder Analysis, Project Plan, milestones, review records and traceability matrix.
+- The baseline milestone [MIL-014]: framework release, wiki language lines and sidebar in the framework's shape, README without the private framework files in its appendix, licence and project URL metadata, review records and the updated traceability matrix. It changes no behaviour of the program.
 
 ### Out of Scope
 
@@ -71,6 +74,7 @@ A small, well-structured reference solution gives the Product Owner a language l
 - Packaging for distribution on PyPI, an installer and a signed executable (the executable built with PyInstaller and its release on the git host are in scope; the file itself is not committed to the repository).
 - Redistribution of the course's own image files; the card and button images are generated for this project.
 - A translation quality review of the word list.
+- Any change to `src/` or `tests/` in the baseline milestone [MIL-014].
 
 ## Expected Benefits
 
@@ -101,7 +105,8 @@ The project supports the Product Owner's goal of completing the 100 Days of Code
 | 5 | Wiki coverage | 3 languages (en, da, ms) with the same page set | File list of `docs/wiki/` |
 | 6 | Repository presentation | A description and at least 5 topics are set on the repository | Read back from the git host API |
 | 7 | Review coverage | Every artifact and every milestone's code has an `RC-*` record with verdict Go | `docs/sqa/reviews/` and the Traceability Matrix |
-| 8 | Delivery window | Everything merged by 2026-10-21 | Date of the last merged pull request |
+| 8 | Delivery window | Everything merged by 2026-10-21, except the baseline milestone [MIL-014] | Date of the last merged pull request |
+| 9 | The baseline milestone is done (objective 6) | Wiki pages in 3 languages with the language line first, `framework/scripts/check-readme.sh` and `framework/scripts/check-languages.sh` exit with code 0, 100 % of the continuous integration (CI) checks of the pull request of [MIL-014] pass | Files in `docs/wiki/`, the script exit codes and the pull request status on the git host |
 
 ## Risks
 
@@ -112,6 +117,7 @@ The project supports the Product Owner's goal of completing the 100 Days of Code
 | Tkinter cannot be tested without a display on a build machine | Presentation code untested in CI | The view model holds the behaviour and is tested without Tkinter; the view test skips when no display exists |
 | The word list has translation errors (machine translated) | Learner learns a wrong meaning | Out of scope for this project; the README says the list is machine translated and may be edited |
 | Course images are copyrighted | Redistribution not allowed in a public repository | Images are generated by a script in this repository |
+| The documents of the baseline milestone [MIL-014] are reviewed by an AI stand-in for S01 | A defect is missed because the review is not independent | Every review record of the baseline says `Mode: autonomous, not independent`, and the end-of-run summary lists it for challenge |
 
 ## Assumptions
 
@@ -120,6 +126,7 @@ The project supports the Product Owner's goal of completing the 100 Days of Code
 - A display and Tkinter are available on the machine where the program runs.
 - Network access is available when the optional speech extra is used.
 - The git host `git.tirsystem.com` is used for the repository, the wiki and the pull requests.
+- The baseline milestone [MIL-014] is finished within one week of its own start, 2026-11-16, by 2026-11-23. For that milestone only, an AI stand-in for S01 reviews and accepts the changed documents.
 
 ## Constraints
 
@@ -127,8 +134,8 @@ The project supports the Product Owner's goal of completing the 100 Days of Code
 - The folder structure is `src/`, `tests/` and `docs/`.
 - Constants are defined in `constants.py`.
 - The assignment's function names are kept so that participants can compare solutions.
-- The Product Owner's language is English and the domain is IT; the wiki is in English, Danish and Bahasa Malaysia.
-- Delivery by 2026-10-21 (self-set, one week).
+- The Product Owner's language is English and the domain is education (it was IT until [MIL-014]; the documents that [MIL-014] does not change keep the domain `it`, see the Open Issues of the Project Plan); the wiki is in English, Danish and Bahasa Malaysia.
+- Delivery by 2026-10-21 (self-set, one week); the baseline milestone [MIL-014] is the exception and has its own week, 2026-11-16 to 2026-11-23.
 
 ## Cost–Benefit Assessment
 
@@ -155,3 +162,4 @@ Proceed — the scope is small, the risks are mitigated, and the result serves t
 [SA-001]: ./stakeholder-analysis.md
 [0264b60]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/0264b6084f26bac5af716ea71596ce3be961fec8
 [f86bc91]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/f86bc9136e7719fbcd049a4f803959019b7d2df3
+[MIL-014]: ./milestones/mil-014-framework-baseline.md

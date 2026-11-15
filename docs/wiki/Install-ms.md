@@ -1,6 +1,6 @@
-# Pemasangan
+[English](Install) · [Dansk](Install-da) · **Bahasa Malaysia**
 
-🌐 [English](Install) · [Dansk](Install-da) · **Bahasa Malaysia**
+# Pemasangan
 
 ## Keperluan
 

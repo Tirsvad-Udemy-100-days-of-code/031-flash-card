@@ -4,7 +4,7 @@
 | Key | Value |
 | --- | --- |
 | ID | TM-001 |
-| CrossReference | [BC-001] |
+| CrossReference | [BC-001], [PP-001], [MIL-014] |
 
 ## Version History
 | Date | Status | Author | Reviewer | Change | Commit |
@@ -16,7 +16,8 @@
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [9c8e294] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [2211d0f] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [0264b60] |
-| 2026-10-15 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [f86bc91] |
+| 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [f86bc91] |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the baseline milestone and the wiki row, the new review records and the domain education of the changed documents; reviewed in autonomous mode, not independent | pending |
 
 ---
 
@@ -30,9 +31,9 @@ updated whenever an artifact instance is created or reviewed.
 
 | Artifact Instance | Type | Language | Domain | Upstream (Backward Link) | Downstream (Forward Link) | Last Reviewed (RC-ID) |
 | --- | --- | --- | --- | --- | --- | --- |
-| BC-001 | Business Case | en | it | - | SA-001, PP-001 | [RC-073] |
+| BC-001 | Business Case | en | education | - | SA-001, PP-001, MIL-014 | [RC-082] (Go, re-review of the whole document), [RC-073] |
 | SA-001 | Stakeholder Analysis | en | it | BC-001 | PP-001, DICT-001 | [RC-002] |
-| PP-001 | Project Plan | en | it | BC-001, SA-001 | MIL-001 to MIL-008 | [RC-074] |
+| PP-001 | Project Plan | en | education | BC-001, SA-001 | MIL-001 to MIL-008, MIL-014 | [RC-083] (Go, review of the whole document against QC-PP-001, which the plan had not met before), [RC-074] |
 | UCD-001 | Use Case Diagram | en | it | SA-001, BC-001 | US-001, UC-001 | [RC-004] |
 | US-001 | User Story | en | it | UCD-001, BC-001 | MIL-002 to MIL-006, MIL-008 | [RC-068] |
 | UC-001 | Use Case | en | it | UCD-001, US-001 | DM-001, SSD-001 | [RC-058] |
@@ -59,6 +60,7 @@ updated whenever an artifact instance is created or reviewed.
 | MIL-011 | Milestone / Gateway | en | it | BC-001 | - | [RC-065] |
 | MIL-012 | Milestone / Gateway | en | it | BC-001 | - | [RC-070], [RC-072], [RC-081] |
 | MIL-013 | Milestone / Gateway | en | it | BC-001 | - | [RC-076], [RC-079], [RC-080] |
+| MIL-014 | Milestone / Gateway | en | education | BC-001, PP-001, MIL-013 | - | [RC-084] (Go) |
 | ADR-0005 | Architecture Decision Record | - | - | BC-001 | - | [RC-075] |
 | PY-MIL-001 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-023] |
 | PY-MIL-002 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-024] |
@@ -74,12 +76,17 @@ updated whenever an artifact instance is created or reviewed.
 | PY-MIL-012 | Python Source Code | - | - | MIL-012 | - | [RC-071] |
 | PY-MIL-013 | Python Source Code | - | - | MIL-013 | - | [RC-077] |
 | SH-MIL-013 | Shell Script | - | - | MIL-013 | - | [RC-078] |
+| Wiki | Wiki | en, da, ms | - | BC-001, MIL-014 | - | [RC-085] (Go-with-conditions) |
 
 ## Coverage Notes
 
 - `-` in Upstream means foundational; in Downstream it means nothing is built on it yet; in Last Reviewed it means no `RC-*` exists yet. Every row has a review record from the baseline review (autonomous mode, AI as stand-in for S01).
 - Types not created for this project, and why: ADR-0003.
 - Source code (`PY`) is added as `src/` is reviewed, one row per milestone.
+- The domain of BC-001, PP-001, MIL-014 and this matrix is `education` since [MIL-014]. The other documents keep the domain `it` they were accepted with; a change of their domain would need a new review of each (see the Open Issues of PP-001).
+- [PP-001] is reviewed against `QC-PP-001` for the first time in [RC-083]; the earlier records of the plan used no checklist. The review found that the dates of MIL-009 to MIL-013 precede the date of MIL-008, which MIL-009 depends on; the verdict is `Go-with-conditions` (an Open Issue of PP-001).
+- The source code, the tools and the scripts are reviewed in the records of their milestones and not again in [MIL-014], which changes no source file.
+- The review records and this matrix have no QC checklist for themselves and are not reviewed.
 
 ---
 
@@ -216,3 +223,8 @@ updated whenever an artifact instance is created or reviewed.
 [RC-079]: ./reviews/rc-079-container-checks.md
 [RC-080]: ./reviews/rc-080-sandbox-run.md
 [RC-081]: ./reviews/rc-081-tag-annotated.md
+[MIL-014]: ../milestones/mil-014-framework-baseline.md
+[RC-082]: ./reviews/rc-082-business-case-baseline.md
+[RC-083]: ./reviews/rc-083-project-plan-baseline.md
+[RC-084]: ./reviews/rc-084-milestone-014.md
+[RC-085]: ./reviews/rc-085-wiki.md
