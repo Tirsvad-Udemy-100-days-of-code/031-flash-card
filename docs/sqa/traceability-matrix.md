@@ -18,7 +18,8 @@
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [0264b60] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [f86bc91] |
 | 2026-11-16 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the baseline milestone and the wiki row, the new review records and the domain education of the changed documents; reviewed in autonomous mode, not independent | [94431a3] |
-| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the re-review records of BC-001 and MIL-014 for task 6 and corrected the coverage note about source files; reviewed in autonomous mode, not independent | [12d3033] |
+| 2026-11-16 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the re-review records of BC-001 and MIL-014 for task 6 and corrected the coverage note about source files; reviewed in autonomous mode, not independent | [12d3033] |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the re-review record RC-088 of MIL-014 for the corrected wording of task 6; reviewed in autonomous mode, not independent | pending |
 
 ---
 
@@ -61,7 +62,7 @@ updated whenever an artifact instance is created or reviewed.
 | MIL-011 | Milestone / Gateway | en | it | BC-001 | - | [RC-065] |
 | MIL-012 | Milestone / Gateway | en | it | BC-001 | - | [RC-070], [RC-072], [RC-081] |
 | MIL-013 | Milestone / Gateway | en | it | BC-001 | - | [RC-076], [RC-079], [RC-080] |
-| MIL-014 | Milestone / Gateway | en | education | BC-001, PP-001, MIL-013 | - | [RC-087] (Go, re-review after task 6), [RC-084] (Go) |
+| MIL-014 | Milestone / Gateway | en | education | BC-001, PP-001, MIL-013 | - | [RC-088] (Go, re-review after the corrected wording of task 6), [RC-087] (Go, re-review after task 6), [RC-084] (Go) |
 | ADR-0005 | Architecture Decision Record | - | - | BC-001 | - | [RC-075] |
 | PY-MIL-001 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-023] |
 | PY-MIL-002 | Python Source Code | - | - | DCD-001, ADR-0002 | - | [RC-024] |
@@ -233,3 +234,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-086]: ./reviews/rc-086-business-case-task-6.md
 [RC-087]: ./reviews/rc-087-milestone-014-task-6.md
 [12d3033]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/12d3033b2cbf2a6d6f88b1f8ad54c221cdc5e070
+[RC-088]: ./reviews/rc-088-milestone-014-task-6-wording.md

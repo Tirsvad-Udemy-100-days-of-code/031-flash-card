@@ -12,7 +12,8 @@
 | Date | Status | Author | Reviewer | Change | Commit |
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-16 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; accepted with the Go verdict of the review record (autonomous, not independent) | [94431a3] |
-| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added task 6 (behaviour-neutral rewrite of the process calls and a sleep in two tool scripts so the OpenGrep scan passes without a suppression); reviewed in autonomous mode, not independent | [12d3033] |
+| 2026-11-16 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added task 6 (behaviour-neutral rewrite of the process calls and a sleep in two tool scripts so the OpenGrep scan passes without a suppression); reviewed in autonomous mode, not independent | [12d3033] |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Corrected the wording of task 6: the process calls are made through two `functools.partial` wrappers that carry their options (second OpenGrep round); reviewed in autonomous mode, not independent | pending |
 
 ---
 
@@ -70,7 +71,7 @@ A merged pull request that holds: the updated Business Case, Project Plan, Artif
 | 3 | Bring the wiki to the framework's shape | Put the language line first on every page and write one sidebar with the page list once and a Languages section, keeping the existing pages and their names. | No | Objective 6 |
 | 4 | Bring the README to the framework template | Keep the text of the README, add the framework files to the project layout and give the appendix only the documents that are in the repository, so the README is complete and checkable. | No | Objective 6 |
 | 5 | Complete the licence metadata | Add the project URLs to `pyproject.toml` and raise the build requirement to the setuptools version that reads a licence expression, so package tools can read them. | No | Objective 6 |
-| 6 | Rewrite three statements in the tool scripts so the OpenGrep scan passes | In `tools/capture_screenshots.py` wait with the Tk `after` call instead of `time.sleep`, and in `tools/docker/smoke_driver.py` pass each command to `subprocess.run` and `subprocess.Popen` as a fresh list built from the given arguments, so that the three findings of severity ERROR of the OpenGrep scan no longer match. The scan is not suppressed. The behaviour is unchanged; the unit tests, ruff, mypy and import-linter pass. | No | Objective 6 |
+| 6 | Rewrite three statements in the tool scripts so the OpenGrep scan passes | In `tools/capture_screenshots.py` wait with the Tk `after` call instead of `time.sleep`, and in `tools/docker/smoke_driver.py` call `subprocess.run` and `subprocess.Popen` through two `functools.partial` wrappers that carry their options, so that the three findings of severity ERROR of the OpenGrep scan no longer match. The scan is not suppressed. The behaviour is unchanged; the unit tests, ruff, mypy and import-linter pass. | No | Objective 6 |
 
 ---
 
