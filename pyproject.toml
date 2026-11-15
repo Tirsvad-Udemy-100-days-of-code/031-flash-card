@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -20,6 +20,11 @@ classifiers = [
 ]
 # The core program uses the Python standard library only (ADR-0001).
 dependencies = []
+
+[project.urls]
+Repository = "https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card"
+Documentation = "https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/wiki"
+"Issue tracker" = "https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/issues"
 
 [project.optional-dependencies]
 # Spoken Malay word (text to speech). Optional; the program works without it.

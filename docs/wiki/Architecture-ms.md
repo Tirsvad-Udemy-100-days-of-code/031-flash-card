@@ -1,6 +1,6 @@
-# Seni bina
+[English](Architecture) · [Dansk](Architecture-da) · **Bahasa Malaysia**
 
-🌐 [English](Architecture) · [Dansk](Architecture-da) · **Bahasa Malaysia**
+# Seni bina
 
 Program dibina dalam empat lapisan di bawah `src/flash_card/`. Import menuju ke dalam; `lint-imports` memeriksanya.
 

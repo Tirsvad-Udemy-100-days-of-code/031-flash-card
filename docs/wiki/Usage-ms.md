@@ -1,6 +1,6 @@
-# Penggunaan
+[English](Usage) · [Dansk](Usage-da) · **Bahasa Malaysia**
 
-🌐 [English](Usage) · [Dansk](Usage-da) · **Bahasa Malaysia**
+# Penggunaan
 
 ## Berlatih dengan kad
 

@@ -40,6 +40,6 @@ Go — criterion 5 of MIL-012 is met. The remaining condition of RC-072 is the a
 
 ---
 
-[MIL-012]: ../milestones/mil-012-release-0-2-0.md
+[MIL-012]: ../../milestones/mil-012-release-0-2-0.md
 [RC-072]: ./rc-072-release-v0-2-0.md
 [8f135b9]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/8f135b94bf88578c01800eef9ca0fc2d29dff485

@@ -1,6 +1,6 @@
-# Install
+**English** · [Dansk](Install-da) · [Bahasa Malaysia](Install-ms)
 
-🌐 **English** · [Dansk](Install-da) · [Bahasa Malaysia](Install-ms)
+# Install
 
 ## Requirements
 

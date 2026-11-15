@@ -1,6 +1,6 @@
-# Brug
+[English](Usage) · **Dansk** · [Bahasa Malaysia](Usage-ms)
 
-🌐 [English](Usage) · **Dansk** · [Bahasa Malaysia](Usage-ms)
+# Brug
 
 ## Øv kortene
 

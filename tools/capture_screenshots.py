@@ -119,7 +119,7 @@ def _pump(root: object, seconds: float) -> None:
     end = time.monotonic() + seconds
     while time.monotonic() < end:
         root.update()  # type: ignore[attr-defined]
-        time.sleep(0.01)
+        root.after(10)  # type: ignore[attr-defined]
 
 
 def capture(output_dir: Path) -> list[Path]:

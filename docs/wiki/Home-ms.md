@@ -1,6 +1,6 @@
-# Flash Card
+[English](Home) · [Dansk](Home-da) · **Bahasa Malaysia**
 
-🌐 [English](Home) · [Dansk](Home-da) · **Bahasa Malaysia**
+# Flash Card
 
 Program kad imbas untuk mempelajari perkataan Melayu yang paling kerap digunakan beserta terjemahan Denmark. Ia ialah penyelesaian hari ke-31 kursus Udemy *100 Days of Code: The Complete Python Pro Bootcamp*.
 

@@ -42,6 +42,6 @@ Go — criterion 7 of MIL-013 and the open condition of RC-072 on the smoke test
 
 ---
 
-[MIL-013]: ../milestones/mil-013-container-checks.md
+[MIL-013]: ../../milestones/mil-013-container-checks.md
 [RC-079]: ./rc-079-container-checks.md
 [6e3fcf8]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/6e3fcf8aa3d66b9fa84339e1dce90d5f53cbed67

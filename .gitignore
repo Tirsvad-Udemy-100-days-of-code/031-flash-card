@@ -1,9 +1,13 @@
 # Local secrets: tokens are for personal use and are never part of the project
 .env
 .env.*
+!.env.example
 
 # Learner's own progress (created by the program on the first "known" answer)
 data/words_to_learn.csv
+
+# Local AI prompt logs (not published)
+/docs/ai-prompts/
 
 # Virtual environments
 .venv/

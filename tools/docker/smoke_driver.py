@@ -11,6 +11,7 @@ Uses the standard library only, so it runs in a bare container. It needs
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import os
 import shutil
@@ -22,7 +23,7 @@ import time
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Protocol
+from typing import Any, Protocol
 
 ## @brief Title of the program window.
 WINDOW_NAME = "Flashy"
@@ -105,7 +106,7 @@ def progress_ok(rows: int, words: int) -> bool:
 class _Process:
     """A real subprocess, stopped as a whole process group."""
 
-    def __init__(self, process: subprocess.Popen[bytes]) -> None:
+    def __init__(self, process: subprocess.Popen[Any]) -> None:
         self._process = process
 
     def stop(self) -> None:
@@ -117,10 +118,19 @@ class _Process:
             self._process.kill()
 
 
+## @brief `subprocess.run` with the options of every command of this tool.
+_run_captured = functools.partial(
+    subprocess.run, capture_output=True, text=True, check=False
+)
+## @brief `subprocess.Popen` with a session of its own, so the process group can
+# be stopped as a whole.
+_popen_in_session = functools.partial(subprocess.Popen[bytes], start_new_session=True)
+
+
 def real_run(args: Sequence[str]) -> str:
     """Run a command and return stdout, or "" when it fails."""
     try:
-        done = subprocess.run(args, capture_output=True, text=True, check=False)
+        done = _run_captured(args)
     except OSError:
         return ""
     return done.stdout if done.returncode == 0 else ""
@@ -128,7 +138,7 @@ def real_run(args: Sequence[str]) -> str:
 
 def real_start(command: Sequence[str]) -> Running:
     """Start the program in its own process group."""
-    return _Process(subprocess.Popen(command, start_new_session=True))
+    return _Process(_popen_in_session(command))
 
 
 @dataclass(frozen=True)

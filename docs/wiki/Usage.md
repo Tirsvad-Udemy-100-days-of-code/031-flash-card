@@ -1,6 +1,6 @@
-# Usage
+**English** · [Dansk](Usage-da) · [Bahasa Malaysia](Usage-ms)
 
-🌐 **English** · [Dansk](Usage-da) · [Bahasa Malaysia](Usage-ms)
+# Usage
 
 ## Study the cards
 
