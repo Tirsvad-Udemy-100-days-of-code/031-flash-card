@@ -14,7 +14,7 @@
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: tagged releases v0.1.0 and v0.2.0 (new request of S01) | [0264b60] |
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope: container and sandbox checks (new request of S01) | [f86bc91] |
 | 2026-11-16 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added objective 6, success criterion 9, a scope item, an out-of-scope item, a risk, an assumption and a constraint exception for the baseline milestone MIL-014; set the domain to education; reviewed in autonomous mode, not independent | [94431a3] |
-| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope wording: the baseline milestone includes one behaviour-neutral rewrite of three statements in two scripts of `tools/` so the OpenGrep scan passes; reviewed in autonomous mode, not independent | pending |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Scope wording: the baseline milestone includes one behaviour-neutral rewrite of three statements in two scripts of `tools/` so the OpenGrep scan passes; reviewed in autonomous mode, not independent | [12d3033] |
 
 ---
 
@@ -165,3 +165,4 @@ Proceed — the scope is small, the risks are mitigated, and the result serves t
 [f86bc91]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/f86bc9136e7719fbcd049a4f803959019b7d2df3
 [MIL-014]: ./milestones/mil-014-framework-baseline.md
 [94431a3]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/94431a39b6ef3859341ddc17384b90bd97fb8944
+[12d3033]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/12d3033b2cbf2a6d6f88b1f8ad54c221cdc5e070
