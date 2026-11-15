@@ -19,7 +19,7 @@
 | 2026-10-15 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the rows and review records of the executable request (no checklist exists for this type) | [f86bc91] |
 | 2026-11-16 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the baseline milestone and the wiki row, the new review records and the domain education of the changed documents; reviewed in autonomous mode, not independent | [94431a3] |
 | 2026-11-16 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the re-review records of BC-001 and MIL-014 for task 6 and corrected the coverage note about source files; reviewed in autonomous mode, not independent | [12d3033] |
-| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the re-review record RC-088 of MIL-014 for the corrected wording of task 6; reviewed in autonomous mode, not independent | pending |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added the re-review record RC-088 of MIL-014 for the corrected wording of task 6; reviewed in autonomous mode, not independent | [d4c5073] |
 
 ---
 
@@ -235,3 +235,4 @@ updated whenever an artifact instance is created or reviewed.
 [RC-087]: ./reviews/rc-087-milestone-014-task-6.md
 [12d3033]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/12d3033b2cbf2a6d6f88b1f8ad54c221cdc5e070
 [RC-088]: ./reviews/rc-088-milestone-014-task-6-wording.md
+[d4c5073]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/d4c5073ac80a61435b1315329cb6d90af07f1dcb

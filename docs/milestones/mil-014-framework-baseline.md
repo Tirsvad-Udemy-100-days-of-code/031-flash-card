@@ -13,7 +13,7 @@
 | --- | --- | --- | --- | --- | --- |
 | 2026-11-16 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Initial version; accepted with the Go verdict of the review record (autonomous, not independent) | [94431a3] |
 | 2026-11-16 | Deprecated | Jens Tirsvad Nielsen | AI as stand-in for S01 | Added task 6 (behaviour-neutral rewrite of the process calls and a sleep in two tool scripts so the OpenGrep scan passes without a suppression); reviewed in autonomous mode, not independent | [12d3033] |
-| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Corrected the wording of task 6: the process calls are made through two `functools.partial` wrappers that carry their options (second OpenGrep round); reviewed in autonomous mode, not independent | pending |
+| 2026-11-16 | Accepted | Jens Tirsvad Nielsen | AI as stand-in for S01 | Corrected the wording of task 6: the process calls are made through two `functools.partial` wrappers that carry their options (second OpenGrep round); reviewed in autonomous mode, not independent | [d4c5073] |
 
 ---
 
@@ -80,3 +80,4 @@ A merged pull request that holds: the updated Business Case, Project Plan, Artif
 [MIL-013]: ./mil-013-container-checks.md
 [94431a3]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/94431a39b6ef3859341ddc17384b90bd97fb8944
 [12d3033]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/12d3033b2cbf2a6d6f88b1f8ad54c221cdc5e070
+[d4c5073]: https://git.tirsystem.com/Tirsvad-Udemy-100-days-of-code/031-flash-card/commit/d4c5073ac80a61435b1315329cb6d90af07f1dcb
